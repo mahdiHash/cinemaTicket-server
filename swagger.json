@@ -1,0 +1,27 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cinema Ticket Server API",
+    "description": "This is a clone api of cinematicket.org. We tried to implement as many features as we can.",
+    "contact": {
+      "name": "Mahdi Hashemi",
+      "url": "https://github.com/mahdiHash",
+      "email": "mahdihashemi.code@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "localhost:12000/"
+    }
+  ],
+  "paths": {
+    
+  },
+  "components": {
+
+  },
+  "security": [
+
+  ]
+}
