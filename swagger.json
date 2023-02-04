@@ -39,9 +39,22 @@
     
   },
   "components": {
-
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [ "name", "code", "message" ],
+        "properties": {
+          "name": { "type": "string" },
+          "code": { "type": "integer" },
+          "message": { "type": "string" },
+          "headers": { "type": "object" },
+          "body": { "type": "object" },
+          "parameters": { "type": "object" }
+        }
+      }
+    }
   },
   "security": [
-
+    
   ]
 }
