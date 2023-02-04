@@ -1,6 +1,5 @@
 const crypto = require('crypto');
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../../config/prismaConfig');
 
 const controller = async (req, res, next) => {
   let key = crypto.randomBytes(32).toString('hex');
