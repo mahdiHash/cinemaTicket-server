@@ -149,7 +149,7 @@ model place_schedule {
 model users {
   id              Int       @id @default(autoincrement())
   full_name       String?
-  tel             String
+  tel             String    @unique
   email           String?
   birthday        DateTime? @db.Date
   password        String?
