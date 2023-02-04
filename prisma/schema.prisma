@@ -1,0 +1,271 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model plays {
+  id            Int       @id @default(autoincrement())
+  title         String
+  director      String
+  duration      Int       @db.SmallInt
+  genre         String
+  type          playType
+  intro         String
+  publish_date  DateTime? @db.Date
+  review        String?
+  review_writer String?
+  cover_url     String
+  trailer_url   String
+
+  play_ratings     play_ratings[]
+  play_celebrities play_celebrities[]
+  play_pics        play_pics[]
+  place_schedule   place_schedule[]
+  tickets          tickets[]
+}
+
+model play_ratings {
+  play    plays @relation(fields: [play_id], references: [id], onDelete: Cascade)
+  play_id Int
+  user    users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id Int
+  rating  Float @db.Real
+
+  @@id([play_id, user_id])
+}
+
+model play_celebrities {
+  play         plays       @relation(fields: [play_id], references: [id], onDelete: Cascade)
+  play_id      Int
+  celebrity    celebrities @relation(fields: [celebrity_Id], references: [id], onDelete: Restrict)
+  celebrity_Id Int
+  is_main_char Boolean
+
+  @@id([play_id, celebrity_Id])
+}
+
+model play_pics {
+  url      String          @id
+  play     plays           @relation(fields: [play_id], references: [id], onDelete: Cascade)
+  play_id  Int
+  position playPicPosition
+}
+
+model comments {
+  id            Int         @id @default(autoincrement())
+  record_id     Int
+  user          users?      @relation(fields: [user_id], references: [id], onDelete: SetNull)
+  user_id       Int?
+  content       String      @db.VarChar(750)
+  type          commentType
+  parentComment comments?   @relation(name: "parentComment", fields: [in_reply_to], references: [id], onDelete: SetNull)
+  in_reply_to   Int?        @default(-1)
+  submit_date   DateTime    @db.Date
+
+  comments_likes    comments_likes[]
+  comments_dislikes comments_dislikes[]
+  comments          comments[]          @relation("parentComment")
+}
+
+model comments_likes {
+  user       users    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  comment    comments @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  comment_id Int
+
+  @@id([user_id, comment_id])
+}
+
+model comments_dislikes {
+  user       users    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  comment    comments @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  comment_id Int
+
+  @@id([user_id, comment_id])
+}
+
+model celebrities {
+  id              Int       @id @default(autoincrement())
+  full_name       String
+  role            celebRole
+  profile_pic_url String
+  birthday        DateTime? @db.Date
+  birth_city      String?
+  bio             String?
+
+  play_celebrities play_celebrities[]
+  celebrity_pics   celebrity_pics[]
+}
+
+model celebrity_pics {
+  url          String      @id
+  celeb        celebrities @relation(fields: [celebrity_id], references: [id], onDelete: Cascade)
+  celebrity_id Int
+}
+
+model places {
+  id                     Int       @id @default(autoincrement())
+  name                   String
+  type                   placeType
+  tel                    String?
+  national_submission_id String
+  address                String
+  password               String
+  facilities             String?
+  profile_pic_url        String?
+
+  place_ratings  place_ratings[]
+  place_schedule place_schedule[]
+  tickets        tickets[]
+}
+
+model place_ratings {
+  place    places @relation(fields: [place_id], references: [id], onDelete: Cascade)
+  place_id Int
+  user     users  @relation(fields: [user_id], references: [id])
+  user_id  Int
+  ratings  Float  @db.Real
+
+  @@id([place_id, user_id])
+}
+
+model place_schedule {
+  play_time DateTime @db.Timestamp()
+  hall_num  Int      @db.SmallInt
+  place     places   @relation(fields: [place_id], references: [id], onDelete: Cascade)
+  place_id  Int
+  play      plays    @relation(fields: [play_id], references: [id], onDelete: Restrict)
+  play_id   Int
+  capacity  Int      @db.SmallInt
+
+  @@id([play_time, hall_num])
+}
+
+model users {
+  id              Int       @id @default(autoincrement())
+  full_name       String
+  tel             String
+  email           String?
+  birthday        DateTime? @db.Date
+  password        String?
+  credit_card_num String?
+  national_id     String?
+  profile_pic_url String?
+
+  ratings           play_ratings[]
+  comments          comments[]
+  comments_likes    comments_likes[]
+  comments_dislikes comments_dislikes[]
+  place_ratings     place_ratings[]
+  tickets           tickets[]
+}
+
+model admins {
+  id              Int         @id @default(autoincrement())
+  full_name       String
+  password        String
+  tel             String
+  email           String
+  profile_pic_url String?
+  access_level    adminAccess
+}
+
+model non_approved_places {
+  id                     Int       @id @default(autoincrement())
+  name                   String
+  type                   placeType
+  national_submission_id String
+  owner                  String
+  address                String
+}
+
+model tickets {
+  id         Int      @id @default(autoincrement())
+  user       users?   @relation(fields: [user_id], references: [id], onDelete: SetNull)
+  user_id    Int?
+  play_title String
+  play       plays    @relation(fields: [play_id], references: [id], onDelete: Restrict)
+  play_id    Int
+  place_name String
+  place      places?  @relation(fields: [place_id], references: [id], onDelete: SetNull)
+  place_id   Int?
+  time       DateTime @db.Timestamp()
+  hall_num   Int      @db.SmallInt
+  seats      String
+
+  transactions transactions[]
+}
+
+model transactions {
+  id        Int             @id @default(autoincrement())
+  ticket    tickets         @relation(fields: [ticket_id], references: [id], onDelete: Restrict)
+  ticket_id Int
+  user_id   Int // user can delete account but this field can't be null
+  cost      Decimal         @db.Money
+  type      transactionType
+  time      DateTime        @db.Timestamp()
+}
+
+model reports {
+  id          Int        @id @default(autoincrement())
+  type        reportType
+  record_id   Int
+  description String?
+}
+
+model api_keys {
+  key String @id
+}
+
+enum playType {
+  movie
+  show
+}
+
+enum commentType {
+  movie
+  show
+  cinema
+  theater
+}
+
+enum playPicPosition {
+  background
+  review
+  morePics
+}
+
+enum celebRole {
+  actor
+  actress
+  director
+  producer
+}
+
+enum placeType {
+  cinema
+  theater
+}
+
+enum adminAccess {
+  super
+  play
+  comment
+}
+
+enum transactionType {
+  ticket
+  wallet
+}
+
+enum reportType {
+  movie
+  comment
+  cinema
+  theater
+}
