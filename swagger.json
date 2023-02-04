@@ -16,6 +16,26 @@
     }
   ],
   "paths": {
+    "/getapikey": {
+      "get": {
+        "description": "Get an api key from the server. You need to provide this key in \"apikey\" header of your requests headers.",
+        "summary": "Api key for other requests",
+        "operationId": "apikey",
+        "responses": {
+          "200": {
+            "description": "key generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "flkajfdldfasfd8af9d8f9adsfd9af9d89fa9dsf9daf89d"
+              }
+            }
+          }
+        }
+      }
+    }
     
   },
   "components": {
