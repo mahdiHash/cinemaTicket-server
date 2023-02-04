@@ -3,8 +3,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
-const getApiKey = require('./utils/middlewares/getapikey');
-const authorizeApiKey = require('./utils/middlewares/authorizeApiKey');
+const getApiKey = require('./controllers/others/getapikey');
+const authorizeApiKey = require('./controllers/others/authorizeApiKey');
 
 const app = express();
 
