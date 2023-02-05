@@ -14,14 +14,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+// swagger docs
+app.use('/apidocs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+
 // check and create api keys
 app.get('/getapikey', getApiKey);
 app.use('/', authorizeApiKey);
 
 // set routers
 app.use('/auth', authRouter);
-
-// swagger docs
-app.use('/apidocs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 module.exports = app;
