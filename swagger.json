@@ -35,8 +35,107 @@
           }
         }
       }
+    },
+    "/signup": {
+      "post": {
+        "description": "This route is used for user signup.",
+        "summary": "User signup",
+        "requestBody": {
+          "description": "The \"tel\" field must contain 11 characters and the \"password\" field must contain at least 6 characters. \"password\" and \"repeatPass\" fields must be the same.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tel": {
+                    "type": "string",
+                    "description": "This field must contain 11 characters.",
+                    "example": "09120000000"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "This field must contain at least 6 characters.",
+                    "example": "someRand0mPa33"
+                  },
+                  "repeatPass": {
+                    "type": "string",
+                    "description": "This field must be the same as password field.",
+                    "example": "someRand0mPa33"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The response contains two fileds: token (JWT) and user object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { 
+                      "type": "string",
+                      "description": "This token will be used by routes that need it. Store it in the user's browser.",
+                      "example": "fadsf879a8f79da7fs897df987ads9 f7d98a7f" 
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "The id of user in database.",
+                          "example": "123"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "description": "This field will be null after signing up. You need to get the user's name for all submission actions.",
+                          "example": "Jack Nicholson"
+                        },
+                        "tel": {
+                          "type": "string",
+                          "description": "User's phone number.",
+                          "example": "09120000000"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "User's email. This field will be null after signing up.",
+                          "example": "jack@example.com"
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday). This field will be null after signing up.",
+                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
+                        },
+                        "creadit_card_num": {
+                          "type": "string",
+                          "description": "This field will be null after signing up.",
+                          "example": "1234123412341234"
+                        },
+                        "national_id": {
+                          "type": "string",
+                          "description": "This field will be null after signing up.",
+                          "example": "00000000000"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "This field will be null after signing up. This is a url to the image web address.",
+                          "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The inputs are probably incorrect. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
-    
   },
   "components": {
     "schemas": {
