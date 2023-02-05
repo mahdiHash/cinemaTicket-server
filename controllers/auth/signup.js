@@ -3,6 +3,7 @@ const inputValidator = require('../../utils/inputValidators/signupInputs');
 const jwt = require('jsonwebtoken');
 const escape = require('../../utils/escape');
 const bcrypt = require('bcryptjs');
+const { encrypt, decrypt } = require('../../utils/cipherFunc');
 
 const controller = [
   // validate inputs
@@ -17,7 +18,7 @@ const controller = [
     let hashedPass = await bcrypt.hash(req.body.password, 16);
     let user = await prisma.users.create({
       data: {
-        tel: escape(req.body.tel),
+        tel: encrypt(req.body.tel),
         password: hashedPass,
       }
     })
@@ -27,6 +28,7 @@ const controller = [
     );
 
     delete user.password;
+    user.tel = decrypt(user.tel);
     res.json({
       token,
       user
