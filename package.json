@@ -1,0 +1,31 @@
+{
+  "name": "cinematicket-server",
+  "version": "1.0.0",
+  "description": "CinemaTicket Server-Side Application",
+  "main": "server.js",
+  "repository": "https://github.com/mahdihash/cinematicket-server.git",
+  "author": "mahdiHash <mahdihashemiii939@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "dotenv -e .env node ./server.js",
+    "devstart": "dotenv -e .env.dev node ./server.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.9.0",
+    "@prisma/engines": "^4.9.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "imagekit": "^4.1.2",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "prisma": "^4.9.0",
+    "swagger-ui-express": "^4.6.0"
+  }
+}
