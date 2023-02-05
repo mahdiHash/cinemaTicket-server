@@ -152,7 +152,7 @@ model users {
   tel             String    @unique
   email           String?
   birthday        DateTime? @db.Date
-  password        String?
+  password        String
   credit_card_num String?
   national_id     String?
   profile_pic_url String?
