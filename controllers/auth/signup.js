@@ -1,7 +1,6 @@
 const prisma = require('../../config/prismaConfig');
 const inputValidator = require('../../utils/inputValidators/signupInputs');
 const jwt = require('jsonwebtoken');
-const escape = require('../../utils/escape');
 const bcrypt = require('bcryptjs');
 const { encrypt, decrypt } = require('../../utils/cipherFunc');
 
@@ -22,8 +21,9 @@ const controller = [
         password: hashedPass,
       }
     })
+      .catch(next);
     let token = jwt.sign(
-      { id: user.id, tel: user.tel, exp: 1000 * 60 * 60 * 24 * 90 },
+      { id: user.id, tel: user.tel, exp: 1000 * 60 * 60 * 24 * 90 }, // 90 days
       process.env.JWT_TOKEN_SECRET
     );
 
