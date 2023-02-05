@@ -18,6 +18,7 @@
   "paths": {
     "/getapikey": {
       "get": {
+        "security": [{}],
         "description": "Get an api key from the server. You need to provide this key in \"apikey\" header of your requests headers.",
         "summary": "Api key for other requests",
         "operationId": "apikey",
@@ -38,6 +39,9 @@
     },
     "/signup": {
       "post": {
+        "security": [
+          { "apikey": ["apikey"] }
+        ],
         "description": "This route is used for user signup.",
         "summary": "User signup",
         "requestBody": {
@@ -158,9 +162,19 @@
           "parameters": { "type": "object" }
         }
       }
+    },
+    "securitySchemes": {
+      "apikey": {
+        "description": "The value of your api key must go inside a header named \"apikey\" on all request except for \"/getapikey\" route.",
+        "name": "apikey",
+        "type": "apiKey",
+        "in": "header"
+      }
     }
   },
   "security": [
-    
+    {
+      "apikey": ["apikey"]
+    }
   ]
 }
