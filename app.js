@@ -1,6 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const errHandler = require('./utils/errors/errorHandler');
+const createNotFoundErr = require('./utils/errors/createNotFoundErr');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
 const getApiKey = require('./controllers/others/getapikey');
@@ -23,5 +25,10 @@ app.use('/', authorizeApiKey);
 
 // set routers
 app.use('/auth', authRouter);
+
+// if the route is not found, create a 404 error
+// if there's an error, pass it to errorHandler
+app.use('/', createNotFoundErr);
+app.use('/', errHandler);
 
 module.exports = app;
