@@ -7,7 +7,7 @@ const handler = (err, req, res, next) => {
   // if the http status code of response is already set,
   // then it's specified by developer so just push it to
   // errors array
-  if (res.status) {
+  if (res.statusCode && res.statusCode != 200) {
     errors.push({
       name,
       message: err.message ?? err.msg,
