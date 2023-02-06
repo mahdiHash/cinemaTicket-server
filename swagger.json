@@ -82,7 +82,7 @@
                     "token": { 
                       "type": "string",
                       "description": "This token will be used by routes that need it. Store it in the user's browser.",
-                      "example": "fadsf879a8f79da7fs897df987ads9 f7d98a7f" 
+                      "example": "fadsf879a8f79da7fs897df987ads9f7d98a7f" 
                     },
                     "user": {
                       "type": "object",
@@ -94,8 +94,8 @@
                         },
                         "full_name": {
                           "type": "string",
-                          "description": "This field will be null after signing up. You need to get the user's name for all submission actions.",
-                          "example": "Jack Nicholson"
+                          "description": "You need to get the user's name for all submission actions.",
+                          "example": null
                         },
                         "tel": {
                           "type": "string",
@@ -104,28 +104,28 @@
                         },
                         "email": {
                           "type": "string",
-                          "description": "User's email. This field will be null after signing up.",
-                          "example": "jack@example.com"
+                          "description": "User's email.",
+                          "example": null
                         },
                         "birthday": {
                           "type": "string",
-                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday). This field will be null after signing up.",
-                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
+                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
+                          "example": null
                         },
-                        "creadit_card_num": {
+                        "credit_card_num": {
                           "type": "string",
-                          "description": "This field will be null after signing up.",
-                          "example": "1234123412341234"
+                          "description": "User's credit card number.",
+                          "example": null
                         },
                         "national_id": {
                           "type": "string",
-                          "description": "This field will be null after signing up.",
-                          "example": "00000000000"
+                          "description": "User's national id.",
+                          "example": null
                         },
                         "profile_pic_url": {
                           "type": "string",
-                          "description": "This field will be null after signing up. This is a url to the image web address.",
-                          "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                          "description": "This is a url to an image web address.",
+                          "example": null
                         }
                       }
                     }
