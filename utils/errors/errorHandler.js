@@ -30,6 +30,13 @@ const handler = (err, req, res, next) => {
       message: err.message,
     })
   }
+  else if (name == "UnauthorizedErr") {
+    res.status(401);
+    errors.push({
+      name,
+      message: err.message,
+    })
+  }
   // it's a server err
   else {
     res.status(500);

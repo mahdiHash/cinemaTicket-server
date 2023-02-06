@@ -139,6 +139,101 @@
           }
         }
       }
+    },
+    "/auth/login": {
+      "post": {
+        "security": [
+          { "apikey": [ "apikey" ]}
+        ],
+        "description": "This route is used for user login.",
+        "summary": "User login",
+        "requestBody": {
+          "description": "The \"tel\" field must contain 11 characters.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tel": {
+                    "description": "This field must contain 11 characters",
+                    "type": "string",
+                    "example": "09120000000"
+                  },
+                  "password": {
+                    "type": "array",
+                    "example": "someRand0mPa33"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The response has 2 fields: \"token\" (JWT) and \"user\". You need to store the token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "This the JWT. You need to store it in the browser for further usecases.",
+                      "example": "a8f7d7f8ds8afd78f8ad8f78adsf8dadaf9sd8fa"
+                    },
+                    "user": {
+                      "type": "object",
+                      "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "The id of user in database.",
+                          "example": "123"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "description": "User's full name. Needed for submission actions like writing a comments.",
+                          "example": "Jack Nicholson"
+                        },
+                        "tel": {
+                          "type": "string",
+                          "description": "User's phone number.",
+                          "example": "09120000000"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "User's email.",
+                          "example": "jack@example.com"
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
+                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
+                        },
+                        "credit_card_num": {
+                          "type": "string",
+                          "description": "User's credit card number.",
+                          "example": "1234123412341234"
+                        },
+                        "national_id": {
+                          "type": "string",
+                          "description": "User's national id.",
+                          "example": "00000000000"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "This is a url to the image web address.",
+                          "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
