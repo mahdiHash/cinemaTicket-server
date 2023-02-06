@@ -45,7 +45,7 @@ const handler = (err, req, res, next) => {
 
   res.json({
     errors,
-    code: res.status,
+    code: res.statusCode,
     headers: req.headers,
     body: req.body,
     parameters: req.params,
