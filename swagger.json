@@ -37,7 +37,7 @@
         }
       }
     },
-    "/signup": {
+    "/auth/signup": {
       "post": {
         "security": [
           { "apikey": ["apikey"] }
