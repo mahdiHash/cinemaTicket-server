@@ -29,7 +29,7 @@ app.use('/', authorizeApiKey);
 
 // set routers
 app.use('/auth', authRouter);
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 
 // if the route is not found, create a 404 error
 // if there's an error, pass it to errorHandler
