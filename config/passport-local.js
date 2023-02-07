@@ -15,7 +15,7 @@ let strategy = new LocalStrategy(
     });
 
     if (!user) {
-      return cb(new UnauthorizedErr('tel or password is field incorrect.'));
+      return cb(new UnauthorizedErr('tel or password field is incorrect.'));
     }
 
     let isPassMatch = await bcrypt.compare(pass, user.password);
