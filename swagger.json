@@ -240,6 +240,73 @@
           }
         }
       }
+    },
+    "/user/profile": {
+      "get": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Get user's information",
+        "description": "Use this route for getting any information on user's profile.",
+        "responses": {
+          "200": {
+            "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" and \"id\" fields, the rest could be null.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "The id of user in database.",
+                      "example": "123"
+                    },
+                    "full_name": {
+                      "type": "string",
+                      "description": "User's full name. Needed for submission actions like writing a comments.",
+                      "example": "Jack Nicholson"
+                    },
+                    "tel": {
+                      "type": "string",
+                      "description": "User's phone number.",
+                      "example": "09120000000"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email.",
+                      "example": "jack@example.com"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
+                      "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
+                    },
+                    "credit_card_num": {
+                      "type": "string",
+                      "description": "User's credit card number.",
+                      "example": "1234123412341234"
+                    },
+                    "national_id": {
+                      "type": "string",
+                      "description": "User's national id.",
+                      "example": "00000000000"
+                    },
+                    "profile_pic_url": {
+                      "type": "string",
+                      "description": "This is a url to the image web address.",
+                      "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          }
+        }
+      }
     }
   },
   "components": {
