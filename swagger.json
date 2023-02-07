@@ -270,12 +270,19 @@
         "name": "apikey",
         "type": "apiKey",
         "in": "header"
-      }
+      },
+      "jwt": {
+        "description": "The value of your JWT must go inside \"Athorization\" header with the format of \"Bearer {token}\".",
+        "type": "http",
+        "scheme": "bearer"      }
     }
   },
   "security": [
     {
-      "apikey": ["apikey"]
+      "apikey": [ "apikey" ]
+    },
+    {
+      "jwt": [ "jwt" ]
     }
   ]
 }
