@@ -160,7 +160,7 @@
                     "example": "09120000000"
                   },
                   "password": {
-                    "type": "array",
+                    "type": "string",
                     "example": "someRand0mPa33"
                   }
                 }
