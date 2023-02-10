@@ -14,7 +14,7 @@ const handler = (err, req, res, next) => {
   // then it's specified by developer so just push it to
   // errors array
   if (res.statusCode && res.statusCode != 200) {
-    errors.push({
+    resObj.errors.push({
       name,
       message: err.message ?? err.msg,
     });
@@ -22,7 +22,7 @@ const handler = (err, req, res, next) => {
   // validaion err
   else if (name == 'ValidationError') {
     res.status(400);
-    errors = err.details.map((errObj) => {
+    resObj.errors = err.details.map((errObj) => {
       return {
         name,
         message: errObj.message,
@@ -31,14 +31,14 @@ const handler = (err, req, res, next) => {
   }
   else if (name == "NotFoundErr") {
     res.status(404);
-    errors.push({
+    resObj.errors.push({
       name,
       message: err.message,
     })
   }
   else if (name == "UnauthorizedErr") {
     res.status(401);
-    errors.push({
+    resObj.errors.push({
       name,
       message: err.message,
     })
@@ -46,7 +46,7 @@ const handler = (err, req, res, next) => {
   // it's a server err
   else {
     res.status(500);
-    errors.push(new ServerErr());
+    resObj.errors.push(new ServerErr());
     console.error({
       err,
       headers: resObj.headers,
