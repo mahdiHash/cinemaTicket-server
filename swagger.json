@@ -307,6 +307,127 @@
           }
         }
       }
+    },
+    "/user/update": {
+      "put": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "description": "Use this route to update user's profile information. You only need to send the fields you want to update, the rest of the fileds won't be updated.",
+        "summary": "Update user's profile info",
+        "requestBody": {
+          "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. Note that \"profile_pic_url\" can't be updated using this form. To update user's profile image, you need to send a PUT request to \"/user/img/upload\".",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "full_name": {
+                    "type": "string",
+                    "example": "Jack Nicholson"
+                  },
+                  "tel": {
+                    "type": "string",
+                    "example": "09120000000",
+                    "description": "If provided, it can't be empty and must contain 11 characters."
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "jack@example.com"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "example": "Sat Feb 04 2023 23:12:12 GMT+0330",
+                    "description": "If provided, you should convert your Date to string."
+                  },
+                  "credit_card_num": {
+                    "type": "string",
+                    "example": "1234123412341234",
+                    "description": "Must contain 16 characters."
+                  },
+                  "national_id": {
+                    "type": "string",
+                    "example": "0000000000",
+                    "description": "Must contain 10 characters"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The response object contains \"token\" and \"user\" object properties. If the \"tel\" field was provided in the request body, you should have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "This the JWT. You need to store it in the browser for further usecases.",
+                      "example": "a8f7d7f8ds8afd78f8ad8f78adsf8dadaf9sd8fa"
+                    },
+                    "user": {
+                      "type": "object",
+                      "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "The id of user in database.",
+                          "example": "123"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "description": "User's full name. Needed for submission actions like writing a comments.",
+                          "example": "Jack Nicholson"
+                        },
+                        "tel": {
+                          "type": "string",
+                          "description": "User's phone number.",
+                          "example": "09120000000"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "User's email.",
+                          "example": "jack@example.com"
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
+                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
+                        },
+                        "credit_card_num": {
+                          "type": "string",
+                          "description": "User's credit card number.",
+                          "example": "1234123412341234"
+                        },
+                        "national_id": {
+                          "type": "string",
+                          "description": "User's national id.",
+                          "example": "00000000000"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "This is a url to the image web address.",
+                          "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          }
+        }
+      }
     }
   },
   "components": {
