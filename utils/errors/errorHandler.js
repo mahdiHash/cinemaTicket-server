@@ -3,6 +3,12 @@ const ServerErr = require('./serverErr');
 const handler = (err, req, res, next) => {
   let name = err.name;
   let errors = [];
+  let resObj = {
+    errors,
+    headers: req.headers,
+    body: req.body,
+    parameters: req.params,
+  };
 
   // if the http status code of response is already set,
   // then it's specified by developer so just push it to
@@ -41,15 +47,15 @@ const handler = (err, req, res, next) => {
   else {
     res.status(500);
     errors.push(new ServerErr());
+    console.error({
+      err,
+      headers: resObj.headers,
+      body: resObj.body,
+      parameters: resObj.parameters,
+    });
   }
 
-  res.json({
-    errors,
-    code: res.statusCode,
-    headers: req.headers,
-    body: req.body,
-    parameters: req.params,
-  });
+  res.json(resObj);
 }
 
 module.exports = handler;
