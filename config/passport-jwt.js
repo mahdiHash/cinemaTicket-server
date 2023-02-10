@@ -19,7 +19,6 @@ const JWTStrategy = new Strategy(
       cb(new UnauthorizedErr());
     }
     else {
-      delete user.password;
       cb(null, user);
     }
   }

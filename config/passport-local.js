@@ -21,7 +21,6 @@ let strategy = new LocalStrategy(
     let isPassMatch = await bcrypt.compare(pass, user.password);
 
     if (isPassMatch) {
-      delete user.password;
       cb(null, user);
     }
     else {
