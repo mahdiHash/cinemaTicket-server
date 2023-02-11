@@ -2,6 +2,10 @@ require('dotenv').config();
 const crypto = require('crypto');
 
 function encrypt(input = "") {
+  if (input === null) {
+    return null;
+  }
+
   const cipher = crypto.createCipheriv(
     process.env.CIPHER_ALGORITHM,
     process.env.CIPHER_KEY,
@@ -12,6 +16,10 @@ function encrypt(input = "") {
 }
 
 function decrypt(input = "") {
+  if (input === null) {
+    return null;
+  }
+  
   const decipher = crypto.createDecipheriv(
     process.env.CIPHER_ALGORITHM,
     process.env.CIPHER_KEY,
