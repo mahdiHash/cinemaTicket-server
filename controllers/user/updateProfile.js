@@ -14,7 +14,7 @@ const controller = [
     inputsValidator.validateAsync(req.body)
       .then((body) => {
         // store validated body for further use (some values may be trimmed)
-        res.locals.validatedBody = body;
+        res.locals.validBody = body;
         next();
       })
       .catch(next);
@@ -24,14 +24,14 @@ const controller = [
   // look up for a duplicate phone number
   async (req, res, next) => {
     if (
-      !res.locals.validatedBody.tel ||
-      encrypt(res.locals.validatedBody.tel) === req.user.tel
+      !res.locals.validBody.tel ||
+      encrypt(res.locals.validBody.tel) === req.user.tel
     ) {
       return next();
     }
 
     let duplicate = await prisma.users.findFirst({
-      where: { tel: encrypt(res.locals.validatedBody.tel) },
+      where: { tel: encrypt(res.locals.validBody.tel) },
     });
 
     if (duplicate) {
@@ -45,31 +45,20 @@ const controller = [
 
   // authorization successful, update user's profile info
   (req, res, next) => {
-    // encrypt tel to store in db
-    if (res.locals.validatedBody.tel) {
-      res.locals.tel = encrypt(res.locals.validatedBody.tel);
+    // if undefined is passed to a field while updateing a record,
+    // prisma won't update that field 
+    let updateData = {
+      full_name: res.locals.validBody.full_name,
+      tel: encrypt(res.locals.validBody.tel) || undefined,
+      email: encrypt(res.locals.validBody.email) || undefined,
+      birthday: res.locals.validBody.birthday ? new Date(res.locals.validBody.birthday) : undefined,
+      credit_card_num: encrypt(res.locals.validBody.credit_card_num) || undefined,
+      national_id: encrypt(res.locals.validBody.national_id) || undefined,
     }
 
-    // regulate birthday for prismaClient
-    if (req.body.birthday) {
-      res.locals.birthday = new Date(res.locals.validatedBody.birthday);
-    }
-
-    // tel and birthday properties values should change if they exist. 
-    // I stored them in res.locals above and now I'm seperating the rest 
-    // of properties to be unchanged.
-    let { tel, birthday, ...restBody } = res.locals.validatedBody;
-
-    // if you pass undefined to a field while updateing a record, prisma won't
-    // update that field, so if tel and birthday aren't provided, they won't 
-    // exist in res.locals and won't be updated.
     prisma.users.update({
       where: { id: req.user.id },
-      data: {
-        tel: res.locals.tel,
-        birthday: res.locals.birthday,
-        ...restBody,
-      },
+      data: updateData, 
     })
       .then((updatedUser) => {
         let token = jwt.sign(
@@ -81,10 +70,21 @@ const controller = [
           process.env.JWT_TOKEN_SECRET
         );
 
-        updatedUser.tel = decrypt(updatedUser.tel);
+        // decrypt possible encrypted values for the client
+        let descryptedUser = {
+          id: updatedUser.id,
+          full_name: updatedUser.full_name,
+          tel: decrypt(updatedUser.tel),
+          email: decrypt(updatedUser.email),
+          birthday: updatedUser.birthday,
+          credit_card_num: decrypt(updatedUser.credit_card_num),
+          national_id: decrypt(updatedUser.national_id),
+          profile_pic_url: updatedUser.profile_pic_url,
+        }
+
         res.json({
           token,
-          user: updatedUser,
+          user: descryptedUser,
         });
       })
       .catch((err) => {
