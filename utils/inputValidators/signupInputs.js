@@ -6,7 +6,7 @@ const schema = Joi.object({
     .length(11)
     .messages({
       "any.required": "tel field must be provided.",
-      "string.length": "tel filed must contain 11 characters."
+      "string.length": "tel field must contain 11 characters."
     }),
 
   password: Joi.string()
@@ -15,9 +15,9 @@ const schema = Joi.object({
     .empty()
     .min(6)
     .messages({
-      "any.required": "password must be provided.",
-      "string.empty": "password can't be empty.",
-      "string.min": "password should contain at least 6 characters.",
+      "any.required": "password field must be provided.",
+      "string.empty": "password field can't be empty.",
+      "string.min": "password field should contain at least 6 characters.",
     }),
 
   repeatPass: Joi.ref('password'),
