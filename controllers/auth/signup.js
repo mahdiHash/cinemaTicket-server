@@ -9,14 +9,18 @@ const controller = [
   // validate inputs
   (req, res, next) => {
     inputValidator.validateAsync(req.body)
-      .then(() => next())
+      .then((body) => {
+        // store validated body for further use (some values may be trimmed)
+        res.locals.validatedBody = body;
+        next();
+      })
       .catch(next);
   },
 
   // lookup for a duplicate phone number
   async (req, res, next) => {
     let duplicate = await prisma.users.findFirst({
-      where: { tel: encrypt(req.body.tel) },
+      where: { tel: encrypt(res.locals.validatedBody.tel) },
     });
 
     if (duplicate) {
@@ -30,8 +34,8 @@ const controller = [
 
   // signup user
   async (req, res, next) => {
-    let hashedPass = await bcrypt.hash(req.body.password, 16);
-    let hashedTel = encrypt(req.body.tel);
+    let hashedPass = await bcrypt.hash(res.locals.validatedBody.password, 16);
+    let hashedTel = encrypt(res.locals.validatedBody.tel);
     let user = await prisma.users.create({
       data: {
         tel: hashedTel,
@@ -45,7 +49,7 @@ const controller = [
     );
 
     delete user.password;
-    user.tel = req.body.tel;
+    user.tel = res.locals.validatedBody.tel;
     res.json({
       token,
       user

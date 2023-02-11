@@ -8,7 +8,11 @@ const controller = [
   // validate inputs
   (req, res, next) => {
     inputValidator.validateAsync(req.body)
-      .then(() => next())
+      .then((body) => {
+        // store validated body for further use (some values may be trimmed)
+        res.locals.validatedBody = body;
+        next();
+      })
       .catch(next);
   },
 

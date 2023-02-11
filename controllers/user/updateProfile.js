@@ -12,19 +12,26 @@ const controller = [
   // validate inputs
   (req, res, next) => {
     inputsValidator.validateAsync(req.body)
-      .then(() => next())
+      .then((body) => {
+        // store validated body for further use (some values may be trimmed)
+        res.locals.validatedBody = body;
+        next();
+      })
       .catch(next);
   },
 
   // if req.body.tel is provided and is not the same as before, 
   // look up for a duplicate phone number
   async (req, res, next) => {
-    if (!req.body.tel || encrypt(req.body.tel) === req.user.tel) {
+    if (
+      !res.locals.validatedBody.tel ||
+      encrypt(res.locals.validatedBody.tel) === req.user.tel
+    ) {
       return next();
     }
 
     let duplicate = await prisma.users.findFirst({
-      where: { tel: encrypt(req.body.tel) },
+      where: { tel: encrypt(res.locals.validatedBody.tel) },
     });
 
     if (duplicate) {
@@ -39,19 +46,19 @@ const controller = [
   // authorization successful, update user's profile info
   (req, res, next) => {
     // encrypt tel to store in db
-    if (req.body.tel) {
-      res.locals.tel = encrypt(req.body.tel);
+    if (res.locals.validatedBody.tel) {
+      res.locals.tel = encrypt(res.locals.validatedBody.tel);
     }
 
     // regulate birthday for prismaClient
     if (req.body.birthday) {
-      res.locals.birthday = new Date(req.body.birthday);
+      res.locals.birthday = new Date(res.locals.validatedBody.birthday);
     }
 
     // tel and birthday properties values should change if they exist. 
     // I stored them in res.locals above and now I'm seperating the rest 
     // of properties to be unchanged.
-    let { tel, birthday, ...restBody } = req.body;
+    let { tel, birthday, ...restBody } = res.locals.validatedBody;
 
     // if you pass undefined to a field while updateing a record, prisma won't
     // update that field, so if tel and birthday aren't provided, they won't 
