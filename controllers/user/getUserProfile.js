@@ -7,8 +7,19 @@ const controller = [
 
   // authorization successful, send user's profile
   (req, res, next) => {
-    req.user.tel = decrypt(req.user.tel);
-    res.json(req.user);
+    // decrypt some vlaues for the client
+    let descryptedUser = {
+      id: updatedUser.id,
+      full_name: updatedUser.full_name,
+      tel: decrypt(updatedUser.tel),
+      email: decrypt(updatedUser.email),
+      birthday: updatedUser.birthday,
+      credit_card_num: decrypt(updatedUser.credit_card_num),
+      national_id: decrypt(updatedUser.national_id),
+      profile_pic_url: updatedUser.profile_pic_url,
+    }
+
+    res.json(descryptedUser);
   }
 ];
 
