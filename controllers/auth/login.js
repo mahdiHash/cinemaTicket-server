@@ -2,7 +2,6 @@ const passport = require('passport');
 const inputValidator = require('../../utils/inputValidators/loginInputs');
 const jwt = require('jsonwebtoken');
 const { decrypt } = require('../../utils/cipherFunc');
-const ServerErr = require('../../utils/errors/serverErr');
 
 const controller = [
   // validate inputs
