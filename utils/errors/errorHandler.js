@@ -1,7 +1,10 @@
+const { ValidationError } = require('joi');
 const ServerErr = require('./serverErr');
+const NotFoundErr = require('./notFoundErr');
+const BadRequestErr = require('./badRequestErr');
+const UnauthorizedErr = require('./unauthorized');
 
 const handler = (err, req, res, next) => {
-  let name = err.name;
   let errors = [];
   let resObj = {
     errors,
@@ -15,31 +18,38 @@ const handler = (err, req, res, next) => {
   // errors array
   if (res.statusCode && res.statusCode != 200) {
     resObj.errors.push({
-      name,
+      name: err.name,
       message: err.message ?? err.msg,
     });
   }
   // validaion err
-  else if (name == 'ValidationError') {
+  else if (err instanceof ValidationError) {
     res.status(400);
     resObj.errors = err.details.map((errObj) => {
       return {
-        name,
+        name: err.name,
         message: errObj.message,
       }
     });
   }
-  else if (name == "NotFoundErr") {
+  else if (err instanceof NotFoundErr) {
     res.status(404);
     resObj.errors.push({
-      name,
+      name: err.name,
       message: err.message,
     })
   }
-  else if (name == "UnauthorizedErr") {
+  else if (err instanceof UnauthorizedErr) {
     res.status(401);
     resObj.errors.push({
-      name,
+      name: err.name,
+      message: err.message,
+    })
+  }
+  else if (err instanceof BadRequestErr) {
+    res.status(400);
+    resObj.errors.push({
+      name: err.name,
       message: err.message,
     })
   }
