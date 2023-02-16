@@ -358,7 +358,7 @@
         },
         "responses": {
           "200": {
-            "description": "The response object contains \"token\" and \"user\" object properties. If the \"tel\" field was provided in the request body, you have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status.",
+            "description": "The response object contains \"token\" and \"user\" object properties. If the \"tel\" field was provided in the request body, you have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status).",
             "content": {
               "application/json": {
                 "schema": {
