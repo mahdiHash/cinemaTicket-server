@@ -507,7 +507,7 @@
         "in": "header"
       },
       "jwt": {
-        "description": "The value of your JWT must go inside \"Athorization\" header with the format of \"Bearer {token}\".",
+        "description": "The value of your JWT must go inside \"Authorization\" header with the format of \"Bearer {token}\".",
         "type": "http",
         "scheme": "bearer"      }
     }
