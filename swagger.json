@@ -481,7 +481,6 @@
     "schemas": {
       "Error": {
         "type": "object",
-        "required": [ "name", "code", "message" ],
         "properties": {
           "errors": {
             "type": "array",
@@ -492,7 +491,6 @@
               }
             }
           },
-          "code": { "type": "integer" },
           "headers": { "type": "object" },
           "body": { "type": "object" },
           "parameters": { "type": "object" }
