@@ -18,7 +18,8 @@ model plays {
   publish_date  DateTime? @db.Date
   review        String?
   review_writer String?
-  cover_url     String
+  cover_url     String?
+  cover_fileId  String?
   trailer_url   String
 
   play_ratings     play_ratings[]
@@ -50,6 +51,7 @@ model play_celebrities {
 
 model play_pics {
   url      String          @id
+  fileId   String
   play     plays           @relation(fields: [play_id], references: [id], onDelete: Cascade)
   play_id  Int
   position playPicPosition
@@ -90,13 +92,14 @@ model comments_dislikes {
 }
 
 model celebrities {
-  id              Int       @id @default(autoincrement())
-  full_name       String
-  role            celebRole
-  profile_pic_url String
-  birthday        DateTime? @db.Date
-  birth_city      String?
-  bio             String?
+  id                 Int       @id @default(autoincrement())
+  full_name          String
+  role               celebRole
+  profile_pic_url    String?
+  profile_pic_fileId String?
+  birthday           DateTime? @db.Date
+  birth_city         String?
+  bio                String?
 
   play_celebrities play_celebrities[]
   celebrity_pics   celebrity_pics[]
@@ -118,6 +121,7 @@ model places {
   password               String
   facilities             String?
   profile_pic_url        String?
+  profile_pic_fileId     String?
 
   place_ratings  place_ratings[]
   place_schedule place_schedule[]
@@ -147,15 +151,16 @@ model place_schedule {
 }
 
 model users {
-  id              Int       @id @default(autoincrement())
-  full_name       String?
-  tel             String    @unique
-  email           String?
-  birthday        DateTime? @db.Date
-  password        String
-  credit_card_num String?
-  national_id     String?
-  profile_pic_url String?
+  id                 Int       @id @default(autoincrement())
+  full_name          String?
+  tel                String    @unique
+  email              String?
+  birthday           DateTime? @db.Date
+  password           String
+  credit_card_num    String?
+  national_id        String?
+  profile_pic_url    String?
+  profile_pic_fileId String?
 
   ratings           play_ratings[]
   comments          comments[]
@@ -166,13 +171,14 @@ model users {
 }
 
 model admins {
-  id              Int         @id @default(autoincrement())
-  full_name       String
-  password        String
-  tel             String
-  email           String
-  profile_pic_url String?
-  access_level    adminAccess
+  id                 Int         @id @default(autoincrement())
+  full_name          String
+  password           String
+  tel                String
+  email              String
+  profile_pic_url    String?
+  profile_pic_fileId String?
+  access_level       adminAccess
 }
 
 model non_approved_places {
