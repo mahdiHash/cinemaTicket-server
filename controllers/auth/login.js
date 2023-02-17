@@ -2,6 +2,7 @@ const passport = require('passport');
 const inputValidator = require('../../utils/inputValidators/loginInputs');
 const jwt = require('jsonwebtoken');
 const { decrypt } = require('../../utils/cipherFunc');
+const { unescape } = require('../../utils/sanitizeInputs');
 
 const controller = [
   // validate inputs
@@ -28,7 +29,7 @@ const controller = [
     // decrypt some vlaues for the client
     let descryptedUser = {
       id: req.user.id,
-      full_name: req.user.full_name,
+      full_name: unescape(req.user.full_name),
       tel: decrypt(req.user.tel),
       email: decrypt(req.user.email),
       birthday: req.user.birthday,
