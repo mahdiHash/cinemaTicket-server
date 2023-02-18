@@ -475,6 +475,44 @@
           }
         }
       }
+    },
+    "/img/{imageUrl}": {
+      "get": {
+        "security": [
+          { "apikey": [ "apikey" ]}
+        ],
+        "summary": "Get image",
+        "description": "You need to provide the url into \"{baseUrl}/img\" to get the image. You can provide \"height\" and \"width\" query values to get the image at the size you want.",
+        "parameters": [
+          {
+            "name": "imageUrl",
+            "in": "path",
+            "description": "This is the url to the image given to you by server.",
+            "required": true,
+            "example": "/user/imageName"
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "allowEmptyValue": true,
+            "example": "300"
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "allowEmptyValue": true,
+            "example": "300"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted."
+          },
+          "404": {
+            "description": "Image not found."
+          }
+        }
+      }
     }
   },
   "components": {
