@@ -1,4 +1,5 @@
 const { ValidationError } = require('joi');
+const { MulterError } = require('multer');
 const ServerErr = require('./serverErr');
 const NotFoundErr = require('./notFoundErr');
 const BadRequestErr = require('./badRequestErr');
@@ -31,6 +32,13 @@ const handler = (err, req, res, next) => {
         message: errObj.message,
       }
     });
+  }
+  else if (err instanceof MulterError) {
+    res.status(400);
+    resObj.errors.push({
+      name: err.name,
+      message: err.message,
+    })
   }
   else if (err instanceof NotFoundErr) {
     res.status(404);
