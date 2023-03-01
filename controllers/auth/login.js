@@ -22,8 +22,9 @@ const controller = [
   // authentication successful
   (req, res, next) => {
     let token = jwt.sign(
-      { id: req.user.id, tel: req.user.tel, exp: 1000 * 60 * 60 * 24 * 90 }, // 90 days
+      { id: req.user.id, tel: req.user.tel },
       process.env.JWT_TOKEN_SECRET,
+      { expiresIn: '90d' },
     );
 
     // decrypt some vlaues for the client

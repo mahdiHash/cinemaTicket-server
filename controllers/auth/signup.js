@@ -44,8 +44,9 @@ const controller = [
     })
       .catch(next);
     let token = jwt.sign(
-      { id: user.id, tel: hashedTel, exp: 1000 * 60 * 60 * 24 * 90 }, // 90 days
-      process.env.JWT_TOKEN_SECRET
+      { id: user.id, tel: hashedTel },
+      process.env.JWT_TOKEN_SECRET,
+      { expiresIn: '90d' },
     );
 
     delete user.password;
