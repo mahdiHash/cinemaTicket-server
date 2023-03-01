@@ -572,6 +572,101 @@
           }
         }
       }
+    },
+    "/admin/login": {
+      "post": {
+        "security": [
+          { "apikey": [ "apikey" ]}
+        ],
+        "summary": "Admin login",
+        "description": "Use this route for admins login. The response body will contain a \"token\" and a \"admin\" field (admin info). Store the token for further use.",
+        "requestBody": {
+          "description": "The tel field must contain 11 characters.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tel": {
+                    "type": "string",
+                    "example": "09000000000"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "someRand0mPa33"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The response contains two fields: \"token\" and \"admin\". You may want to store the token for further actions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "f9d7f9d7fd9a8f7d9as87fd98af7d9sf7d9as8f7d98s7af9d8s7fasf9da8s7fd987f9s8da7f98d7s9f"
+                    },
+                    "admin": {
+                      "type": "object",
+                      "properties": {
+                        "id": { 
+                          "type": "integer",
+                          "example": 123 
+                        },
+                        "access_level": {
+                          "type": "string",
+                          "description": "Possible values: super, play, comment"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "محمد کمالی"
+                        },
+                        "tel": {
+                          "type": "string",
+                          "example": "09000000000"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "myemail@example.com"
+                        },
+                        "national_id": {
+                          "type": "string",
+                          "example": "0123456789"
+                        },
+                        "home_tel": {
+                          "type": "string",
+                          "example": "01234567890"
+                        },
+                        "full_address": {
+                          "type": "string",
+                          "example": "Iran, Tehran, Azadi sq."
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                          "example": "/path/to/image"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The \"tel\" or \"password\" field is incorrect. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "400": {
+            "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
