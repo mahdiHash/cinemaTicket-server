@@ -174,8 +174,11 @@ model admins {
   id                 Int         @id @default(autoincrement())
   full_name          String
   password           String
-  tel                String
-  email              String
+  tel                String      @unique
+  email              String      @unique
+  national_id        String      @unique
+  home_tel           String
+  full_address       String
   profile_pic_url    String?
   profile_pic_fileId String?
   access_level       adminAccess
