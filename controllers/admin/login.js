@@ -19,7 +19,7 @@ const controller = [
     let token = jwt.sign(
       { id: req.user.id, tel: req.user.tel },
       process.env.JWT_TOKEN_SECRET,
-      { expiresIn: '1d'},
+      { expiresIn: '7d'},
     );
 
     res.json({
