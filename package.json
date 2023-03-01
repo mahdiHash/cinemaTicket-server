@@ -11,8 +11,8 @@
     "devstart": "dotenv -e .env.dev node ./server.js"
   },
   "dependencies": {
-    "@prisma/client": "^4.9.0",
-    "@prisma/engines": "^4.9.0",
+    "@prisma/client": "^4.10.1",
+    "@prisma/engines": "^4.10.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

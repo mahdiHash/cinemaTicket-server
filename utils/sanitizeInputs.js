@@ -1,6 +1,8 @@
-// taken from: https://github.com/validatorjs/validator.js/blob/master/src/lib/escape.js
+function escape(str = '') {
+  if (str === null) {
+    return null;
+  }
 
-function escape(str) {
   return str.replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#x27;')
@@ -11,7 +13,11 @@ function escape(str) {
     .replace(/`/g, '&#96;');
 }
 
-function unescape(str) {
+function unescape(str = '') {
+  if (str === null) {
+    return null;
+  }
+
   return (str.replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#x27;/g, "'")

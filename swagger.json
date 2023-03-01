@@ -317,7 +317,7 @@
         "description": "Use this route to update user's profile information. You only need to send the fields you want to update, the rest of the fileds won't be updated.",
         "summary": "Update user's profile info",
         "requestBody": {
-          "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. Note that \"profile_pic_url\" can't be updated using this form. To update user's profile image, you need to send a PUT request to \"/user/img/upload\".",
+          "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. Note that \"profile_pic_url\" can't be updated using this form. To update user's profile image, you need to send a PUT request to \"/user/profilePic/upload\".",
           "content": {
             "body": {
               "schema": {
@@ -472,6 +472,103 @@
           },
           "401": {
             "description": "The JWT you provided is not valid. No error message will be provided."
+          }
+        }
+      }
+    },
+    "/user/profilePic/upload": {
+      "put": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Upload user's profile pic",
+        "description": "The file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp. If the user has already uploaded a photo, it'll be deleted.",
+        "requestBody": {
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "img": {
+                    "type": "image file",
+                    "description": "The image file to upload."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "If the upload is successful, the link to the image will be sent to you.",
+            "content": {
+              "application/json": {
+                "example": "localhost:12000/img/user-image-name.jpg"
+              }
+            }
+          },
+          "400": {
+            "description": "The file you uploaded is not valid against one of the specified limitations. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
+    },
+    "/user/profilePic/remove": {
+      "delete": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Remove user's profile pic",
+        "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
+        "responses": {
+          "200": {
+            "description": "The profile pic is successfully removed."
+          },
+          "400": {
+            "description": "User has not uploaded any profile pic. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          }
+        }
+      }
+    },
+    "/img/{imageUrl}": {
+      "get": {
+        "security": [
+          { "apikey": [ "apikey" ]}
+        ],
+        "summary": "Get image",
+        "description": "You need to provide the url into \"{baseUrl}/img\" to get the image. You can provide \"height\" and \"width\" query values to get the image at the size you want.",
+        "parameters": [
+          {
+            "name": "imageUrl",
+            "in": "path",
+            "description": "This is the url to the image given to you by server.",
+            "required": true,
+            "example": "/user/imageName"
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "allowEmptyValue": true,
+            "example": "300"
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "allowEmptyValue": true,
+            "example": "300"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted."
+          },
+          "404": {
+            "description": "Image not found."
           }
         }
       }

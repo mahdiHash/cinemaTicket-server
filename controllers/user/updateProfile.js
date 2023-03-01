@@ -2,6 +2,7 @@ const prisma = require('../../config/prismaConfig');
 const passport = require('../../config/passportConfig');
 const inputsValidator = require('../../utils/inputValidators/updateUserProfileInputs');
 const { encrypt, decrypt } = require('../../utils/cipherFunc');
+const { escape, unescape } = require('../../utils/sanitizeInputs');
 const jwt = require('jsonwebtoken');
 const BadRequestErr = require('../../utils/errors/badRequestErr');
 
@@ -48,7 +49,7 @@ const controller = [
     // if undefined is passed to a field while updateing a record,
     // prisma won't update that field 
     let updateData = {
-      full_name: res.locals.validBody.full_name,
+      full_name: escape(res.locals.validBody.full_name) || undefined,
       tel: encrypt(res.locals.validBody.tel) || undefined,
       email: encrypt(res.locals.validBody.email) || undefined,
       birthday: res.locals.validBody.birthday ? new Date(res.locals.validBody.birthday) : undefined,
@@ -73,7 +74,7 @@ const controller = [
         // decrypt possible encrypted values for the client
         let descryptedUser = {
           id: updatedUser.id,
-          full_name: updatedUser.full_name,
+          full_name: unescape(updatedUser.full_name),
           tel: decrypt(updatedUser.tel),
           email: decrypt(updatedUser.email),
           birthday: updatedUser.birthday,

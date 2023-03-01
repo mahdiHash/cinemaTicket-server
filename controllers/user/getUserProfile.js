@@ -1,5 +1,6 @@
 const passport = require('../../config/passportConfig');
 const { decrypt } = require('../../utils/cipherFunc');
+const { unescape } = require('../../utils/sanitizeInputs');
 
 const controller = [
   // authorization
@@ -9,14 +10,14 @@ const controller = [
   (req, res, next) => {
     // decrypt some vlaues for the client
     let descryptedUser = {
-      id: updatedUser.id,
-      full_name: updatedUser.full_name,
-      tel: decrypt(updatedUser.tel),
-      email: decrypt(updatedUser.email),
-      birthday: updatedUser.birthday,
-      credit_card_num: decrypt(updatedUser.credit_card_num),
-      national_id: decrypt(updatedUser.national_id),
-      profile_pic_url: updatedUser.profile_pic_url,
+      id: req.user.id,
+      full_name: unescape(req.user.full_name),
+      tel: decrypt(req.user.tel),
+      email: decrypt(req.user.email),
+      birthday: req.user.birthday,
+      credit_card_num: decrypt(req.user.credit_card_num),
+      national_id: decrypt(req.user.national_id),
+      profile_pic_url: req.user.profile_pic_url,
     }
 
     res.json(descryptedUser);
