@@ -124,7 +124,7 @@
                         },
                         "profile_pic_url": {
                           "type": "string",
-                          "description": "This is a url to an image web address.",
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
                           "example": null
                         }
                       }
@@ -222,8 +222,8 @@
                         },
                         "profile_pic_url": {
                           "type": "string",
-                          "description": "This is a url to the image web address.",
-                          "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                          "example": "/path/to/image"
                         }
                       }
                     }
@@ -294,8 +294,8 @@
                     },
                     "profile_pic_url": {
                       "type": "string",
-                      "description": "This is a url to the image web address.",
-                      "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                      "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                      "example": "/path/to/image"
                     }
                   }
                 }
@@ -410,8 +410,8 @@
                         },
                         "profile_pic_url": {
                           "type": "string",
-                          "description": "This is a url to the image web address.",
-                          "example": "https://ik.imagekit.io/cinematicketClone/default-image.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1673641046262"
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                          "example": "/path/to/image"
                         }
                       }
                     }
