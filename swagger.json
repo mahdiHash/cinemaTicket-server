@@ -731,6 +731,128 @@
           }
         }
       }
+    },
+    "/admin/create": {
+      "post": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Create admin by super admin",
+        "description": "Only the admins with \"super\" access level can send a request to this route.",
+        "requestBody": {
+          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values.",
+          "content": {
+            "body": {
+              "schema": {
+                "properties": {
+                  "access_level": {
+                    "type": "string",
+                    "description": "Allowed values: play and comment.",
+                    "example": "play"
+                  },
+                  "full_name": {
+                    "type": "string",
+                    "example": "محمد کمالی"
+                  },
+                  "tel": {
+                    "type": "string",
+                    "description": "This field must contain 11 characters.",
+                    "example": "09000000000"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password must contain at least 8 characters.",
+                    "example": "someRand0mPa33"
+                  },
+                  "repeatPass": {
+                    "type": "string",
+                    "description": "This field must be the same as \"password\".",
+                    "example": "someRand0mPa33"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "myemail@example.com"
+                  },
+                  "national_id": {
+                    "type": "string",
+                    "description": "This field must contain 10 characters.",
+                    "example": "0123456789"
+                  },
+                  "home_tel": {
+                    "type": "string",
+                    "description": "This field must contain 11 characters.",
+                    "example": "01234567890"
+                  },
+                  "full_address": {
+                    "type": "string",
+                    "description": "This field must contain at least 10 characters.",
+                    "example": "ایران، تهران، میدان آزادی"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "\"profile_pic_url\" will be null if the admin hasn't uploaded any image.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 123 
+                    },
+                    "access_level": {
+                      "type": "string",
+                      "description": "Possible values: super, play, comment",
+                      "example": "play"
+                    },
+                    "full_name": {
+                      "type": "string",
+                      "example": "محمد کمالی"
+                    },
+                    "tel": {
+                      "type": "string",
+                      "example": "09000000000"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "myemail@example.com"
+                    },
+                    "national_id": {
+                      "type": "string",
+                      "example": "0123456789"
+                    },
+                    "home_tel": {
+                      "type": "string",
+                      "example": "01234567890"
+                    },
+                    "full_address": {
+                      "type": "string",
+                      "example": "ایران، تهران، میدان آزادی"
+                    },
+                    "profile_pic_url": {
+                      "type": "string",
+                      "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                      "example": "/path/to/image"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
