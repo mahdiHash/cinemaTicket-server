@@ -501,10 +501,10 @@
         },
         "responses": {
           "200": {
-            "description": "If the upload is successful, the link to the image will be sent to you.",
+            "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
             "content": {
               "application/json": {
-                "example": "localhost:12000/img/user-image-name.jpg"
+                "example": "/path/to/image"
               }
             }
           },
