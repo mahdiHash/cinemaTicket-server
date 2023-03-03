@@ -853,6 +853,53 @@
           }
         }
       }
+    },
+    "/admin/resetPass": {
+      "put": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Reset admin password",
+        "description": "If the process is successful, an OK 200 response will be sent to you with no additional information.",
+        "requestBody": {
+          "description": "\"newPass\" and \"repeatNewPass\" fields must be the same and contain at least 8 characters.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldPass": {
+                    "type": "string",
+                    "example": "someRand0mPa33"
+                  },
+                  "newPass": {
+                    "type": "string",
+                    "description": "At least 8 characters.",
+                    "example": "newRand0mPa33"
+                  },
+                  "repeatNewPass": {
+                    "type": "string",
+                    "description": "The same as \"newPass\" field.",
+                    "example": "newRand0mPa33"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
