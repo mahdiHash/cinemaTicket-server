@@ -900,6 +900,47 @@
           }
         }
       }
+    },
+    "/admin/profilePic/upload": {
+      "put": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Upload admin's profile pic",
+        "description": "The file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp. If the user has already uploaded a photo, it'll be deleted.",
+        "requestBody": {
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "img": {
+                    "type": "image file",
+                    "description": "The image file to upload."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{basaeURL}/img/{imageUrl}\".",
+            "content": {
+              "application/json": {
+                "example": "/path/to/image"
+              }
+            }
+          },
+          "400": {
+            "description": "The file you uploaded is not valid against one of the specified limitations. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
