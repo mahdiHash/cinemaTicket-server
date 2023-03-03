@@ -941,6 +941,27 @@
           }
         }
       }
+    },
+    "/admin/profilePic/remove": {
+      "delete": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Remove admin's profile pic",
+        "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
+        "responses": {
+          "200": {
+            "description": "The profile pic is successfully removed."
+          },
+          "400": {
+            "description": "User has not uploaded any profile pic. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
