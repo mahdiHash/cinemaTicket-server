@@ -6,17 +6,6 @@ const bcrypt = require('bcryptjs');
 const { encrypt } = require('../../utils/cipherFunc');
 
 const controller = [
-  // input validation
-  (req, res, next) => {
-    inputValidator.validateAsync(req.body)
-      .then((body) => {
-        // store validated body for further use (some values may be trimmed)
-        res.locals.validBody = body;
-        next();
-      })
-      .catch(next);
-  },
-
   // authorization
   passport.authenticate('adminJwt', { session: false }),
 
@@ -27,6 +16,17 @@ const controller = [
     }
 
     next();
+  },
+
+  // input validation
+  (req, res, next) => {
+    inputValidator.validateAsync(req.body)
+      .then((body) => {
+        // store validated body for further use (some values may be trimmed)
+        res.locals.validBody = body;
+        next();
+      })
+      .catch(next);
   },
 
   async (req, res, next) => {
