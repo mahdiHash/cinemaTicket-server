@@ -26,24 +26,20 @@ const controller = [
       folder: 'user',
       useUniqueFileName: false, // set no unique postfix so if user has already uploaded a photo, it gets overwritten
     })
-      .then(async (result) => {
+      .then(async (fileInfo) => {
         fileReadStream.destroy();
-        await prisma.users.update({
+        fsPromise.rm(req.file.path);
+        prisma.users.update({
           where: { id: req.user.id },
           data: {
-            profile_pic_fileId: result.fileId,
-            profile_pic_url: result.filePath,
+            profile_pic_fileId: fileInfo.fileId,
+            profile_pic_url: fileInfo.filePath,
           }
         })
           .then(() => {
-            fsPromise.rm(req.file.path);
-            res.json(result.filePath);
+            res.json(fileInfo.filePath);
           })
-          .catch((err) => {
-            fsPromise.rm(req.file.path)
-              .then(() => next(err))
-              .catch(next);
-          });
+          .catch(next);
       })
       .catch((err) => {
         fsPromise.rm(req.file.path)
