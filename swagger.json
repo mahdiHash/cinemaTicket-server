@@ -962,6 +962,38 @@
           }
         }
       }
+    },
+    "/admin/userProfile/{user_id}/removeProfilePic": {
+      "get": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Remove a user's profile pic by super admin",
+        "description": "Super admins can remove users profile pic using this route. If the process is successfull, an OK 200 response will be given to the client.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The profile pic is successfully removed."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "404": {
+            "description": "No user with the given user_id is found. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
