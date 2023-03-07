@@ -964,7 +964,7 @@
       }
     },
     "/admin/userProfile/{user_id}/removeProfilePic": {
-      "get": {
+      "delete": {
         "security": [
           { "apikey": [ "apikey" ]},
           { "jwt": [ "jwt" ]}
@@ -997,6 +997,10 @@
     },
     "/admin/userProfile/{user_id}/setDefaultFullName": {
       "put": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
         "summary": "Set user's full name to a default value",
         "description": "This route can be used by super admins to set a default value (کاربر سینماتیکت) to a user's full name. If the process is successful, the default value will be given to the client.",
         "parameters": [
@@ -1025,7 +1029,7 @@
           "404": {
             "description": "No user with the given user_id is found. More information on the error will be sent to you on response. You can see the schema down this page."
           }
-        }
+        }        
       }
     },
     "/admin/update/{admin_id}": {
