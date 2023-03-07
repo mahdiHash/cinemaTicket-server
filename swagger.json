@@ -964,7 +964,7 @@
       }
     },
     "/admin/userProfile/{user_id}/removeProfilePic": {
-      "get": {
+      "delete": {
         "security": [
           { "apikey": [ "apikey" ]},
           { "jwt": [ "jwt" ]}
