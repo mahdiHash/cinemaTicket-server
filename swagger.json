@@ -970,7 +970,7 @@
           { "jwt": [ "jwt" ]}
         ],
         "summary": "Remove a user's profile pic by super admin",
-        "description": "Super admins can remove users profile pic using this route. If the process is successfull, an OK 200 response will be given to the client.",
+        "description": "Super admins can remove users profile pic using this route. If the process is successful, an OK 200 response will be given to the client.",
         "parameters": [
           {
             "name": "user_id",
@@ -997,10 +997,6 @@
     },
     "/admin/userProfile/{user_id}/setDefaultFullName": {
       "put": {
-        "security": [
-          { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
-        ],
         "summary": "Set user's full name to a default value",
         "description": "This route can be used by super admins to set a default value (کاربر سینماتیکت) to a user's full name. If the process is successful, the default value will be given to the client.",
         "parameters": [
@@ -1029,7 +1025,71 @@
           "404": {
             "description": "No user with the given user_id is found. More information on the error will be sent to you on response. You can see the schema down this page."
           }
-        }        
+        }
+      }
+    },
+    "/admin/update/{admin_id}": {
+      "put": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Update an admin's info by super admin.",
+        "description": "The admin_id of this route is optional: if it's present, that admin's profile info will be updated, but if it's not, the current logged in super admin's profile info will be updated. Super admins can't update other super admins profile info.",
+        "requestBody": {
+          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values.",
+          "content": {
+            "body": {
+              "schema": {
+                "properties": {
+                  "access_level": {
+                    "type": "string",
+                    "description": "Allowed values: play and comment. In case of a super admin, this field will be ignored.",
+                    "example": "play"
+                  },
+                  "full_name": {
+                    "type": "string",
+                    "example": "محمد کمالی"
+                  },
+                  "tel": {
+                    "type": "string",
+                    "description": "This field must contain 11 characters.",
+                    "example": "09000000000"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password must contain at least 8 characters.",
+                    "example": "someRand0mPa33"
+                  },
+                  "repeatPass": {
+                    "type": "string",
+                    "description": "This field must be the same as \"password\".",
+                    "example": "someRand0mPa33"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "myemail@example.com"
+                  },
+                  "national_id": {
+                    "type": "string",
+                    "description": "This field must contain 10 characters.",
+                    "example": "0123456789"
+                  },
+                  "home_tel": {
+                    "type": "string",
+                    "description": "This field must contain 11 characters.",
+                    "example": "01234567890"
+                  },
+                  "full_address": {
+                    "type": "string",
+                    "description": "This field must contain at least 10 characters.",
+                    "example": "ایران، تهران، میدان آزادی"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
