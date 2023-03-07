@@ -2,6 +2,7 @@ const prisma = require('../../config/prismaConfig');
 const passport = require('../../config/passportConfig');
 const ForbiddenErr = require('../../utils/errors/forbiddenErr');
 const inputValidator = require('../../utils/inputValidators/createAdmin');
+const superAdminAuth = require('../../utils/middleware/superAdminAuth');
 const bcrypt = require('bcryptjs');
 const { encrypt } = require('../../utils/cipherFunc');
 
@@ -9,14 +10,7 @@ const controller = [
   // authorization
   passport.authenticate('adminJwt', { session: false }),
 
-  // super admin authorization
-  (req, res, next) => {
-    if (req.user.access_level !== 'super') {
-      return next(new ForbiddenErr('You are not authorized to create admins.'));
-    }
-
-    next();
-  },
+  superAdminAuth,
 
   // input validation
   (req, res, next) => {
