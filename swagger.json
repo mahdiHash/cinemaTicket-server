@@ -994,6 +994,43 @@
           }
         }
       }
+    },
+    "/admin/userProfile/{user_id}/setDefaultFullName": {
+      "put": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Set user's full name to a default value",
+        "description": "This route can be used by super admins to set a default value (کاربر سینماتیکت) to a user's full name. If the process is successful, the default value will be given to the client.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The full name is successfully set to default value.",
+            "content": {
+              "application/json": {
+                "example": "کاربر سینماتیکت"
+              }
+            }
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "404": {
+            "description": "No user with the given user_id is found. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }        
+      }
     }
   },
   "components": {
