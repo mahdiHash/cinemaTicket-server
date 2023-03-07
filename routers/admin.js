@@ -6,6 +6,7 @@ const resetPass = require('../controllers/admin/resetPass');
 const uploadProfilePic = require('../controllers/admin/uploadProfilePic');
 const removeProfilePic = require('../controllers/admin/removeProfilePic');
 const removeUserProfilePic = require('../controllers/admin/removeUserProfilePic');
+const setUserDefaultFullName = require('../controllers/admin/setUserDefaultFullName');
 
 router.post('/login', login);
 
@@ -20,5 +21,7 @@ router.put('/profilePic/upload', uploadProfilePic);
 router.delete('/profilePic/remove', removeProfilePic);
 
 router.delete('/userProfile/:userId/removeProfilePic', removeUserProfilePic);
+
+router.put('/userProfile/:userId/setDefaultFullName', setUserDefaultFullName);
 
 module.exports = router;
