@@ -2,7 +2,7 @@ const prisma = require('../../config/prismaConfig');
 const ApiKeyErr = require('../../utils/errors/apikeyErr');
 
 const middleware = (req, res, next) => {
-  let key = req.headers.apikey;
+  let key = req.headers.apikey ?? '';
 
   prisma.api_keys.findUnique({ where: { key } })
     .then((record) => {
