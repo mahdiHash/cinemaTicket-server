@@ -53,7 +53,7 @@ const controller = [
       where: { id: targetAdmin.id },
       data: targetAdmin,
     })
-      .then(() => {
+      .then((admin) => {
         res.json({
           id: req.params.adminId,
           access_level: res.locals.validBody.access_level,
