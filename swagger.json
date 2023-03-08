@@ -668,14 +668,22 @@
         }
       }
     },
-    "/admin/profile": {
+    "/admin/profile/{admin_id}": {
       "get": {
         "security": [
           { "apikey": [ "apikey" ]},
           { "jwt": [ "jwt" ]}
         ],
         "summary": "Get admin's profile",
-        "description": "JWT must be provided.",
+        "description": "JWT must be provided. Normal admins can't get other admins profile info.",
+        "parameters": [
+          {
+            "name": "admin_id",
+            "in": "path",
+            "example": 123,
+            "description": "This parameter is optional: if it's present, that admin's profile info will be sent to the client, but if it's not, the current logged in admin's profile info will be sent."
+          }
+        ],
         "responses": {
           "200": {
             "description": "\"profile_pic_url\" will be null if the admin hasn't uploaded any image.",
