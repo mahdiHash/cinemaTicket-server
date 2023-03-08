@@ -1,24 +1,15 @@
 const prisma = require('../../config/prismaConfig');
 const passport = require('../../config/passportConfig');
 const inputValidator = require('../../utils/inputValidators/updateAdmin');
+const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const { encrypt } = require('../../utils/cipherFunc');
 
 const controller = [
   // authorization
   passport.authenticate('adminJwt', { session: false }),
 
-  // input validation
-  (req, res, next) => {
-    inputValidator
-      .validateAsync(req.body)
-      .then((body) => {
-        // store validated body for further use (some values may be trimmed)
-        res.locals.validBody = body;
-        next();
-      })
-      .catch(next);
-  },
-
+  storeValidatedInputs(inputValidator),
+  
   async (req, res, next) => {
     let upAdmin = {
       id: req.user.id,

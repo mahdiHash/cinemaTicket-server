@@ -1,6 +1,7 @@
 const prisma = require('../../config/prismaConfig');
 const passport = require('../../config/passportConfig');
 const inputsValidator = require('../../utils/inputValidators/updateUserProfileInputs');
+const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const { encrypt, decrypt } = require('../../utils/cipherFunc');
 const { escape, unescape } = require('../../utils/sanitizeInputs');
 const jwt = require('jsonwebtoken');
@@ -10,17 +11,8 @@ const controller = [
   // authorization
   passport.authenticate('jwt', { session: false }),
 
-  // validate inputs
-  (req, res, next) => {
-    inputsValidator.validateAsync(req.body)
-      .then((body) => {
-        // store validated body for further use (some values may be trimmed)
-        res.locals.validBody = body;
-        next();
-      })
-      .catch(next);
-  },
-
+  storeValidatedInputs(inputsValidator),
+  
   // if req.body.tel is provided and is not the same as before, 
   // look up for a duplicate phone number
   async (req, res, next) => {

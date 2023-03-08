@@ -1,16 +1,12 @@
 const passport = require('../../config/passportConfig');
 const inputValidator = require('../../utils/inputValidators/adminLogin');
+const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const jwt = require('jsonwebtoken');
 const { decrypt } = require('../../utils/cipherFunc');
 
 const controller = [
-  // input validation
-  (req, res, next) => {
-    inputValidator.validateAsync(req.body)
-      .then(() => next())
-      .catch(next);
-  },
-
+  storeValidatedInputs(inputValidator),
+  
   // authentication
   passport.authenticate('adminLocal', { session: false }),
 

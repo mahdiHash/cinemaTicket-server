@@ -1,6 +1,7 @@
 const passport = require('../../config/passportConfig');
 const prisma = require('../../config/prismaConfig');
 const inputsValidator = require('../../utils/inputValidators/resetPass');
+const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const bcrypt = require('bcryptjs');
 const UnauthorizedErr = require('../../utils/errors/unauthorized');
 
@@ -8,17 +9,8 @@ const controller = [
   // authorization
   passport.authenticate('jwt', { session: false }),
 
-  // validate inputs
-  (req, res, next) => {
-    inputsValidator.validateAsync(req.body)
-      .then((body) => {
-        // store validated body for further use (some values may be trimmed)
-        res.locals.validatedBody = body;
-        next();
-      })
-      .catch(next);
-  },
-
+  storeValidatedInputs(inputsValidator),
+  
   // check for password being correct and if it is, change it
   async (req, res, next) => {
     let isMatch = await bcrypt.compare(

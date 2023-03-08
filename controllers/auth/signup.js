@@ -1,22 +1,14 @@
 const prisma = require('../../config/prismaConfig');
 const inputValidator = require('../../utils/inputValidators/signupInputs');
+const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { encrypt } = require('../../utils/cipherFunc');
 const BadRequestErr = require('../../utils/errors/badRequestErr');
 
 const controller = [
-  // validate inputs
-  (req, res, next) => {
-    inputValidator.validateAsync(req.body)
-      .then((body) => {
-        // store validated body for further use (some values may be trimmed)
-        res.locals.validatedBody = body;
-        next();
-      })
-      .catch(next);
-  },
-
+  storeValidatedInputs(inputValidator),
+  
   // lookup for a duplicate phone number
   async (req, res, next) => {
     let duplicate = await prisma.users.findFirst({

@@ -1,21 +1,13 @@
 const passport = require('passport');
 const inputValidator = require('../../utils/inputValidators/loginInputs');
+const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const jwt = require('jsonwebtoken');
 const { decrypt } = require('../../utils/cipherFunc');
 const { unescape } = require('../../utils/sanitizeInputs');
 
 const controller = [
-  // validate inputs
-  (req, res, next) => {
-    inputValidator.validateAsync(req.body)
-      .then((body) => {
-        // store validated body for further use (some values may be trimmed)
-        res.locals.validatedBody = body;
-        next();
-      })
-      .catch(next);
-  },
-
+  storeValidatedInputs(inputValidator),
+  
   // authenticate user
   passport.authenticate('local', { session: false }),
 
