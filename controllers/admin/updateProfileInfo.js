@@ -1,10 +1,7 @@
 const prisma = require('../../config/prismaConfig');
 const passport = require('../../config/passportConfig');
 const inputValidator = require('../../utils/inputValidators/updateAdmin');
-const NotFoundErr = require('../../utils/errors/notFoundErr');
-const BadRequestErr = require('../../utils/errors/badRequestErr');
-const ForbiddenErr = require('../../utils/errors/forbiddenErr');
-const { encrypt, decrypt } = require('../../utils/cipherFunc');
+const { encrypt } = require('../../utils/cipherFunc');
 
 const controller = [
   // authorization
@@ -23,33 +20,9 @@ const controller = [
   },
 
   async (req, res, next) => {
-    if (req.query.admin_id && !isFinite(req.query.admin_id)) {
-      new BadRequestErr('admin id not valid.');
-    }
-
-    let targetAdmin = req.query.admin_id
-      ? await prisma.admins.findUnique({
-        where: { id: +req.query.admin_id },
-      })
-        .catch(next)
-      : req.user;
-
-    if (!targetAdmin) {
-      return next(new NotFoundErr('admin not found.'));
-    }
-
-    if (
-      (req.query.admin_id && req.user.access_level !== 'super') || // user is not super admin to modify others admins info
-      (targetAdmin.id !== req.user.id && targetAdmin.access_level === 'super') // user is super admin and can't modify other super admins info
-    ) {
-      return next(new ForbiddenErr());
-    }
-
-    targetAdmin = {
-      id: req.query.admin_id ? +req.query.admin_id : req.user.id,
-      access_level: req.query.admin_id
-        ? res.locals.validBody.access_level
-        : req.user.access_level,
+    let upAdmin = {
+      id: req.user.id,
+      access_level: req.user.access_level,
       full_name: res.locals.validBody.full_name,
       tel: encrypt(res.locals.validBody.tel),
       email: encrypt(res.locals.validBody.email),
@@ -59,19 +32,19 @@ const controller = [
     };
 
     prisma.admins.update({
-      where: { id: targetAdmin.id },
-      data: targetAdmin,
+      where: { id: upAdmin.id },
+      data: upAdmin,
     })
       .then((admin) => {
         res.json({
-          id: admin.id,
-          access_level: admin.access_level,
-          full_name: admin.full_name,
-          tel: decrypt(admin.tel),
-          email: decrypt(admin.email),
-          national_id: decrypt(admin.national_id),
-          home_tel: decrypt(admin.home_tel),
-          full_address: decrypt(admin.full_address),
+          id: req.user.id,
+          access_level: res.locals.validBody.access_level,
+          full_name: res.locals.validBody.full_name,
+          tel: res.locals.validBody.tel,
+          email: res.locals.validBody.email,
+          national_id: res.locals.validBody.national_id,
+          home_tel: res.locals.validBodyadmin.home_tel,
+          full_address: res.locals.validBody.full_address,
           profile_pic_url: admin.profile_pic_url,
         });
       })
