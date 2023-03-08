@@ -854,7 +854,7 @@
         }
       }
     },
-    "/admin/update/?admin_id={id}": {
+    "/admin/update/{admin_id}": {
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
@@ -865,9 +865,9 @@
         "parameters": [
           {
             "name": "admin_id",
-            "in": "query",
+            "in": "path",
             "example": 123,
-            "description": "The admin_id of this route is optional: if it's present, that admin's profile info will be updated, but if it's not, the current logged in super admin's profile info will be updated."
+            "description": "The admin_id of this route is optional: if it's present, that admin's profile info will be updated, but if it's not, the current logged in super admin's profile info will be updated. Super admins can update normal admins profie info."
           }
         ],
         "requestBody": {
