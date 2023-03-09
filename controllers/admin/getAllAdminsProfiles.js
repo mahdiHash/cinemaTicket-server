@@ -12,7 +12,7 @@ const controller = [
   async (req, res, next) => {
     let admins = await prisma.admins.findMany({
       where: { id: { not: req.user.id }},
-      orderBy: { access_level: 'asc' },
+      orderBy: [ { access_level: 'asc'}, { full_name: 'asc' } ],
     });
 
     for (let admin of admins) {
