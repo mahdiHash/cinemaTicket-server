@@ -11,6 +11,7 @@ const uploadProfilePic = require('../controllers/admin/uploadProfilePic');
 const removeProfilePic = require('../controllers/admin/removeProfilePic');
 const removeUserProfilePic = require('../controllers/admin/removeUserProfilePic');
 const setUserDefaultFullName = require('../controllers/admin/setUserDefaultFullName');
+const removeNormalAdmin = require('../controllers/admin/removeNormalAdmin');
 
 router.post('/login', login);
 
@@ -20,11 +21,13 @@ router.get('/profile/:adminId', getOtherAdminsProfile);
 
 router.get('/profile', getProfile);
 
-router.post('/create', createAdmin)
+router.post('/create', createAdmin);
 
 router.put('/update/:adminId', updateNormalAdminProfileInfo);
 
-router.put('/update', updateProfileInfo)
+router.put('/update', updateProfileInfo);
+
+router.delete('/remove/:adminId', removeNormalAdmin);
 
 router.put('/resetPass', resetPass);
 

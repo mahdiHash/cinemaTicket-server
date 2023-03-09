@@ -1054,6 +1054,38 @@
         }
       }
     },
+    "/admin/remove/{admin_id}": {
+      "delete": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Remove a normal admin by super admin",
+        "description": "Only super admins can use this route, and they can't remove other super admins. If the operation is successful, you'll get an OK 200 response.",
+        "parameters": [
+          {
+            "name": "admin_id",
+            "in": "path",
+            "example": 123,
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The admin is successfully removed. No additional information will be provided."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "404": {
+            "description": "No admin with the given admin_id is found. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
+    },
     "/admin/resetPass": {
       "put": {
         "security": [
