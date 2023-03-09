@@ -4,6 +4,7 @@ const ServerErr = require('./serverErr');
 const NotFoundErr = require('./notFoundErr');
 const BadRequestErr = require('./badRequestErr');
 const UnauthorizedErr = require('./unauthorized');
+const ForbiddenErr = require('./forbiddenErr');
 
 const handler = (err, req, res, next) => {
   let errors = [];
@@ -35,6 +36,13 @@ const handler = (err, req, res, next) => {
   }
   else if (err instanceof MulterError) {
     res.status(400);
+    resObj.errors.push({
+      name: err.name,
+      message: err.message,
+    })
+  }
+  else if (err instanceof ForbiddenErr) {
+    res.status(403);
     resObj.errors.push({
       name: err.name,
       message: err.message,
