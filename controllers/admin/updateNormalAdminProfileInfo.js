@@ -6,6 +6,7 @@ const NotFoundErr = require('../../utils/errors/notFoundErr');
 const BadRequestErr = require('../../utils/errors/badRequestErr');
 const { encrypt } = require('../../utils/cipherFunc');
 const superAdminAuth = require('../../utils/middleware/superAdminAuth');
+const ForbiddenErr = require('../../utils/errors/forbiddenErr');
 
 const controller = [
   // authorization
@@ -27,6 +28,10 @@ const controller = [
 
     if (!targetAdmin) {
       return next(new NotFoundErr('admin not found.'));
+    }
+
+    if (targetAdmin.access_level === 'super') {
+      return next(new ForbiddenErr('super admins can\'t update other super admins info.'));
     }
 
     targetAdmin = {
