@@ -189,13 +189,15 @@ model admins {
 }
 
 model non_approved_places {
-  id         Int       @id @default(autoincrement())
-  owner      users     @relation(fields: [owner_id], references: [id], onDelete: Restrict)
+  id         Int                        @id @default(autoincrement())
+  owner      users                      @relation(fields: [owner_id], references: [id], onDelete: Restrict)
   owner_id   Int
   name       String
   type       placeType
   license_id String
   address    String
+  status     non_approved_places_status
+  code       String
 }
 
 model tickets {
@@ -282,4 +284,10 @@ enum reportType {
   comment
   cinema
   theater
+}
+
+enum non_approved_places_status {
+  waiting
+  approved
+  denied
 }
