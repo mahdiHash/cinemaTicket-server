@@ -1263,6 +1263,60 @@
           }
         }        
       }
+    },
+    "/place/register": {
+      "post": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Register a new place by user",
+        "description": "The users can register for their licensed cinema/theater using this route.",
+        "requestBody": {
+          "description": "All the fields must be provided.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the place to register."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Only two values are valid: cinema and theater"
+                  },
+                  "license_id": {
+                    "type": "string",
+                    "description": "The official license id of the place. It has to have 10 characters."
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Full address of the place. Must contain at least 10 characters."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "If the process is successful, a code will be returned to the client. This code has to be written down and can be used to track the process via \"/place/registerStat/{code}\" route.",
+            "content": {
+              "application/json": {
+                "example": "XF2US0AD"
+              }
+            }
+          },
+          "400": {
+            "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
