@@ -7,7 +7,7 @@ const schema = joi.object({
       let validValues = ['play', 'comment'];
 
       if (!validValues.includes(value)) {
-        return helpers.error('any.invalid');
+        return helpers.error('any.only');
       }
       else {
         return value;
@@ -15,7 +15,7 @@ const schema = joi.object({
     })
     .messages({
       'any.required': 'access_level field must be provided.',
-      'any.invalid': 'access_level field not valid.'
+      'any.only': 'access_level field not valid.'
     }),
 
   full_name: joi.string()
