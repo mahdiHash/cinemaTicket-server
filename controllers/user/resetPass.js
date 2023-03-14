@@ -14,7 +14,7 @@ const controller = [
   // check for password being correct and if it is, change it
   async (req, res, next) => {
     let isMatch = await bcrypt.compare(
-      res.locals.validatedBody.oldPass,
+      res.locals.validBody.oldPass,
       req.user.password
     )
       .catch(next);
@@ -23,7 +23,7 @@ const controller = [
       return next(new UnauthorizedErr('oldPass is incorrect.'))
     }
 
-    let newHashedPass = await bcrypt.hash(res.locals.validatedBody.newPass, 16);
+    let newHashedPass = await bcrypt.hash(res.locals.validBody.newPass, 16);
 
     prisma.users.update({
       where: { id: req.user.id },

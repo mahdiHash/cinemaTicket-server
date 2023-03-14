@@ -12,7 +12,7 @@ const controller = [
   // lookup for a duplicate phone number
   async (req, res, next) => {
     let duplicate = await prisma.users.findFirst({
-      where: { tel: encrypt(res.locals.validatedBody.tel) },
+      where: { tel: encrypt(res.locals.validBody.tel) },
     });
 
     if (duplicate) {
@@ -26,8 +26,8 @@ const controller = [
 
   // signup user
   async (req, res, next) => {
-    let hashedPass = await bcrypt.hash(res.locals.validatedBody.password, 16);
-    let hashedTel = encrypt(res.locals.validatedBody.tel);
+    let hashedPass = await bcrypt.hash(res.locals.validBody.password, 16);
+    let hashedTel = encrypt(res.locals.validBody.tel);
     let user = await prisma.users.create({
       data: {
         tel: hashedTel,
@@ -42,7 +42,7 @@ const controller = [
     );
 
     delete user.password;
-    user.tel = res.locals.validatedBody.tel;
+    user.tel = res.locals.validBody.tel;
     res.json({
       token,
       user
