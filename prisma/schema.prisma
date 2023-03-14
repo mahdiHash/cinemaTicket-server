@@ -194,7 +194,7 @@ model non_approved_places {
   owner_id   Int
   name       String
   type       placeType
-  license_id String                     @unique
+  license_id String
   address    String
   status     non_approved_places_status
   code       String                     @unique
