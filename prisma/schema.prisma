@@ -194,10 +194,10 @@ model non_approved_places {
   owner_id   Int
   name       String
   type       placeType
-  license_id String
+  license_id String                     @unique
   address    String
   status     non_approved_places_status
-  code       String
+  code       String                     @unique
 }
 
 model tickets {
