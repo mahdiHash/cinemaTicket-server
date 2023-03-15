@@ -1318,7 +1318,7 @@
         }
       }
     },
-    "/place/registerStat/{code}": {
+    "/place/register/status/{code}": {
       "get": {
         "security": [
           { "apikey": [ "apikey" ]},
