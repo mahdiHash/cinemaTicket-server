@@ -1317,6 +1317,59 @@
           }
         }
       }
+    },
+    "/place/registerStat/{code}": {
+      "get": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Track the status of a place registeration",
+        "description": "Only the creator of process or super admins can see the status.",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "example": "XF2US0AD",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Whole registeration info will be given to you.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "سینما"
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "cinema"
+                    },
+                    "license_id": {
+                      "type": "string",
+                      "example": "0123456789"
+                    },
+                    "address": {
+                      "type": "string",
+                      "example": "ایران، تهران"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The values of this field can be one of the following: waiting, approved, denied.",
+                      "example": "waiting"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
