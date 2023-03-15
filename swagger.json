@@ -1376,6 +1376,38 @@
           }
         }
       }
+    },
+    "/place/register/cancel/{code}": {
+      "delete": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Cancel a pending place registeration",
+        "description": "Only the owner of request can cancel a registeration process.",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "example": "XF2US0AD",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If the process is successful, an OK 200 response will be given to you. The registeration status can't be accessible after cancelation."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "404": {
+            "description": "The code you provided is not found. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
