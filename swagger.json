@@ -1367,6 +1367,12 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "The \"tel\" or \"password\" field is incorrect. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
           }
         }
       }
