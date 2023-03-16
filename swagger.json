@@ -1408,6 +1408,96 @@
           }
         }
       }
+    },
+    "/place/register/all": {
+      "get": {
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "summary": "Get all pending new place registerations",
+        "description": "Only super admins can access this route.",
+        "responses": {
+          "200": {
+            "description": "All the registerations info will be sent in an array of the scheme below.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "سینما"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "This field can only have values of \"cinema\" or \"theater\".",
+                      "example": "cinema"
+                    },
+                    "license_id": {
+                      "type": "string",
+                      "example": "0123456789"
+                    },
+                    "address": {
+                      "type": "string",
+                      "example": "ایران، تهران"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The values of this field can be one of the following: waiting, approved, denied.",
+                      "example": "waiting"
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "XF2US0AD" 
+                    },
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 123
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "فریبا محسنی"
+                        },
+                        "tel": {
+                          "type": "string",
+                          "example": "09010000000"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "f.mohseni@example.com"
+                        },
+                        "national_id": {
+                          "type": "string",
+                          "example": "0123456789"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "This field is a relative path to the image.",
+                          "example": "/path/to/image"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The \"tel\" or \"password\" field is incorrect. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
