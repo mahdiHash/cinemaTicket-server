@@ -198,6 +198,7 @@ model non_approved_places {
   address    String
   status     non_approved_places_status
   code       String                     @unique
+  issue_date  DateTime                   @db.Timestamp() @default(now())
 }
 
 model tickets {
