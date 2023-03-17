@@ -4,6 +4,7 @@ const inputValidator = require('../../utils/inputValidators/placeRegister');
 const { randomBytes } = require('crypto');
 const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const BadRequestErr = require('../../utils/errors/badRequestErr');
+const ForbiddenErr = require('../../utils/errors/forbiddenErr');
 
 const contoller = [
   // authorization
@@ -12,6 +13,16 @@ const contoller = [
   storeValidatedInputs(inputValidator),
 
   async (req, res, next) => {
+    // check if the uesr has 5 >= pending requests
+    let ownerRegistersCount = await prisma.non_approved_places.count({
+      where: { owner_id: req.user.id, status: 'waiting' },
+    })
+      .catch(next);
+
+    if (ownerRegistersCount >= 5) {
+      return next(new ForbiddenErr('You can\'t make more than 5 registering request.'));
+    }
+
     let code;
 
     // generate a unique code
