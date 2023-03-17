@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "start": "dotenv -e .env node ./server.js",
-    "devstart": "dotenv -e .env.dev node ./server.js"
+    "devstart": "dotenv -e .env.dev node ./server.js",
+    "devdbseed": "dotenv -e .env.dev node ./prisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
