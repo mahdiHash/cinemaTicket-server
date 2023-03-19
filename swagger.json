@@ -1417,72 +1417,117 @@
         ],
         "summary": "Get all pending new place registerations",
         "description": "Only super admins can access this route.",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Results can be sorted by date from new to old (desc). The default order is from old to new (asc).",
+            "example": "asc"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "This field is used for pagination. You need to provide the last id of the items you get for newer results, and the first id of the items you get for older results.",
+            "example": 123
+          },
+          {
+            "name": "backward",
+            "in": "query",
+            "description": "If you need to go to the previous page, set this field to \"true\".",
+            "example": true
+          },
+          {
+            "name": "license_id",
+            "in": "query",
+            "description": "You can set a value to this field to find a specific records. It must contain 10 characters.",
+            "example": "0123456789"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "description": "To get the records based on their status, you can set one of these values: \"waiting\", \"approved\" and \"denied\".",
+            "example": "waiting"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "All the registerations info will be sent in an array of the scheme below.",
+            "description": "All the registerations info will be sent in an array of the scheme below (up to 10 records for each request). You can use \"haveMore\" field to know when there's no more data to retrieve.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer",
-                      "example": 123
+                    "haveMore": {
+                      "type": "boolean",
+                      "description": "This field determines wether there's more records to get or not.",
+                      "example": true
                     },
-                    "name": {
-                      "type": "string",
-                      "example": "سینما"
-                    },
-                    "type": {
-                      "type": "string",
-                      "description": "This field can only have values of \"cinema\" or \"theater\".",
-                      "example": "cinema"
-                    },
-                    "license_id": {
-                      "type": "string",
-                      "example": "0123456789"
-                    },
-                    "address": {
-                      "type": "string",
-                      "example": "ایران، تهران"
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The values of this field can be one of the following: waiting, approved, denied.",
-                      "example": "waiting"
-                    },
-                    "code": {
-                      "type": "string",
-                      "example": "XF2US0AD" 
-                    },
-                    "owner": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "example": 123
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "example": "فریبا محسنی"
-                        },
-                        "tel": {
-                          "type": "string",
-                          "example": "09010000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "example": "f.mohseni@example.com"
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "example": "0123456789"
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This field is a relative path to the image.",
-                          "example": "/path/to/image"
-                        }
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 123
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "سینما"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "This field can only have values of \"cinema\" or \"theater\".",
+                            "example": "cinema"
+                          },
+                          "license_id": {
+                            "type": "string",
+                            "example": "0123456789"
+                          },
+                          "address": {
+                            "type": "string",
+                            "example": "ایران، تهران"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "The values of this field can be one of the following: waiting, approved, denied.",
+                            "example": "waiting"
+                          },
+                          "code": {
+                            "type": "string",
+                            "example": "XF2US0AD" 
+                          },
+                          "owner": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 123
+                              },
+                              "full_name": {
+                                "type": "string",
+                                "example": "فریبا محسنی"
+                              },
+                              "tel": {
+                                "type": "string",
+                                "example": "09010000000"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "f.mohseni@example.com"
+                              },
+                              "national_id": {
+                                "type": "string",
+                                "example": "0123456789"
+                              },
+                              "profile_pic_url": {
+                                "type": "string",
+                                "description": "This field is a relative path to the image.",
+                                "example": "/path/to/image"
+                              }
+                            }
+                          }
+                        }  
                       }
                     }
                   }
@@ -1491,7 +1536,7 @@
             }
           },
           "401": {
-            "description": "The \"tel\" or \"password\" field is incorrect. More information on the error will be sent to you on response. You can see the schema down this page."
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
           },
           "403": {
             "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
