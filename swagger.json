@@ -1543,6 +1543,42 @@
           }
         }
       }
+    },
+    "/place/register/approve/{register_id}": {
+      "post": {
+        "summary": "Approve a pending place register",
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "description": "Only super admins can access this route.",
+        "parameters": [
+          {
+            "name": "register_id",
+            "in": "path",
+            "description": "The id of the place register record to approve.",
+            "example": 123,
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response would be an OK 200 if the process is successful. No more information will be provided."
+          },
+          "400": {
+            "description": "The register_id you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "404": {
+            "description": "No place registeration is found. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
