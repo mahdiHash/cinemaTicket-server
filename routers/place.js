@@ -4,6 +4,7 @@ const trackRegisterStat = require('../controllers/place/trackRegisterStat');
 const cancelRegister = require('../controllers/place/cancelRegister');
 const getAllRegisters = require('../controllers/place/getAllRegisters');
 const approvePlaceRegister = require('../controllers/place/approvePlaceRegister');
+const denyPlaceRegister = require('../controllers/place/denyPlaceRegister');
 
 router.get('/register/status/:code', trackRegisterStat);
 
@@ -14,5 +15,7 @@ router.get('/register/all', getAllRegisters);
 router.post('/register', register);
 
 router.post('/register/approve/:id', approvePlaceRegister);
+
+router.put('/register/deny/:id', denyPlaceRegister);
 
 module.exports = router;
