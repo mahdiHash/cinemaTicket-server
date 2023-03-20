@@ -1497,6 +1497,11 @@
                             "type": "string",
                             "example": "XF2US0AD" 
                           },
+                          "issue_date": {
+                            "type": "string",
+                            "description": "The date of registeration submission. You may put it inside \"new Date()\".",
+                            "example": "2020-01-01T12:00:00.000Z"
+                          },
                           "owner": {
                             "type": "object",
                             "properties": {
