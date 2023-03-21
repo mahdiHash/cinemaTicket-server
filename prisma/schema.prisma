@@ -20,7 +20,7 @@ model plays {
   review_writer String?
   cover_url     String?
   cover_fileId  String?
-  trailer_url   String
+  trailer_url   String?
 
   play_ratings     play_ratings[]
   play_celebrities play_celebrities[]
@@ -92,12 +92,12 @@ model comments_dislikes {
 }
 
 model celebrities {
-  id                 Int       @id @default(autoincrement())
+  id                 Int         @id @default(autoincrement())
   full_name          String
-  role               celebRole
+  role               celebRole[]
   profile_pic_url    String?
   profile_pic_fileId String?
-  birthday           DateTime? @db.Date
+  birthday           DateTime?   @db.Date
   birth_city         String?
   bio                String?
 
@@ -198,7 +198,7 @@ model non_approved_places {
   address    String
   status     non_approved_places_status
   code       String                     @unique
-  issue_date  DateTime                   @db.Timestamp() @default(now())
+  issue_date DateTime                   @default(now()) @db.Timestamp()
 }
 
 model tickets {
@@ -262,6 +262,8 @@ enum celebRole {
   actress
   director
   producer
+  presenter
+  writer
 }
 
 enum placeType {
