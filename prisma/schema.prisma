@@ -40,13 +40,13 @@ model play_ratings {
 }
 
 model play_celebrities {
+  id           Int         @id @default(autoincrement())
   play         plays       @relation(fields: [play_id], references: [id], onDelete: Cascade)
   play_id      Int
   celebrity    celebrities @relation(fields: [celebrity_Id], references: [id], onDelete: Restrict)
   celebrity_Id Int
-  is_main_char Boolean
 
-  @@id([play_id, celebrity_Id])
+  @@unique([play_id, celebrity_Id])
 }
 
 model play_pics {
