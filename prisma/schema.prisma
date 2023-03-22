@@ -122,7 +122,7 @@ model places {
   address            String
   password           String
   city               String
-  hall_num           Int       @db.SmallInt
+  hall_num           Int?      @db.SmallInt
   facilities         String?
   profile_pic_url    String?
   profile_pic_fileId String?
