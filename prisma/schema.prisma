@@ -121,6 +121,8 @@ model places {
   license_id         String
   address            String
   password           String
+  city               String
+  hall_num           Int       @db.SmallInt
   facilities         String?
   profile_pic_url    String?
   profile_pic_fileId String?
@@ -196,6 +198,7 @@ model non_approved_places {
   type       placeType
   license_id String
   address    String
+  city       String
   status     non_approved_places_status
   code       String                     @unique
   issue_date DateTime                   @default(now()) @db.Timestamp()
