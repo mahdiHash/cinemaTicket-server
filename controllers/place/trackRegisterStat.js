@@ -18,6 +18,7 @@ const controller = [
           type: place.type,
           license_id: place.license_id,
           address: place.address,
+          city: place.city,
           status: place.status,
         });
       })

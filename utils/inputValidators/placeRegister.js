@@ -42,6 +42,15 @@ const schema = joi.object({
       'any.required': 'address field must be provided.',
       'string.min': 'address field must contain at least 10 characters',
     }),
+
+  city: joi.string()
+    .required()
+    .trim()
+    .empty()
+    .messages({
+      'any.required': 'city field must be provided.',
+      'string.empty': 'city field can\'t be empty',
+    }),
 });
 
 module.exports = schema;

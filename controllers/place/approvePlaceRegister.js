@@ -36,6 +36,7 @@ const controller = [
         type: register.type,
         license_id: register.license_id,
         address: register.address,
+        city: register.city,
         password: bcrypt.hashSync(register.code),
       },
     })
