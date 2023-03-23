@@ -1,3 +1,4 @@
+const errorLogger = require('./errorLogger');
 const { ValidationError } = require('joi');
 const { MulterError } = require('multer');
 const ServerErr = require('./serverErr');
@@ -73,12 +74,15 @@ const handler = (err, req, res, next) => {
   else {
     res.status(500);
     resObj.errors.push(new ServerErr());
-    console.error({
-      err,
-      headers: resObj.headers,
-      body: resObj.body,
-      parameters: resObj.parameters,
-    });
+    errorLogger(
+      { title: 'SERVER-SIDE ERROR' },
+      [{
+        err,
+        headers: resObj.headers,
+        body: resObj.body,
+        parameters: resObj.parameters,
+      }]
+    );
   }
 
   res.json(resObj);
