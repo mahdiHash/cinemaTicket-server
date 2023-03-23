@@ -1620,6 +1620,110 @@
           }
         }
       }
+    },
+    "/celebrity/create": {
+      "post": {
+        "summary": "Create a celebrity profile",
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "description": "Only super/play admins can access this route.",
+        "requestBody": {
+          "description": "Only \"full_name\" and \"role\" fields are mandatory. \"role\" can have these values (as an array): actor, actress, writer, presenter, director.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "full_name": {
+                    "type": "string",
+                    "description": "This field must contain at least 3 characters.",
+                    "example": "کامران تفتی"
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "Valid values (comma-seperated): actor, actress, writer, presenter, director.",
+                    "example": "actor,director"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "description": "This field will be converted to a Date object.",
+                    "example": "2000-07-01T15:30:10.000Z"
+                  },
+                  "birth_city": {
+                    "type": "string",
+                    "description": "If provided, it can't be empty.",
+                    "example": "تهران"
+                  },
+                  "bio": {
+                    "type": "string",
+                      "description": "This the biography of the person you're adding. If provided, can't be empty."
+                  },
+                  "img": {
+                    "type": "image file",
+                    "description": "File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The process is successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "full_name": {
+                      "type": "string",
+                      "example": "کامران تفتی"
+                    },
+                    "role": {
+                      "type": "array",
+                      "description": "Could contain these values (as an array): actor, actress, writer, presenter, director.",
+                      "example": "[ \"actor\", \"director\" ]"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "description": "You may convert this field to a new Date() object.",
+                      "example": "2000-07-01T15:30:10.000Z"
+                    },
+                    "birth_city": {
+                      "type": "string",
+                      "description": "If provided, it can't be empty.",
+                      "example": "تهران"
+                    },
+                    "bio": {
+                      "type": "string"
+                    },
+                    "profile_pic_url": {
+                      "type": "string",
+                      "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
+                      "example": "path/to/image"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
