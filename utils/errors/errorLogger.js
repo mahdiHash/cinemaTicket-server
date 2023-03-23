@@ -26,8 +26,13 @@ module.exports = function (options, valuesToPrint) {
     console.log("\x1b[34m%s\x1b[0m", `${date.toDateString()} - ${date.toTimeString()}`);
   }
 
-  for (let value of valuesToPrint) {
-    console.log(value);
+  if (valuesToPrint instanceof Array) {
+    for (let value of valuesToPrint) {
+      console.log(value);
+    }
+  }
+  else {
+    console.log(valuesToPrint);
   }
 
   if (endEmptyLine) {
