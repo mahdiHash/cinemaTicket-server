@@ -12,6 +12,7 @@ const userRouter = require('./routers/user');
 const imgRouter = require('./routers/img');
 const adminRouter = require('./routers/admin');
 const placeRouter = require('./routers/place');
+const celebrityRouter = require('./routers/celebrity');
 const passport = require('./config/passportConfig');
 
 const app = express();
@@ -36,6 +37,7 @@ app.use('/user', userRouter);
 app.use('/img', imgRouter);
 app.use('/admin', adminRouter);
 app.use('/place', placeRouter);
+app.use('/celeb', celebrityRouter);
 
 // if the route is not found, create a 404 error
 // if there's an error, pass it to errorHandler
