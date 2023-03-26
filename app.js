@@ -37,7 +37,7 @@ app.use('/user', userRouter);
 app.use('/img', imgRouter);
 app.use('/admin', adminRouter);
 app.use('/place', placeRouter);
-app.use('/celeb', celebrityRouter);
+app.use('/celebrity', celebrityRouter);
 
 // if the route is not found, create a 404 error
 // if there's an error, pass it to errorHandler
