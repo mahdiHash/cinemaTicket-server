@@ -17,10 +17,18 @@ const controller = [
     let celebrities = await prisma.celebrities.findMany({
       where: { full_name: res.locals.validQuery.full_name },
       orderBy: { id: 'desc' },
+      select: {
+        id: true,
+        full_name: true,
+        profile_pic_url: true,
+        bio: true,
+        birth_city: true,
+        birthday: true,
+      },
       cursor: req.query.cursor
-        ? { id: +res.locals.validQuery.cursor + takeSign }
+        ? { id: +res.locals.validQuery.cursor + -takeSign }
         : undefined,
-      take: -takeSign * 15, // because of desc order we should reverse the take sign    
+      take: takeSign * 3, // because of desc order we should reverse the take sign    
     })
       .catch(next);
     let lastRecordCursor = celebrities[celebrities.length - 1]?.id ?? -1;
@@ -28,7 +36,7 @@ const controller = [
       where: { full_name: res.locals.validQuery.full_name },
       orderBy: { id: 'desc' },
       cursor: {
-        id: lastRecordCursor + 1,
+        id: lastRecordCursor + -takeSign,
       },
       take: takeSign * 1,
     })
