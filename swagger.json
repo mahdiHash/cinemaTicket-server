@@ -1630,7 +1630,7 @@
         ],
         "description": "Only super/play admins can access this route.",
         "requestBody": {
-          "description": "Only \"full_name\" and \"role\" fields are mandatory. \"role\" can have these values (as an array): actor, actress, writer, presenter, director.",
+          "description": "Only \"full_name\" and \"role\" fields are mandatory. \"role\" can have these values (multiple checkboxes, as an array): actor, actress, writer, presenter, director.",
           "content": {
             "body": {
               "schema": {
@@ -1642,9 +1642,9 @@
                     "example": "کامران تفتی"
                   },
                   "role": {
-                    "type": "string",
-                    "description": "Valid values (comma-seperated): actor, actress, writer, presenter, director.",
-                    "example": "actor,director"
+                    "type": "array",
+                    "description": "Valid values (multiple checkboxes, as an array): actor, actress, writer, presenter, director.",
+                    "example": "[ \"actor\", \"director\" ]"
                   },
                   "birthday": {
                     "type": "string",
@@ -1821,7 +1821,7 @@
         }
       }
     },
-    "/celeb/{celeb_id}": {
+    "/celebrity/{celeb_id}": {
       "get": {
         "summary": "Get a celebrity profile",
         "security": [
