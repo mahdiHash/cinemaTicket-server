@@ -17,17 +17,8 @@ const controller = [
       return next(new NotFoundErr('celebrity not found.'));
     }
 
-    let picsUrls = await prisma.celebrity_pics.findMany({
-      where: { celebrity_id: +req.params.id },
-      select: { url: true },
-    })
-      .catch(next);
-
     delete celeb.profile_pic_fileId;
-    res.json({
-      profile: celeb,
-      pics: picsUrls.map((obj) => obj.url),
-    });
+    res.json(celeb);
   }
 ];
 
