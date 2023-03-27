@@ -14,15 +14,15 @@ const schema = joi.object({
     .required()
     .custom((roles, helpers) => {
       let validValues = ['actor', 'actress', 'writer', 'presenter', 'director'];
-      let arr = roles.split(',');
+      roles = typeof roles === 'string' ? JSON.parse(roles) : roles;
 
-      for (let value of arr) {
-        if (!validValues.includes(value)) {
+      for (let role of roles) {
+        if (!validValues.includes(role)) {
           return helpers.error('any.invalid');
         }
       }
 
-      return arr;
+      return roles;
     })
     .messages({
       'array.max': 'role array field must contain at most 5 items.',
