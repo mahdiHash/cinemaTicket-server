@@ -52,6 +52,7 @@ const controller = [
           await prisma.celebrity_pics.create({
             data: {
               url: fileInfo.filePath,
+              fileId: fileInfo.fileId,
               celebrity_id: celeb.id,
             }
           });
