@@ -2053,6 +2053,71 @@
           }
         }
       }
+    },
+    "/celebrity/{celeb_id}/pics/upload": {
+      "post": {
+        "summary": "Upload pics of a celebrity",
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "description": "Only play/super admins can access this route.",
+        "parameters": [
+          {
+            "name": "celeb_id",
+            "in": "path",
+            "description": "The id of the celebrity you want to upload pics of.",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "All photos must provide under the \"imgs\" field.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "imgs": {
+                    "type": "array",
+                    "description": "Array of images you want to uplaod. Each file limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp.",
+                    "items": {
+                      "type": "image file"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The response would be an array of each image url.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "path/to/image"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The files you uploaded are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "404": {
+            "description": "No celebrity is found with this id. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
