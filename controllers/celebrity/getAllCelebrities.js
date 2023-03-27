@@ -15,7 +15,9 @@ const controller = [
   async (req, res, next) => {
     let takeSign = res.locals.validQuery.backward ? -1 : 1;
     let celebrities = await prisma.celebrities.findMany({
-      where: { full_name: res.locals.validQuery.full_name },
+      where: { 
+        full_name: { search: res.locals.validQuery.full_name.split(' ').join(' | ') }
+      },
       orderBy: { id: 'desc' },
       select: {
         id: true,
