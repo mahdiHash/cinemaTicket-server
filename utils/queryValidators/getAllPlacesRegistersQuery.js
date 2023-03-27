@@ -8,7 +8,7 @@ const schema = joi.object({
         return value.trim();
       }
       else {
-        helpers.error('any.invalid');
+        return helpers.error('any.invalid');
       }
     })
     .messages({
@@ -30,7 +30,12 @@ const schema = joi.object({
       'any.invalid': 'the sort field of query is not valid.',
     }),
 
-  cursor: joi.number(),
+  cursor: joi.number()
+    .min(1)
+    .messages({
+      'number.min': 'cursor field must be more than 1.',
+      'number.base': 'cursor field must be a number.',
+    }),
 
   backward: joi.boolean(),
 
