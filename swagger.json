@@ -1839,54 +1839,42 @@
         ],
         "responses": {
           "200": {
-            "description": "There will be two fields: one for the celebrity profile info and one for all the images uploaded for the celebrity (as an array).",
+            "description": "\"profile_pic_url\" field could be null.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "profile": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                            "type": "integer",
-                            "example": 123
-                          },
-                          "full_name": {
-                            "type": "string",
-                            "example": "کامران تفتی"
-                          },
-                          "role": {
-                            "type": "array",
-                            "description": "Could contain these values (as an array): actor, actress, writer, presenter, director.",
-                            "example": "[ \"actor\", \"director\" ]"
-                          },
-                          "birthday": {
-                            "type": "string",
-                            "description": "You may convert this field to a new Date() object.",
-                            "example": "2000-07-01T15:30:10.000Z"
-                          },
-                          "birth_city": {
-                            "type": "string",
-                            "description": "If provided, it can't be empty.",
-                            "example": "تهران"
-                          },
-                          "bio": {
-                            "type": "string"
-                          },
-                          "profile_pic_url": {
-                            "type": "string",
-                            "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
-                            "example": "path/to/image"
-                          }
-                      }
+                    "id": {
+                      "type": "integer",
+                      "example": 123
                     },
-                    "pics": {
+                    "full_name": {
+                      "type": "string",
+                      "example": "کامران تفتی"
+                    },
+                    "role": {
                       "type": "array",
-                      "items": {
-                        "type": "string",
-                        "example": "path/to/image"
-                      }
+                      "description": "Could contain these values (as an array): actor, actress, writer, presenter, director.",
+                      "example": "[ \"actor\", \"director\" ]"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "description": "You may convert this field to a new Date() object.",
+                      "example": "2000-07-01T15:30:10.000Z"
+                    },
+                    "birth_city": {
+                      "type": "string",
+                      "description": "If provided, it can't be empty.",
+                      "example": "تهران"
+                    },
+                    "bio": {
+                      "type": "string"
+                    },
+                    "profile_pic_url": {
+                      "type": "string",
+                      "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
+                      "example": "path/to/image"
                     }
                   }
                 }
