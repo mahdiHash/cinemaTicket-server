@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -108,6 +108,7 @@ model celebrities {
 
 model celebrity_pics {
   url          String      @id
+  fileId       String
   celeb        celebrities @relation(fields: [celebrity_id], references: [id], onDelete: Cascade)
   celebrity_id Int
 }
