@@ -5,6 +5,7 @@ const getCelebProfile = require('../controllers/celebrity/getCelebProfile');
 const updateCelebProfile = require('../controllers/celebrity/updateProfile');
 const removeProfilePic = require('../controllers/celebrity/removeProfilePic');
 const uploadCelebPics = require('../controllers/celebrity/uploadPics');
+const getCelebPics = require('../controllers/celebrity/getCelebPics');
 
 router.post('/create', create);
 
@@ -15,6 +16,8 @@ router.put('/:id/update', updateCelebProfile);
 router.delete('/:id/profilePic/remove', removeProfilePic);
 
 router.post('/:id/pics/upload', uploadCelebPics);
+
+router.get('/:id/pics', getCelebPics);
 
 router.get('/:id', getCelebProfile);
 
