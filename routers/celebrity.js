@@ -6,6 +6,8 @@ const updateCelebProfile = require('../controllers/celebrity/updateProfile');
 const removeProfilePic = require('../controllers/celebrity/removeProfilePic');
 const uploadCelebPics = require('../controllers/celebrity/uploadPics');
 const getCelebPics = require('../controllers/celebrity/getCelebPics');
+const removeCelebPic = require('../controllers/celebrity/removeCelebrityPic');
+const removeAllCelebPics = require('../controllers/celebrity/removeAllCelebrityPics');
 
 router.post('/create', create);
 
@@ -18,6 +20,10 @@ router.delete('/:id/profilePic/remove', removeProfilePic);
 router.post('/:id/pics/upload', uploadCelebPics);
 
 router.get('/:id/pics', getCelebPics);
+
+router.delete('/:id/pics/remove/all', removeAllCelebPics);
+
+router.delete('/:id/pics/remove/:folder/:fileName', removeCelebPic);
 
 router.get('/:id', getCelebProfile);
 
