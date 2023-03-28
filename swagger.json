@@ -2143,6 +2143,49 @@
           }
         }
       }
+    },
+    "/celebrity/{celeb_id}/pics/remove/{pic_url}": {
+      "delete": {
+        "summary": "Delete a specific celebrity pic",
+        "security": [
+          { "apikey": [ "apikey" ]},
+          { "jwt": [ "jwt" ]}
+        ],
+        "description": "Only play/super admins can access this route. If you want to delete all celebrity pics, place \"all\" in {pic_url}.",
+        "parameters": [
+          {
+            "name": "celeb_id",
+            "in": "path",
+            "description": "The id of the celebrity you want to get the pics of.",
+            "example": 123,
+            "required": true
+          },
+          {
+            "name": "pic_url",
+            "in": "path",
+            "description": "The url of the pic you want to delete. You can delete all celebrity pics by setting \"all\" to this parameter.",
+            "example": "/path/to/image",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If the process is successful, an OK 200 response will be sent with no additional information."
+          },
+          "400": {
+            "description": "The celeb_id you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this resource/action. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "404": {
+            "description": "No celebrity is found with this id. More information on the error will be sent to you on response. You can see the schema down this page."
+          }
+        }
+      }
     }
   },
   "components": {
