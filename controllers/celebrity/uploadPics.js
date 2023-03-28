@@ -41,25 +41,27 @@ const controller = [
           throw new NotFoundErr('celebrity not found.');
         }
 
-        for (let file of req.files) {
+        await Promise.all(req.files.map((file) => {
           let fileReadStream = fs.createReadStream(file.path);
-          let fileInfo = await imageKit.upload({
+          return imageKit.upload({
             file: fileReadStream,
             fileName: `celebPic${celeb.id}`,
             folder: 'celebpics',
-          });
-
-          await prisma.celebrity_pics.create({
-            data: {
-              url: fileInfo.filePath,
-              fileId: fileInfo.fileId,
-              celebrity_id: celeb.id,
-            }
-          });
-
-          fileReadStream.destroy();
-          uploadedImgsUrls.push(fileInfo.filePath);
-        }
+          })
+            .then(async (fileInfo) => {
+              await prisma.celebrity_pics.create({
+                data: {
+                  url: fileInfo.filePath,
+                  fileId: fileInfo.fileId,
+                  celebrity_id: celeb.id,
+                }
+              })
+              uploadedImgsUrls.push(fileInfo.filePath);
+            })
+            .finally(() => {
+              fileReadStream.destroy();
+            })
+        }))
 
         res.json(uploadedImgsUrls);
       })
