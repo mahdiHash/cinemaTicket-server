@@ -8,12 +8,15 @@ const uploadCelebPics = require('../controllers/celebrity/uploadPics');
 const getCelebPics = require('../controllers/celebrity/getCelebPics');
 const removeCelebPic = require('../controllers/celebrity/removeCelebrityPic');
 const removeAllCelebPics = require('../controllers/celebrity/removeAllCelebrityPics');
+const removeCeleb = require('../controllers/celebrity/removeCeleb');
 
 router.post('/create', create);
 
 router.get('/all', getAllCelebs);
 
 router.put('/:id/update', updateCelebProfile);
+
+router.delete('/:id/remove', removeCeleb);
 
 router.delete('/:id/profilePic/remove', removeProfilePic);
 
