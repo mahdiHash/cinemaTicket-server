@@ -12,6 +12,7 @@ model plays {
   id            Int       @id @default(autoincrement())
   title         String
   director      String
+  producer      String
   duration      Int       @db.SmallInt
   genre         String
   type          playType
