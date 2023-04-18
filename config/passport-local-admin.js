@@ -11,7 +11,7 @@ const adminLocalStrategy = new Strategy(async (req, cb) => {
   });
 
   if (!admin) {
-    return cb(new UnauthorizedErr('tel or password is incorrect.'));
+    return cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
   }
 
   let doesPassMatch = await bcrypt.compare(password, admin.password);
@@ -20,7 +20,7 @@ const adminLocalStrategy = new Strategy(async (req, cb) => {
     cb(null, admin);
   }
   else {
-    cb(new UnauthorizedErr('tel or password is incorrect.'));
+    cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
   }
 });
 

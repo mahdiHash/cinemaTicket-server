@@ -2,7 +2,7 @@ class ApiKeyErr extends Error {
   constructor(msg) {
     super();
     this.name = "ApiKeyErr";
-    this.message = msg ?? "The api key is not provided or not valid.";
+    this.message = msg ?? "کلید api معتبر نیست یا ارسال نشده است.";
     this.code = 401;
   }
 }

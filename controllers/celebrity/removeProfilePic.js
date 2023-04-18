@@ -13,7 +13,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.id)) {
-      return next(new BadRequestErr('celeb_id not valid.'));
+      return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
     }
 
     prisma.celebrities.findUnique({
@@ -21,11 +21,11 @@ const controller = [
     })
       .then(async (celeb) => {
         if (!celeb) {
-          return next(new NotFoundErr('celebrity not found.'));
+          return next(new NotFoundErr('فرد مورد نظر پیدا نشد.'));
         }
 
         if (!celeb.profile_pic_fileId) {
-          return next(new BadRequestErr('celebrity has no profile pic.'));
+          return next(new BadRequestErr('فرد مورد نظر عکس پروفایل ندارد.'));
         }
 
         await imageKit.deleteFile(celeb.profile_pic_fileId);

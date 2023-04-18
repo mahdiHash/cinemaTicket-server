@@ -3,7 +3,7 @@ const BadRequestErr = require('../../utils/errors/badRequestErr');
 
 const controller = async (req, res, next) => {
   if (!isFinite(req.params.id)) {
-    return next(new BadRequestErr('celeb_id not valid.'));
+    return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
   }
 
   prisma.celebrity_pics.findMany({

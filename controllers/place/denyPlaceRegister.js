@@ -12,7 +12,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.id)) {
-      return next(new BadRequestErr('id parameter is not valid.'));
+      return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
     }
 
     let register = await prisma.non_approved_places.findUnique({
@@ -21,11 +21,11 @@ const controller = [
       .catch(next);
 
     if (!register) {
-      return next(new NotFoundErr('no registeration found.'));
+      return next(new NotFoundErr('درخواستی پیدا نشد.'));
     }
 
     if (register.status === 'approved' || register.status === 'denied') {
-      return next(new BadRequestErr('state of this register can\'t be changed.'));
+      return next(new BadRequestErr('وضعیت ثبت این درخواست را نمی‌توان تغییر داد.'));
     }
 
     await prisma.non_approved_places.update({

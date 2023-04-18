@@ -24,7 +24,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.id)) {
-      return next(new BadRequestErr('celeb_id not valid.'));
+      return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
     }
 
     prisma.celebrities.findUnique({
@@ -34,7 +34,7 @@ const controller = [
         let uploadedFileInfo;
 
         if (!celeb) {
-          return next(new NotFoundErr('celeb not found.'));
+          return next(new NotFoundErr('فرد مورد نظر پیدا نشد.'));
         }
 
         if (req.file) {

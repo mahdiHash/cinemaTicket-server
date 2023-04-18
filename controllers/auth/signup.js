@@ -17,7 +17,7 @@ const controller = [
 
     if (duplicate) {
       res.status(400);
-      return next(new BadRequestErr("There's already a user registered with this phone number."));
+      return next(new BadRequestErr('قبلاً با این شماره همراه ثبت نام شده است.'));
     }
     else {
       next();

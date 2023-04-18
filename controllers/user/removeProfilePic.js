@@ -14,7 +14,7 @@ const controller = [
       .catch(next);
 
     if (fileId === null) {
-      return next(new BadRequestErr('user has no profile pic.'));
+      return next(new BadRequestErr('کاربر عکس پروفایل ندارد.'));
     }
 
     imageKit.deleteFile(fileId)

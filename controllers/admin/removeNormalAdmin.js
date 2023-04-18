@@ -14,7 +14,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.adminId)) {
-      return next(new BadRequestErr('admin id not valid.'));
+      return next(new BadRequestErr('شناسۀ ادمین باید یک عدد باشد.'));
     }
 
     let targetAdmin = await prisma.admins.findUnique({
@@ -23,11 +23,11 @@ const controller = [
       .catch(next);
 
     if (!targetAdmin) {
-      return next(new NotFoundErr('admin not found.'));
+      return next(new NotFoundErr('ادمین پیدا نشد.'));
     }
 
     if (targetAdmin.access_level === 'super') {
-      return next(new ForbiddenErr('super admins can\'t remove other super admins.'));
+      return next(new ForbiddenErr('ادمین برتر نمی‌تواند دیگر ادمین‌های برتر را حذف کند.'));
     }
 
     prisma.admins.delete({

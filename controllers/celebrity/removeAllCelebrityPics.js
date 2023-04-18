@@ -13,7 +13,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.id)) {
-      return next(new BadRequestErr('celeb_id not valid.'));
+      return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
     }
 
     prisma.celebrity_pics.findMany({
@@ -21,7 +21,7 @@ const controller = [
     })
       .then(async (pics) => {
         if (!pics.length) {
-          return next(new NotFoundErr('celebrity has no pic uploaded.'));
+          return next(new NotFoundErr('عکسی آپلود نشده است.'));
         }
 
         await Promise.all(pics.map(({ url, fileId }) => {

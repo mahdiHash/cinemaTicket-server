@@ -11,7 +11,7 @@ const adminJwtStrategy = new Strategy(async (req, cb) => {
     payload = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
   }
   catch (err) {
-    return cb(new UnauthorizedErr('token not valid.'));
+    return cb(new UnauthorizedErr('توکن هویت‌سنجی معتبر نیست.'));
   }
 
   let admin = await prisma.admins.findFirst({
@@ -20,7 +20,7 @@ const adminJwtStrategy = new Strategy(async (req, cb) => {
     .catch(cb);
 
   if (!admin) {
-    cb(new UnauthorizedErr('token not valid.'));
+    cb(new UnauthorizedErr('توکن هویت‌سنجی معتبر نیست.'));
   }
   else {
     cb(null, admin);

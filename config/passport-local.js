@@ -15,7 +15,7 @@ let strategy = new LocalStrategy(
     });
 
     if (!user) {
-      return cb(new UnauthorizedErr('tel or password field is incorrect.'));
+      return cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
     }
 
     let isPassMatch = await bcrypt.compare(pass, user.password);
@@ -24,7 +24,7 @@ let strategy = new LocalStrategy(
       cb(null, user);
     }
     else {
-      cb(new UnauthorizedErr('tel or password field is incorrect.'));
+      cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
     }
   }
 );

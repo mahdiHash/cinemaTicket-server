@@ -9,7 +9,7 @@ let middleware = async (req, res, next) => {
     .catch(next);
 
   if (!registerationInfo) {
-    return next(new NotFoundErr('Register code not found.'));
+    return next(new NotFoundErr('کد ثبت پیدا نشد.'));
   }
 
   if (registerationInfo.owner_id === req.user.id) {

@@ -13,7 +13,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.id)) {
-      return next(new BadRequestErr('celeb_id not valid.'));
+      return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
     }
 
     let celebMovie = await prisma.play_celebrities.findFirst({
@@ -22,7 +22,7 @@ const controller = [
       .catch(next);
 
     if (celebMovie) {
-      return next(new ForbiddenErr('celebrity is casting in a play. you need to remove the play first.'));
+      return next(new ForbiddenErr('این فرد در یک نمایش ثبت شده است. ابتدا آن نمایش را حذف کنید.'));
     }
 
     let celebPics = await prisma.celebrity_pics.findMany({

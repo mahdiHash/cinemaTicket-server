@@ -20,7 +20,7 @@ const controller = [
       .catch(next);
 
     if (!isMatch) {
-      return next(new UnauthorizedErr('oldPass is incorrect.'))
+      return next(new UnauthorizedErr('رمز ورود قدیمی اشتباه است.'))
     }
 
     let newHashedPass = await bcrypt.hash(res.locals.validBody.newPass, 16);

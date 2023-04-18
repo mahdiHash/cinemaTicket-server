@@ -16,7 +16,7 @@ const controller = [
   // upload the image to cloud
   (req, res, next) => {
     if (!req.file) {
-      return next(new BadRequestErr('No file uploaded.'));
+      return next(new BadRequestErr('فایلی آپلود نشده است.'));
     }
 
     let fileReadStream = fs.createReadStream(req.file.path);

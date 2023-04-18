@@ -5,7 +5,7 @@ const NotFoundErr = require('../../utils/errors/notFoundErr');
 const controller = [
   async (req, res, next) => {
     if (!isFinite(req.params.id)) {
-      return next(new BadRequestErr('celeb_id not valid.'));
+      return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
     }
 
     let celeb = await prisma.celebrities.findUnique({
@@ -14,7 +14,7 @@ const controller = [
       .catch(next);
 
     if (!celeb) {
-      return next(new NotFoundErr('celebrity not found.'));
+      return next(new NotFoundErr('شخص مورد نظر پیدا نشد.'));
     }
 
     delete celeb.profile_pic_fileId;

@@ -18,7 +18,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.adminId)) {
-      new BadRequestErr('admin id not valid.');
+      new BadRequestErr('شناسۀ ادمین باید یک عدد باشد.');
     }
 
     let targetAdmin = await prisma.admins.findUnique({
@@ -27,11 +27,11 @@ const controller = [
         .catch(next);
 
     if (!targetAdmin) {
-      return next(new NotFoundErr('admin not found.'));
+      return next(new NotFoundErr('ادمین پیدا نشد.'));
     }
 
     if (targetAdmin.access_level === 'super') {
-      return next(new ForbiddenErr('super admins can\'t update other super admins info.'));
+      return next(new ForbiddenErr('ادمین برتر نمی‌تواند پروفایل دیگر ادمین‌های برتر را آپدیت کند.'));
     }
 
     targetAdmin = {

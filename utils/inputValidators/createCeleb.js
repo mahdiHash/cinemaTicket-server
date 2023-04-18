@@ -5,9 +5,9 @@ const schema = joi.object({
     .trim()
     .min(3)
     .messages({
-      'string.empty': 'full_name field can\'t be empty',
-      'string.min': 'full_name field must contain at least 3 characters.',
-      'any.required': 'full_name field must be provided.',
+      'string.empty': 'نام کامل نمی‌تواند خالی باشد.',
+      'string.min': 'نام کامل باید حداقل 3 حرف داشته باشد.',
+      'any.required': 'نام کامل باید وارد شود.',
     }),
 
   role: joi.string()
@@ -25,30 +25,30 @@ const schema = joi.object({
       return roles;
     })
     .messages({
-      'array.max': 'role array field must contain at most 5 items.',
-      'array.min': 'role array field must contain at least 1 item.',
-      'any.invalid': 'role array field contain invalid values.',
-      'any.required': 'role array field must be provided.',
+      'array.max': 'نقش فرد می‌تواند حداکثر 5 مورد را شامل شود.',
+      'array.min': 'نقش فرد باید حداقل شامل 1 مورد شود.',
+      'any.invalid': 'نقش فرد شامل مقدارهای اشتباه است.',
+      'any.required': 'نقش فرد باید وارد شود.',
     }),
 
   birthday: joi.date()
     .iso()
     .messages({
-      'date.format': 'birthday field is not a valid date.',
+      'date.format': 'فرمت تاریخ تولد اشتباه است.',
     }),
 
   birth_city: joi.string()
     .trim()
     .empty()
     .messages({
-      'string.empty': 'birth_city can\'t be empty.',
+      'string.empty': 'محل تولد نمی‌تواند خالی باشد.',
     }),
 
   bio: joi.string()
     .trim()
     .empty()
     .messages({
-      'string.empty': 'bio field can\'t be empty.',
+      'string.empty': 'بیوی فرد نمی‌تواند خالی باشد.',
     }),
 });
 

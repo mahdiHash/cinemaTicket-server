@@ -20,7 +20,7 @@ const contoller = [
       .catch(next);
 
     if (ownerRegistersCount >= 5) {
-      return next(new ForbiddenErr('You can\'t make more than 5 registering request.'));
+      return next(new ForbiddenErr('شما نمی‌توانید بیشتر از 5 درخواست ثبت کنید.'));
     }
 
     let code;
@@ -50,7 +50,7 @@ const contoller = [
     })
       .then((place) => {
         if (place) {
-          throw new BadRequestErr('a place already exists with this license_id.');
+          throw new BadRequestErr('قبلاً یک مکان با این شماره گواهینامه ثبت شده است.');
         }
       })
       .then(() => {

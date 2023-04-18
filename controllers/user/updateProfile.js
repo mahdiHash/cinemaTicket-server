@@ -29,7 +29,7 @@ const controller = [
 
     if (duplicate) {
       res.status(400);
-      return next(new BadRequestErr("There's already a user registered with this phone number."));
+      return next(new BadRequestErr('قبلاً یک کاربر با این شمارۀ همراه ثبت نام کرده است. لطفاً شمارۀ دیگری را انتخاب کنید.'));
     }
     else {
       next();

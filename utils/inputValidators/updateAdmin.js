@@ -14,8 +14,8 @@ const schema = joi.object({
       }
     })
     .messages({
-      'any.required': 'access_level field must be provided.',
-      'any.invalid': 'access_level field not valid.'
+      'any.required': 'سطح دسترسی باید وارد شود.',
+      'any.invalid': 'سطح دسترسی معتبر نیست.'
     }),
 
   full_name: joi.string()
@@ -23,8 +23,8 @@ const schema = joi.object({
     .trim()
     .empty()
     .messages({
-      'any.required': 'full_name field must be provided.',
-      'string.empty': 'full_name field must contain at least 1 character.',
+      'any.required': 'نام کامل باید وارد شود.',
+      'string.empty': 'نام کامل باید حداقل شامل 1 کاراکتر باشد.',
     }),
 
   tel: joi.string()
@@ -32,8 +32,8 @@ const schema = joi.object({
     .trim()
     .length(11)
     .messages({
-      'any.required': 'tel field must be provided.',
-      'string.length': 'tel field must contain 11 characters.',
+      'any.required': 'شمارۀ همراه باید وارد شود.',
+      'string.length': 'شمارۀ همراه باید شامل 11 رقم باشد.',
     }),
 
   email: joi.string()
@@ -41,8 +41,8 @@ const schema = joi.object({
     .trim()
     .email()
     .messages({
-      'any.required': 'email field must be provided.',
-      'string.email': 'email address is not valid.',
+      'any.required': 'ایمیل باید وارد شود.',
+      'string.email': 'ایمیل وارد شده معتبر نیست.',
     }),
 
   national_id: joi.string()
@@ -50,8 +50,8 @@ const schema = joi.object({
     .trim()
     .length(10)
     .messages({
-      'any.required': 'national_id must be provided.',
-      'string.length': 'national_id must contain 10 characters.',
+      'any.required': 'کد ملی باید وارد شود.',
+      'string.length': 'کد ملی باید شامل 10 رقم باشد.',
     }),
 
   home_tel: joi.string()
@@ -59,8 +59,8 @@ const schema = joi.object({
     .trim()
     .length(11)
     .messages({
-      'any.required': 'home_tel field must be provided.',
-      'string.length': 'home_tel field must contain 11 characters.',
+      'any.required': 'تلفن ثابت باید وارد شود.',
+      'string.length': 'تلفن ثابت باید شامل 11 رقم باشد.',
     }),
 
   full_address: joi.string()
@@ -68,9 +68,9 @@ const schema = joi.object({
     .trim()
     .min(10)
     .messages({
-      'any.required': 'full_address field must be provided.',
-      'string.min': 'full_address field must contain at least 11 characters.',
-      'string.empty': 'full_address field can\'t be empty.',
+      'any.required': 'آدرس کامل باید وارد شود.',
+      'string.min': 'آدرس کامل باید حداقل شامل 10 کاراکتر باشد.',
+      'string.empty': 'آدرس کامل نمی‌تواند خالی باشد.',
     }),
 })
   .with('password', 'repeatPass');

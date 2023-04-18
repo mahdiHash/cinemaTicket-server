@@ -13,7 +13,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.userId)) {
-      return next(new BadRequestErr('user_id is not valid.'));
+      return next(new BadRequestErr('شناسۀ کاربر باید یک عدد باشد.'));
     }
 
     let user = await prisma.users.findUnique({
@@ -26,7 +26,7 @@ const controller = [
       .catch(next);
 
     if (!user) {
-      return next(new NotFoundErr("user not found"));
+      return next(new NotFoundErr('کاربر یافت نشد.'));
     }
 
     imageKit.deleteFile(user.profile_pic_fileId)

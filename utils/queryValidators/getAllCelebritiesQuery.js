@@ -4,14 +4,14 @@ const schema = joi.object({
     .trim()
     .min(3)
     .messages({
-      'string.empty': 'full_name field can\'t be empty.',
+      'string.empty': 'full_name quey field can\'t be empty.',
       'string.min': 'full_name field must contain at least 3 characters.',
     }),
 
   cursor: joi.number()
     .min(1)
     .messages({
-      'number.min': 'cursor field must be a positive integer.'
+      'number.min': 'cursor quey field must be a positive integer.'
     }),
 
   backward: joi.boolean(),

@@ -15,7 +15,7 @@ const controller = [
       .catch(next);
 
     if (!fileId) {
-      return next(new BadRequestErr('admin has no profile pic.'));
+      return next(new BadRequestErr('ادمین هیچ عکس پروفایلی آپلود نکرده است.'));
     }
 
     imageKit.deleteFile(fileId)

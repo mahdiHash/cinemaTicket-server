@@ -15,7 +15,7 @@ const controller = [
     let doesPassMatch = await bcrypt.compare(req.body.oldPass, req.user.password);
 
     if (!doesPassMatch) {
-      return next(new UnauthorizedErr('old password is incorrect.'));
+      return next(new UnauthorizedErr('رمز ورود قدیمی اشتباه است.'));
     }
 
     let newPassHash = await bcrypt.hash(res.locals.validBody.newPass, 16);

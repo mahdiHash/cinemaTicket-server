@@ -5,8 +5,8 @@ const schema = Joi.object({
     .trim()
     .empty()
     .messages({
-      'any.required': 'oldPass field must be provided.',
-      'string.empty': 'oldPass field can\'t be empty.',
+      'any.required': 'رمز وورد قدیمی باید وارد شود.',
+      'string.empty': 'رمز ورود قدیمی نمی‌تواند خالی باشد.',
     }),
 
   newPass: Joi.string()
@@ -15,9 +15,9 @@ const schema = Joi.object({
     .empty()
     .min(8)
     .messages({
-      'any.required': 'newPass field must be provided.',
-      'string.empty': 'newPass field can\'t be empty.',
-      'string.min': 'newPass field must contain at least 8 characters.'
+      'any.required': 'رمز ورود جدید باید وارد شود.',
+      'string.empty': 'رمز ورود جدید نمی‌تواند خالی باشد.',
+      'string.min': 'رمز ورود جدید باید حداقل شامل 8 کاراکتر باشد.'
     }),
 
   repeatNewPass: Joi.ref('newPass'),

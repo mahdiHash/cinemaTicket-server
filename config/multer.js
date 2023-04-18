@@ -24,7 +24,7 @@ const upload = multer({
     let fileFormat = path.extname(file.originalname).toLocaleLowerCase();
 
     if (!validForamts.includes(fileFormat)) {
-      cb(new BadRequestErr('file format not valid.'));
+      cb(new BadRequestErr('فرمت عکس آپلود شده معتبر نیست.'));
     }
     else {
       cb(null, true);

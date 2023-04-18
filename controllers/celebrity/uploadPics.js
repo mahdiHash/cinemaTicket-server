@@ -21,7 +21,7 @@ const controller = [
     let uploadedImgsUrls = [];
 
     if (!req.files) {
-      return next(new BadRequestErr('no image is provided.'));
+      return next(new BadRequestErr('عکسی آپلود نشده است.'));
     }
 
     if (!isFinite(req.params.id)) {
@@ -30,7 +30,7 @@ const controller = [
           .catch(errLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
       })
 
-      return next(new BadRequestErr('celeb_id not valid.'));
+      return next(new BadRequestErr('پارامتر id باید یک عدد باشد.'));
     }
 
     prisma.celebrities.findUnique({
@@ -38,7 +38,7 @@ const controller = [
     })
       .then(async (celeb) => {
         if (!celeb) {
-          throw new NotFoundErr('celebrity not found.');
+          throw new NotFoundErr('فرد مورد نظر پیدا نشد.');
         }
 
         await Promise.all(req.files.map((file) => {

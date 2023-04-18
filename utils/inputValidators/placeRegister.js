@@ -5,8 +5,8 @@ const schema = joi.object({
     .trim()
     .empty()
     .messages({
-      'any.required': 'name field must be provided.',
-      'string.empty': 'name field can\'t be empty',
+      'any.required': 'نام مکان باید وارد شود.',
+      'string.empty': 'نام مکان نمی‌تواند خالی باشد.',
     }),
 
   type: joi.string()
@@ -21,8 +21,8 @@ const schema = joi.object({
       return value.trim();
     })
     .messages({
-      'any.required': 'type field must be provided.',
-      'any.only': 'type field not valid.',
+      'any.required': 'نوع مکان باید وارد شود.',
+      'any.only': 'نوع مکان معتبر نیست.',
     }),
 
   license_id: joi.string()
@@ -30,8 +30,8 @@ const schema = joi.object({
     .trim()
     .length(10)
     .messages({
-      'any.required': 'license_id field must be provided.',
-      'string.length': 'license_id field must contain 10 characters.',
+      'any.required': 'شمارۀ گواهینامه باید وارد شود.',
+      'string.length': 'شمارۀ گواهینامه باید شامل 10 رقم باشد.',
     }),
 
   address: joi.string()
@@ -39,8 +39,8 @@ const schema = joi.object({
     .trim()
     .min(10)
     .messages({
-      'any.required': 'address field must be provided.',
-      'string.min': 'address field must contain at least 10 characters',
+      'any.required': 'آدرس باید وارد شود.',
+      'string.min': 'آدرس باید حداقل 10 کاراکتر داشته باشد.',
     }),
 
   city: joi.string()
@@ -48,8 +48,8 @@ const schema = joi.object({
     .trim()
     .empty()
     .messages({
-      'any.required': 'city field must be provided.',
-      'string.empty': 'city field can\'t be empty',
+      'any.required': 'شهر باید وارد شود.',
+      'string.empty': 'شهر نمی‌تواند خالی باشد.',
     }),
 });
 

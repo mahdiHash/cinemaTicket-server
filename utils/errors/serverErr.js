@@ -2,7 +2,7 @@ class ServerErr extends Error {
   constructor(msg) {
     super();
     this.name = ServerErr;
-    this.message = msg ?? "Something went wrong in server.";
+    this.message = msg ?? "خطایی در سوی سرور رخ داده است.";
     this.code = 500;
   }
 }

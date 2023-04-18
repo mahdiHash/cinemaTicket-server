@@ -2,7 +2,7 @@ class BadRequestErr extends Error {
   constructor(msg) {
     super();
     this.name = "BadRequestErr";
-    this.message = msg ?? "The data you provided is not valid.";
+    this.message = msg ?? "دادۀ ارسالی معتبر نیست.";
     this.code = 400;
   }
 }

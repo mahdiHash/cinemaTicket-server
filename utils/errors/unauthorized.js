@@ -2,7 +2,7 @@ class UnauthorizedErr extends Error {
   constructor(msg) {
     super();
     this.name = "UnauthorizedErr";
-    this.message = msg ?? "The credentials you provided are not valid.";
+    this.message = msg ?? "موارد هویت‌سنجی شما معتبر نیست.";
     this.code = 401;
   }
 }

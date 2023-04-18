@@ -13,7 +13,7 @@ const controller = [
 
   async (req, res, next) => {
     if (!isFinite(req.params.adminId)) {
-      return next(new BadRequestErr('admin id not valid.'));
+      return next(new BadRequestErr('شناسۀ ادمین باید یک عدد باشد.'));
     }
 
     let admin = await prisma.admins.findUnique({
@@ -22,7 +22,7 @@ const controller = [
       .catch(next);
 
     if (!admin) {
-      return next(new NotFoundErr('admin not found.'));
+      return next(new NotFoundErr('ادمینی پیدا نشد.'));
     }
 
     res.json({

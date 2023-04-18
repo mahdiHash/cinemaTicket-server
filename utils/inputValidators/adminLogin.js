@@ -5,8 +5,8 @@ const schema = joi.object({
     .trim()
     .length(11)
     .messages({
-      'any.required': 'tel field must be provided.',
-      'string.length': 'tel field must contain 11 characters',
+      'any.required': 'شمارۀ همراه باید وارد شود.',
+      'string.length': 'شمارۀ همراه باید شامل 11 عدد باشد.',
     }),
 
   password: joi.string()
@@ -14,8 +14,8 @@ const schema = joi.object({
     .trim()
     .empty()
     .messages({
-      'any.required': 'password field must be provided.',
-      'string.empty': 'password field can\'t be empty',
+      'any.required': 'رمز ورود باید وارد شود.',
+      'string.empty': 'رمز ورود نمی‌تواند خالی باشد.',
     }),
 });
 
