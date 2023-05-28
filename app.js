@@ -27,14 +27,18 @@ passport.initialize();
 // swagger docs
 app.use('/apidocs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
-// check and create api keys
+// create api keys
 app.get('/getapikey', getApiKey);
+
+// access image route without checking apikey
+app.use('/img', imgRouter);
+
+// check client's api key
 app.use('/', authorizeApiKey);
 
 // set routers
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
-app.use('/img', imgRouter);
 app.use('/admin', adminRouter);
 app.use('/place', placeRouter);
 app.use('/celebrity', celebrityRouter);
