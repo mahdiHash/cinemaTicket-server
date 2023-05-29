@@ -74,16 +74,16 @@
         "responses": {
           "200": {
             "description": "The response contains two fileds: token (JWT) and user object.",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": { 
-                      "type": "string",
-                      "description": "This token will be used by routes that need it. Store it in the user's browser.",
-                      "example": "fadsf879a8f79da7fs897df987ads9f7d98a7f" 
-                    },
                     "user": {
                       "type": "object",
                       "properties": {
@@ -171,16 +171,16 @@
         "responses": {
           "200": {
             "description": "The response has 2 fields: \"token\" (JWT) and \"user\". You need to store the token.",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string",
-                      "description": "This the JWT. You need to store it in the browser for further usecases.",
-                      "example": "a8f7d7f8ds8afd78f8ad8f78adsf8dadaf9sd8fa"
-                    },
                     "user": {
                       "type": "object",
                       "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
@@ -245,7 +245,7 @@
       "get": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get user's information",
         "description": "Use this route for getting any information on user's profile.",
@@ -312,7 +312,7 @@
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Use this route to update user's profile information. You only need to send the fields you want to update, the rest of the fileds won't be updated.",
         "summary": "Update user's profile info",
@@ -359,16 +359,16 @@
         "responses": {
           "200": {
             "description": "The response object contains \"token\" and \"user\" object properties. If the \"tel\" field was provided in the request body, you have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status).",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string",
-                      "description": "This the JWT. You need to store it in the browser for further usecases.",
-                      "example": "a8f7d7f8ds8afd78f8ad8f78adsf8dadaf9sd8fa"
-                    },
                     "user": {
                       "type": "object",
                       "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
@@ -433,7 +433,7 @@
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Reset user's password",
         "description": "Use this route to reset user's password. If the process is successful, an OK 200 response will be sent to you without any detail.",
@@ -480,7 +480,7 @@
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Upload user's profile pic",
         "description": "The file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp. If the user has already uploaded a photo, it'll be deleted.",
@@ -518,7 +518,7 @@
       "delete": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove user's profile pic",
         "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
@@ -672,7 +672,7 @@
       "get": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get admin's profile",
         "description": "JWT must be provided. Normal admins can't get other admins profile info.",
@@ -747,7 +747,7 @@
       "get": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get all admins profiles",
         "description": "Normal admins can't get other admins profile info. This route is for super admins only.",
@@ -814,7 +814,7 @@
       "post": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Create admin by super admin",
         "description": "Only the admins with \"super\" access level can send a request to this route.",
@@ -936,7 +936,7 @@
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Update an admin's info",
         "description": "Super admins can update normal admins info but not other super admins.",
@@ -1058,7 +1058,7 @@
       "delete": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove a normal admin by super admin",
         "description": "Only super admins can use this route, and they can't remove other super admins. If the operation is successful, you'll get an OK 200 response.",
@@ -1090,7 +1090,7 @@
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Reset admin password",
         "description": "If the process is successful, an OK 200 response will be sent to you with no additional information.",
@@ -1137,7 +1137,7 @@
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Upload admin's profile pic",
         "description": "The file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp. If the user has already uploaded a photo, it'll be deleted.",
@@ -1178,7 +1178,7 @@
       "delete": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove admin's profile pic",
         "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
@@ -1199,7 +1199,7 @@
       "delete": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove a user's profile pic by super admin",
         "description": "Super admins can remove users profile pic using this route. If the process is successful, an OK 200 response will be given to the client.",
@@ -1231,7 +1231,7 @@
       "put": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Set user's full name to a default value",
         "description": "This route can be used by super admins to set a default value (کاربر سینماتیکت) to a user's full name. If the process is successful, the default value will be given to the client.",
@@ -1268,7 +1268,7 @@
       "post": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Register a new place by user",
         "description": "The users can register for their licensed cinema/theater using this route.",
@@ -1322,7 +1322,7 @@
       "get": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Track the status of a place registeration",
         "description": "Only the creator of process or super admins can see the status.",
@@ -1381,7 +1381,7 @@
       "delete": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Cancel a pending place registeration",
         "description": "Only the owner of request can cancel a registeration process.",
@@ -1413,7 +1413,7 @@
       "get": {
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get all pending new place registerations",
         "description": "Only super admins can access this route.",
@@ -1554,7 +1554,7 @@
         "summary": "Approve a pending place register",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super admins can access this route.",
         "parameters": [
@@ -1590,7 +1590,7 @@
         "summary": "Deny a pending place register",
         "security": [
           { "apikey": [ "apieky" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super admins can access this route.",
         "parameters": [
@@ -1626,7 +1626,7 @@
         "summary": "Create a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super/play admins can access this route.",
         "requestBody": {
@@ -1730,7 +1730,7 @@
         "summary": "Get all the celebrities profiles",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -1895,7 +1895,7 @@
         "summary": "Update a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super/play admins can access this route.",
         "parameters": [
@@ -2011,7 +2011,7 @@
         "summary": "Remove a celebrity profile pic",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -2047,7 +2047,7 @@
         "summary": "Upload pics of a celebrity",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -2149,7 +2149,7 @@
         "summary": "Delete a specific celebrity pic",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route. If you want to delete all celebrity pics, place \"all\" in {pic_url}.",
         "parameters": [
@@ -2192,7 +2192,7 @@
         "summary": "Remove a celebrity prfile",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -2242,6 +2242,13 @@
           "body": { "type": "object" },
           "parameters": { "type": "object" }
         }
+      },
+      "Set-Cookie": {
+        "description": "The JWT is stored in \"authToken\" cookie. You need to provide it in routes that need it for authorization.",
+        "schema": {
+          "type": "string",
+          "example": "da8f97daf98d7f89f7b89gb7gsg6r87erq893729r8qr7b987gne8r8978907fsa"
+        }
       }
     },
     "securitySchemes": {
@@ -2251,10 +2258,12 @@
         "type": "apiKey",
         "in": "header"
       },
-      "jwt": {
-        "description": "The value of your JWT must go inside \"Authorization\" header with the format of \"Bearer {token}\".",
-        "type": "http",
-        "scheme": "bearer"      }
+      "authToken": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "authToken",
+        "description": "This field must be provided in cookies for authorization of the protected routes."
+      }
     }
   },
   "security": [
@@ -2262,7 +2271,7 @@
       "apikey": [ "apikey" ]
     },
     {
-      "jwt": [ "jwt" ]
+      "authToken": [] 
     }
   ]
 }
