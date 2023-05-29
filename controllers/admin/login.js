@@ -24,6 +24,7 @@ const controller = [
       signed: true,
       sameSite: 'lax',
       secret: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     });
 
     res.json({
