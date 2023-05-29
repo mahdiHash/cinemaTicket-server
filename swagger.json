@@ -354,11 +354,6 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string",
-                      "description": "This the JWT. You need to store it in the browser for further usecases.",
-                      "example": "a8f7d7f8ds8afd78f8ad8f78adsf8dadaf9sd8fa"
-                    },
                     "user": {
                       "type": "object",
                       "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
