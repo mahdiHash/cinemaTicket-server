@@ -39,7 +39,9 @@ const controller = [
       secure: process.env.ENV === 'production',
     })
 
-    res.json(descryptedUser);
+    res.json({
+      user: descryptedUser
+    });
   }
 ];
 
