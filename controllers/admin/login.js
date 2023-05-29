@@ -18,8 +18,15 @@ const controller = [
       { expiresIn: '7d'},
     );
 
+    res.cookie('authToken', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      httpOnly: true,
+      signed: true,
+      sameSite: 'lax',
+      secret: process.env.ENV === 'production',
+    });
+
     res.json({
-      token,
       // decrypt some values for the client
       admin: {
         id: req.user.id,

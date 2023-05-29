@@ -613,15 +613,16 @@
         "responses": {
           "200": {
             "description": "The response contains two fields: \"token\" and \"admin\". You may want to store the token for further actions.",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string",
-                      "example": "f9d7f9d7fd9a8f7d9as87fd98af7d9sf7d9as8f7d98s7af9d8s7fasf9da8s7fd987f9s8da7f98d7s9f"
-                    },
                     "admin": {
                       "type": "object",
                       "properties": {
