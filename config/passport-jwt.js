@@ -1,10 +1,11 @@
-const { Strategy, ExtractJwt } = require('passport-jwt');
+const { Strategy } = require('passport-jwt');
+const jwtExtractorFromCookie = require('../utils/jwtExtractorFromCookie');
 const prisma = require('./prismaConfig');
 const UnauthorizedErr = require('../utils/errors/unauthorized');
 
 const JWTStrategy = new Strategy(
   {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: jwtExtractorFromCookie,
     secretOrKey: process.env.JWT_TOKEN_SECRET,
   },
   async (payload, cb) => {
