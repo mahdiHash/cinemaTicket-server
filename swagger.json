@@ -74,6 +74,11 @@
         "responses": {
           "200": {
             "description": "The response contains two fileds: token (JWT) and user object.",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -166,6 +171,11 @@
         "responses": {
           "200": {
             "description": "The response has 2 fields: \"token\" (JWT) and \"user\". You need to store the token.",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -2226,6 +2236,13 @@
           "headers": { "type": "object" },
           "body": { "type": "object" },
           "parameters": { "type": "object" }
+        }
+      },
+      "Set-Cookie": {
+        "description": "The JWT is stored in \"authToken\" cookie. You need to provide it in routes that need it for authorization.",
+        "schema": {
+          "type": "string",
+          "example": "da8f97daf98d7f89f7b89gb7gsg6r87erq893729r8qr7b987gne8r8978907fsa"
         }
       }
     },
