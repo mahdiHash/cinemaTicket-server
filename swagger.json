@@ -18,6 +18,7 @@
   "paths": {
     "/getapikey": {
       "get": {
+        "tags": [ "Api key" ],
         "security": [{}],
         "description": "Get an api key from the server. You need to provide this key in \"apikey\" header of your requests headers.",
         "summary": "Api key for other requests",
@@ -39,6 +40,7 @@
     },
     "/auth/signup": {
       "post": {
+        "tags": [ "Auth" ],
         "security": [
           { "apikey": ["apikey"] }
         ],
@@ -142,6 +144,7 @@
     },
     "/auth/login": {
       "post": {
+        "tags": [ "Auth" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
@@ -243,6 +246,7 @@
     },
     "/user/profile": {
       "get": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -310,6 +314,7 @@
     },
     "/user/update": {
       "put": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -431,6 +436,7 @@
     },
     "/user/resetPass": {
       "put": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -478,6 +484,7 @@
     },
     "/user/profilePic/upload": {
       "put": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -516,6 +523,7 @@
     },
     "/user/profilePic/remove": {
       "delete": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -537,6 +545,7 @@
     },
     "/img/{imageUrl}": {
       "get": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
@@ -575,6 +584,7 @@
     },
     "/admin/login": {
       "post": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
@@ -670,6 +680,7 @@
     },
     "/admin/profile/{admin_id}": {
       "get": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -745,6 +756,7 @@
     },
     "/admin/profile/all": {
       "get": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -812,6 +824,7 @@
     },
     "/admin/create": {
       "post": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -934,6 +947,7 @@
     },
     "/admin/update/{admin_id}": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1056,6 +1070,7 @@
     },
     "/admin/remove/{admin_id}": {
       "delete": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1088,6 +1103,7 @@
     },
     "/admin/resetPass": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1135,6 +1151,7 @@
     },
     "/admin/profilePic/upload": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1176,6 +1193,7 @@
     },
     "/admin/profilePic/remove": {
       "delete": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1197,6 +1215,7 @@
     },
     "/admin/userProfile/{user_id}/removeProfilePic": {
       "delete": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1229,6 +1248,7 @@
     },
     "/admin/userProfile/{user_id}/setDefaultFullName": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1266,6 +1286,7 @@
     },
     "/place/register": {
       "post": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1320,6 +1341,7 @@
     },
     "/place/register/status/{code}": {
       "get": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1379,6 +1401,7 @@
     },
     "/place/register/cancel/{code}": {
       "delete": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1411,6 +1434,7 @@
     },
     "/place/register/all": {
       "get": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
           { "authToken": [] }
@@ -1551,6 +1575,7 @@
     },
     "/place/register/approve/{register_id}": {
       "post": {
+        "tags": [ "Place" ],
         "summary": "Approve a pending place register",
         "security": [
           { "apikey": [ "apikey" ]},
@@ -1587,6 +1612,7 @@
     },
     "/place/register/deny/{register_id}": {
       "put": {
+        "tags": [ "Place" ],
         "summary": "Deny a pending place register",
         "security": [
           { "apikey": [ "apieky" ]},
@@ -1623,6 +1649,7 @@
     },
     "/celebrity/create": {
       "post": {
+        "tags": [ "Celebrity" ],
         "summary": "Create a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]},
@@ -1727,6 +1754,7 @@
     },
     "/celebrity/all": {
       "get": {
+        "tags": [ "Celebrity" ],
         "summary": "Get all the celebrities profiles",
         "security": [
           { "apikey": [ "apikey" ]},
@@ -1823,6 +1851,7 @@
     },
     "/celebrity/{celeb_id}": {
       "get": {
+        "tags": [ "Celebrity" ],
         "summary": "Get a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]}
@@ -1892,6 +1921,7 @@
     },
     "/celebrity/{celeb_id}/update": {
       "post": {
+        "tags": [ "Celebrity" ],
         "summary": "Update a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]},
@@ -2008,6 +2038,7 @@
     },
     "/celebrity/{celeb_id}/profilePic/remove": {
       "delete": {
+        "tags": [ "Celebrity" ],
         "summary": "Remove a celebrity profile pic",
         "security": [
           { "apikey": [ "apikey" ]},
@@ -2044,6 +2075,7 @@
     },
     "/celebrity/{celeb_id}/pics/upload": {
       "post": {
+        "tags": [ "Celebrity" ],
         "summary": "Upload pics of a celebrity",
         "security": [
           { "apikey": [ "apikey" ]},
@@ -2109,6 +2141,7 @@
     },
     "/celebrity/{celeb_id}/pics": {
       "get": {
+        "tags": [ "Celebrity" ],
         "summary": "Get all a celebrity pics",
         "security": [
           { "apikey": [ "apikey" ]}
@@ -2146,6 +2179,7 @@
     },
     "/celebrity/{celeb_id}/pics/remove/{pic_url}": {
       "delete": {
+        "tags": [ "Celebrity" ],
         "summary": "Delete a specific celebrity pic",
         "security": [
           { "apikey": [ "apikey" ]},
@@ -2189,6 +2223,7 @@
     },
     "/celebrity/{celeb_id}/remove": {
       "delete": {
+        "tags": [ "Celebrity" ],
         "summary": "Remove a celebrity prfile",
         "security": [
           { "apikey": [ "apikey" ]},
