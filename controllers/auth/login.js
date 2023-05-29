@@ -31,10 +31,15 @@ const controller = [
       profile_pic_url: req.user.profile_pic_url,
     }
 
-    res.json({
-      token,
-      user: descryptedUser,
-    });
+    res.cookie('authToken', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      httpOnly: true,
+      signed: true,
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+    })
+
+    res.json(descryptedUser);
   }
 ];
 
