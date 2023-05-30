@@ -38,11 +38,16 @@ const controller = [
       sameSite: "lax",
       secure: process.env.ENV === 'production',
       domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    });
+
+    res.cookie('userData', descryptedUser, {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     })
 
-    res.json({
-      user: descryptedUser
-    });
+    res.end();
   }
 ];
 
