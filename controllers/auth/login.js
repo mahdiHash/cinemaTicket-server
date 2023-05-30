@@ -20,7 +20,7 @@ const controller = [
     );
 
     // decrypt some vlaues for the client
-    let descryptedUser = {
+    let decryptedUser = {
       id: req.user.id,
       full_name: unescape(req.user.full_name),
       tel: decrypt(req.user.tel),
@@ -40,7 +40,7 @@ const controller = [
       domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     });
 
-    res.cookie('userData', descryptedUser, {
+    res.cookie('userData', decryptedUser, {
       maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
       sameSite: "lax",
       secure: process.env.ENV === 'production',
