@@ -84,7 +84,14 @@ const controller = [
           domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
         });
 
-        res.json(descryptedUser);
+        res.cookie('userData', descryptedUser, {
+          maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+          sameSite: "lax",
+          secure: process.env.ENV === 'production',
+          domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+        });
+
+        res.end();
       })
       .catch((err) => {
         next(err);
