@@ -21,6 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(cors({
+  origin: process.env.ENV === 'dev' ? 'http://localhost:3000' : 'domain.ir',
+  optionsSuccessStatus: 200,
   credentials: true
 }));
 
