@@ -53,7 +53,7 @@ const controller = [
       domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     });
 
-    res.cookie('userData', user, {
+    res.cookie('userData', JSON.stringify(user), {
       maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
       sameSite: "lax",
       secure: process.env.ENV === 'production',
