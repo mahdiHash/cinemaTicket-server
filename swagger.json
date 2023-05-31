@@ -428,7 +428,7 @@
     },
     "/img/{imageUrl}": {
       "get": {
-        "tags": [ "User" ],
+        "tags": [ "Image" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
