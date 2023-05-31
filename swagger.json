@@ -75,7 +75,7 @@
         },
         "responses": {
           "200": {
-            "description": "The response contains two fileds: token (JWT) and user object.",
+            "description": "The response Set-Cookie header contains two fileds: authToken (server-usage) and userData object (you can store it).",
             "headers": {
               "Set-Cookie": {
                 "$ref": "#/components/schemas/Set-Cookie"
@@ -84,54 +84,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "The id of user in database.",
-                          "example": "123"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "description": "You need to get the user's name for all submission actions.",
-                          "example": null
-                        },
-                        "tel": {
-                          "type": "string",
-                          "description": "User's phone number.",
-                          "example": "09120000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "description": "User's email.",
-                          "example": null
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
-                          "example": null
-                        },
-                        "credit_card_num": {
-                          "type": "string",
-                          "description": "User's credit card number.",
-                          "example": null
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "description": "User's national id.",
-                          "example": null
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": null
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -173,7 +126,7 @@
         },
         "responses": {
           "200": {
-            "description": "The response has 2 fields: \"token\" (JWT) and \"user\". You need to store the token.",
+            "description": "The response Set-Cookie header contains two fileds: authToken (server-usage) and userData object (you can store it).",
             "headers": {
               "Set-Cookie": {
                 "$ref": "#/components/schemas/Set-Cookie"
@@ -182,55 +135,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "The id of user in database.",
-                          "example": "123"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "description": "User's full name. Needed for submission actions like writing a comments.",
-                          "example": "Jack Nicholson"
-                        },
-                        "tel": {
-                          "type": "string",
-                          "description": "User's phone number.",
-                          "example": "09120000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "description": "User's email.",
-                          "example": "jack@example.com"
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
-                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
-                        },
-                        "credit_card_num": {
-                          "type": "string",
-                          "description": "User's credit card number.",
-                          "example": "1234123412341234"
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "description": "User's national id.",
-                          "example": "00000000000"
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": "/path/to/image"
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -363,7 +268,7 @@
         },
         "responses": {
           "200": {
-            "description": "The response object contains \"token\" and \"user\" object properties. If the \"tel\" field was provided in the request body, you have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status).",
+            "description": "The response Set-Cookie header contains two fileds: authToken (server-usage) and userData object (you can store it). If the \"tel\" field was provided in the request body, you have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status).",
             "headers": {
               "Set-Cookie": {
                 "$ref": "#/components/schemas/Set-Cookie"
@@ -372,55 +277,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "object",
-                      "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "The id of user in database.",
-                          "example": "123"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "description": "User's full name. Needed for submission actions like writing a comments.",
-                          "example": "Jack Nicholson"
-                        },
-                        "tel": {
-                          "type": "string",
-                          "description": "User's phone number.",
-                          "example": "09120000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "description": "User's email.",
-                          "example": "jack@example.com"
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
-                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
-                        },
-                        "credit_card_num": {
-                          "type": "string",
-                          "description": "User's credit card number.",
-                          "example": "1234123412341234"
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "description": "User's national id.",
-                          "example": "00000000000"
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": "/path/to/image"
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
