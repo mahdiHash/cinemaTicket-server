@@ -2280,10 +2280,9 @@
         }
       },
       "Set-Cookie": {
-        "description": "The JWT is stored in \"authToken\" cookie. You need to provide it in routes that need it for authorization.",
+        "description": "The JWT is stored in \"authToken\" cookie(you need to provide it in routes that need it for authorization). The user's profile info is stored in \"userData\" cookie.",
         "schema": {
-          "type": "string",
-          "example": "da8f97daf98d7f89f7b89gb7gsg6r87erq893729r8qr7b987gne8r8978907fsa"
+          "type": "string"
         }
       }
     },
