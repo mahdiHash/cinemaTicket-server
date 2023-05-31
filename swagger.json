@@ -803,7 +803,7 @@
           }
         ],
         "requestBody": {
-          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values.",
+          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values. If the tel field is changed you need to store the authToken cookie.",
           "content": {
             "body": {
               "schema": {
@@ -848,50 +848,19 @@
         },
         "responses": {
           "200": {
-            "description": "\"profile_pic_url\" will be null if the admin hasn't uploaded any image.",
+            "headers": {
+              "Set-Cookie": {
+                "description": "If the current logged-in admin profile info is changed, the JWT is stored in \"authToken\" cookie(you need to provide it in routes that need it for authorization) and the admin's profile info is stored in \"adminData\" cookie.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "\"profile_pic_url\" of the adminData cookie will be null if the admin hasn't uploaded any image.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer",
-                      "example": 123 
-                    },
-                    "access_level": {
-                      "type": "string",
-                      "description": "Possible values: super, play, comment"
-                    },
-                    "full_name": {
-                      "type": "string",
-                      "example": "محمد کمالی"
-                    },
-                    "tel": {
-                      "type": "string",
-                      "example": "09000000000"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "myemail@example.com"
-                    },
-                    "national_id": {
-                      "type": "string",
-                      "example": "0123456789"
-                    },
-                    "home_tel": {
-                      "type": "string",
-                      "example": "01234567890"
-                    },
-                    "full_address": {
-                      "type": "string",
-                      "example": "ایران، تهران، میدان آزادی"
-                    },
-                    "profile_pic_url": {
-                      "type": "string",
-                      "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                      "example": "/path/to/image"
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
