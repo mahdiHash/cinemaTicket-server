@@ -27,9 +27,9 @@ const controller = [
       domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     });
 
-    res.json({
-      // decrypt some values for the client
-      admin: {
+    res.cookie(
+      'adminData', 
+      {
         id: req.user.id,
         access_level: req.user.access_level,
         full_name: req.user.full_name,
@@ -39,8 +39,16 @@ const controller = [
         home_tel: decrypt(req.user.home_tel),
         full_address: decrypt(req.user.full_address),
         profile_pic_url: req.user.profile_pic_url,
+      }, 
+      {
+        maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+        sameSite: 'lax',
+        secret: process.env.ENV === 'production',
+        domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
       }
-    });
+    );
+
+    res.end();
   }
 ];
 
