@@ -400,6 +400,32 @@
         }
       }
     },
+    "/user/logout": {
+      "post": {
+        "tags": [ "User" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "description": "Use this route to logout user. User must be logged-in.",
+        "summary": "User logout",
+        "responses": {
+          "200": {
+            "description": "If the logout is successful, the authToken and userData cookies will be removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          }
+        }
+      }
+    },
     "/img/{imageUrl}": {
       "get": {
         "tags": [ "User" ],
