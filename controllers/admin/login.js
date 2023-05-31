@@ -12,6 +12,12 @@ const controller = [
 
   // authentication successful
   (req, res, next) => {
+    res.clearCookie('userData', {
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    });
+
     let token = jwt.sign(
       { id: req.user.id, tel: req.user.tel },
       process.env.JWT_TOKEN_SECRET,
