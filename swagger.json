@@ -498,57 +498,13 @@
             "description": "The response contains two fields: \"token\" and \"admin\". You may want to store the token for further actions.",
             "headers": {
               "Set-Cookie": {
-                "$ref": "#/components/schemas/Set-Cookie"
+                "$ref": "#/components/schemas/Set-Cookie-Admin"
               }
             },
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "admin": {
-                      "type": "object",
-                      "properties": {
-                        "id": { 
-                          "type": "integer",
-                          "example": 123 
-                        },
-                        "access_level": {
-                          "type": "string",
-                          "description": "Possible values: super, play, comment"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "example": "محمد کمالی"
-                        },
-                        "tel": {
-                          "type": "string",
-                          "example": "09000000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "example": "myemail@example.com"
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "example": "0123456789"
-                        },
-                        "home_tel": {
-                          "type": "string",
-                          "example": "01234567890"
-                        },
-                        "full_address": {
-                          "type": "string",
-                          "example": "Iran, Tehran, Azadi sq."
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": "/path/to/image"
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -2164,6 +2120,12 @@
       },
       "Set-Cookie": {
         "description": "The JWT is stored in \"authToken\" cookie(you need to provide it in routes that need it for authorization). The user's profile info is stored in \"userData\" cookie.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Set-Cookie-Admin": {
+        "description": "The JWT is stored in \"authToken\" cookie(you need to provide it in routes that need it for authorization). The admin's profile info is stored in \"adminData\" cookie.",
         "schema": {
           "type": "string"
         }
