@@ -227,7 +227,7 @@
         "description": "Use this route to update user's profile information. You only need to send the fields you want to update, the rest of the fileds won't be updated.",
         "summary": "Update user's profile info",
         "requestBody": {
-          "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. Note that \"profile_pic_url\" can't be updated using this form. To update user's profile image, you need to send a PUT request to \"/user/profilePic/upload\".",
+          "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. For the \"img\" field: the file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp.",
           "content": {
             "body": {
               "schema": {
@@ -260,6 +260,10 @@
                     "type": "string",
                     "example": "0000000000",
                     "description": "Must contain 10 characters"
+                  },
+                  "img": {
+                    "type": "Image file",
+                    "description": "The image file to upload. Pay attention to the description provided above in the request body."
                   }
                 }
               }
@@ -335,45 +339,6 @@
           },
           "401": {
             "description": "The JWT you provided is not valid. No error message will be provided."
-          }
-        }
-      }
-    },
-    "/user/profilePic/upload": {
-      "put": {
-        "tags": [ "User" ],
-        "security": [
-          { "apikey": [ "apikey" ]},
-          { "authToken": [] }
-        ],
-        "summary": "Upload user's profile pic",
-        "description": "The file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp. If the user has already uploaded a photo, it'll be deleted.",
-        "requestBody": {
-          "content": {
-            "body": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "img": {
-                    "type": "image file",
-                    "description": "The image file to upload."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
-            "content": {
-              "application/json": {
-                "example": "/path/to/image"
-              }
-            }
-          },
-          "400": {
-            "description": "The file you uploaded is not valid against one of the specified limitations. More information on the error will be sent to you on response. You can see the schema down this page."
           }
         }
       }
