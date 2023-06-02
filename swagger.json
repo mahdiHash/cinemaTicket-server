@@ -1294,6 +1294,11 @@
                   "address": {
                     "type": "string",
                     "description": "Full address of the place. Must contain at least 10 characters."
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "The city where the place is located.",
+                    "example": "تهران"
                   }
                 }
               }
