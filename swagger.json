@@ -84,7 +84,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
                 }
               }
             }
@@ -135,7 +140,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
                 }
               }
             }
@@ -281,7 +291,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
                 }
               }
             }
@@ -332,7 +347,19 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -354,7 +381,19 @@
         "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
         "responses": {
           "200": {
-            "description": "The profile pic is successfully removed."
+            "description": "The profile pic is successfully removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "User has not uploaded any profile pic. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -380,7 +419,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
                 }
               }
             }
@@ -469,7 +513,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
                 }
               }
             }
@@ -698,43 +747,51 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer",
-                      "example": 123 
+                    "admin": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 123 
+                        },
+                        "access_level": {
+                          "type": "string",
+                          "description": "Possible values: super, play, comment",
+                          "example": "play"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "محمد کمالی"
+                        },
+                        "tel": {
+                          "type": "string",
+                          "example": "09000000000"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "myemail@example.com"
+                        },
+                        "national_id": {
+                          "type": "string",
+                          "example": "0123456789"
+                        },
+                        "home_tel": {
+                          "type": "string",
+                          "example": "01234567890"
+                        },
+                        "full_address": {
+                          "type": "string",
+                          "example": "ایران، تهران، میدان آزادی"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                          "example": "/path/to/image"
+                        }
+                      }
                     },
-                    "access_level": {
-                      "type": "string",
-                      "description": "Possible values: super, play, comment",
-                      "example": "play"
-                    },
-                    "full_name": {
-                      "type": "string",
-                      "example": "محمد کمالی"
-                    },
-                    "tel": {
-                      "type": "string",
-                      "example": "09000000000"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "myemail@example.com"
-                    },
-                    "national_id": {
-                      "type": "string",
-                      "example": "0123456789"
-                    },
-                    "home_tel": {
-                      "type": "string",
-                      "example": "01234567890"
-                    },
-                    "full_address": {
-                      "type": "string",
-                      "example": "ایران، تهران، میدان آزادی"
-                    },
-                    "profile_pic_url": {
-                      "type": "string",
-                      "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                      "example": "/path/to/image"
+                    "message": {
+                      "$ref": "#/components/schemas/message"
                     }
                   }
                 }
@@ -821,11 +878,59 @@
                 }
               }
             },
-            "description": "\"profile_pic_url\" of the adminData cookie will be null if the admin hasn't uploaded any image.",
+            "description": "\"profile_pic_url\" of the adminData cookie will be null if the admin hasn't uploaded any image. If admin_id is not provided, the admin object of response will be omitted.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 123 
+                        },
+                        "access_level": {
+                          "type": "string",
+                          "description": "Possible values: super, play, comment",
+                          "example": "play"
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "محمد کمالی"
+                        },
+                        "tel": {
+                          "type": "string",
+                          "example": "09000000000"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "myemail@example.com"
+                        },
+                        "national_id": {
+                          "type": "string",
+                          "example": "0123456789"
+                        },
+                        "home_tel": {
+                          "type": "string",
+                          "example": "01234567890"
+                        },
+                        "full_address": {
+                          "type": "string",
+                          "example": "ایران، تهران، میدان آزادی"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                          "example": "/path/to/image"
+                        }
+                      }
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
                 }
               }
             }
@@ -861,7 +966,19 @@
         ],
         "responses": {
           "200": {
-            "description": "The admin is successfully removed. No additional information will be provided."
+            "description": "The admin is successfully removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -912,7 +1029,19 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -952,7 +1081,18 @@
             "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{basaeURL}/img/{imageUrl}\".",
             "content": {
               "application/json": {
-                "example": "/path/to/image"
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "example": "path/to/image"
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
               }
             }
           },
@@ -976,7 +1116,19 @@
         "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
         "responses": {
           "200": {
-            "description": "The profile pic is successfully removed."
+            "description": "The profile pic is successfully removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "User has not uploaded any profile pic. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -1006,7 +1158,19 @@
         ],
         "responses": {
           "200": {
-            "description": "The profile pic is successfully removed."
+            "description": "The profile pic is successfully removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -1042,7 +1206,18 @@
             "description": "The full name is successfully set to default value.",
             "content": {
               "application/json": {
-                "example": "کاربر سینماتیکت"
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fullName": {
+                      "type": "string",
+                      "example": "کاربر سینماتیکت"
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
               }
             }
           },
@@ -1097,10 +1272,21 @@
         },
         "responses": {
           "200": {
-            "description": "If the process is successful, a code will be returned to the client. This code has to be written down and can be used to track the process via \"/place/registerStat/{code}\" route.",
+            "description": "If the process is successful, a code will be returned to the client inside the code property of response. This code has to be written down and can be used to track the process via \"/place/registerStat/{code}\" route.",
             "content": {
               "application/json": {
-                "example": "XF2US0AD"
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "example": "XF2US0AD"
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
               }
             }
           },
@@ -1192,7 +1378,19 @@
         ],
         "responses": {
           "200": {
-            "description": "If the process is successful, an OK 200 response will be given to you. The registeration status can't be accessible after cancelation."
+            "description": "If the process is successful, an OK 200 response will be given to you. The registeration status can't be accessible after cancelation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "The JWT you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -1367,7 +1565,19 @@
         ],
         "responses": {
           "200": {
-            "description": "The response would be an OK 200 if the process is successful. No more information will be provided."
+            "description": "The response would be an OK 200 if the process is successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "The register_id you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -1404,7 +1614,19 @@
         ],
         "responses": {
           "200": {
-            "description": "The response would be an OK 200 if the process is successful. No more information will be provided."
+            "description": "The response would be an OK 200 if the process is successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "The register_id you provided is not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -1478,36 +1700,44 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer",
-                      "example": 123
+                    "celeb": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 123
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "کامران تفتی"
+                        },
+                        "role": {
+                          "type": "array",
+                          "description": "Could contain these values (as an array): actor, actress, writer, presenter, director.",
+                          "example": "[ \"actor\", \"director\" ]"
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "description": "You may convert this field to a new Date() object.",
+                          "example": "2000-07-01T15:30:10.000Z"
+                        },
+                        "birth_city": {
+                          "type": "string",
+                          "description": "If provided, it can't be empty.",
+                          "example": "تهران"
+                        },
+                        "bio": {
+                          "type": "string"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
+                          "example": "path/to/image"
+                        }
+                      }
                     },
-                    "full_name": {
-                      "type": "string",
-                      "example": "کامران تفتی"
-                    },
-                    "role": {
-                      "type": "array",
-                      "description": "Could contain these values (as an array): actor, actress, writer, presenter, director.",
-                      "example": "[ \"actor\", \"director\" ]"
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "description": "You may convert this field to a new Date() object.",
-                      "example": "2000-07-01T15:30:10.000Z"
-                    },
-                    "birth_city": {
-                      "type": "string",
-                      "description": "If provided, it can't be empty.",
-                      "example": "تهران"
-                    },
-                    "bio": {
-                      "type": "string"
-                    },
-                    "profile_pic_url": {
-                      "type": "string",
-                      "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
-                      "example": "path/to/image"
+                    "message": {
+                      "$ref": "#/components/schemas/message"
                     }
                   }
                 }
@@ -1759,36 +1989,44 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer",
-                      "example": 123
+                    "celeb": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 123
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "example": "کامران تفتی"
+                        },
+                        "role": {
+                          "type": "array",
+                          "description": "Could contain these values (as an array): actor, actress, writer, presenter, director.",
+                          "example": "[ \"actor\", \"director\" ]"
+                        },
+                        "birthday": {
+                          "type": "string",
+                          "description": "You may convert this field to a new Date() object.",
+                          "example": "2000-07-01T15:30:10.000Z"
+                        },
+                        "birth_city": {
+                          "type": "string",
+                          "description": "If provided, it can't be empty.",
+                          "example": "تهران"
+                        },
+                        "bio": {
+                          "type": "string"
+                        },
+                        "profile_pic_url": {
+                          "type": "string",
+                          "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
+                          "example": "path/to/image"
+                        }
+                      }
                     },
-                    "full_name": {
-                      "type": "string",
-                      "example": "کامران تفتی"
-                    },
-                    "role": {
-                      "type": "array",
-                      "description": "Could contain these values (as an array): actor, actress, writer, presenter, director.",
-                      "example": "[ \"actor\", \"director\" ]"
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "description": "You may convert this field to a new Date() object.",
-                      "example": "2000-07-01T15:30:10.000Z"
-                    },
-                    "birth_city": {
-                      "type": "string",
-                      "description": "If provided, it can't be empty.",
-                      "example": "تهران"
-                    },
-                    "bio": {
-                      "type": "string"
-                    },
-                    "profile_pic_url": {
-                      "type": "string",
-                      "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
-                      "example": "path/to/image"
+                    "message": {
+                      "$ref": "#/components/schemas/message"
                     }
                   }
                 }
@@ -1830,7 +2068,19 @@
         ],
         "responses": {
           "200": {
-            "description": "If the process is successful, an OK 200 response will be sent with no additional information."
+            "description": "If the process is successful, an OK 200 response will be sent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -1885,14 +2135,22 @@
         },
         "responses": {
           "200": {
-            "description": "The response would be an array of each image url.",
+            "description": "The response would be an array of each image url inside the \"urls\" property.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "example": "path/to/image"
+                  "type": "object",
+                  "properties": {
+                    "urls": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "path/to/image"
+                      }
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
                   }
                 }
               }
@@ -1978,7 +2236,19 @@
         ],
         "responses": {
           "200": {
-            "description": "If the process is successful, an OK 200 response will be sent with no additional information."
+            "description": "If the process is successful, an OK 200 response will be sent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "The celeb_id you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -2015,7 +2285,19 @@
         ],
         "responses": {
           "200": {
-            "description": "If the process is successful, an OK 200 response will be sent with no additional information."
+            "description": "If the process is successful, an OK 200 response will be sent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "The celeb_id you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
@@ -2063,6 +2345,10 @@
         "schema": {
           "type": "string"
         }
+      },
+      "message": {
+        "type": "string",
+        "description": "A message to show to the user when the request is successful."
       }
     },
     "securitySchemes": {
