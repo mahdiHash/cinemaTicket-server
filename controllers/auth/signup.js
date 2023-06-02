@@ -66,7 +66,9 @@ const controller = [
       domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     });
 
-    res.end();
+    res.json({
+      message: "ثبت نام با موفقیت انجام شد. خوش آمدید."
+    });
   }
 ];
 

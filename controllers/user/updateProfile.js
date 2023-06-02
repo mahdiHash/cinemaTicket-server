@@ -144,7 +144,9 @@ const controller = [
           domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
         });
 
-        res.end();
+        res.json({
+          message: "اطلاعات شما تغییر کرد."
+        });
       })
       .catch((err) => {
         next(err);

@@ -39,7 +39,9 @@ const controller = [
       })
       .catch(next);
 
-    res.end();
+    res.json({
+      message: "پروفایل هنرمند حذف شد."
+    });
   }
 ];
 

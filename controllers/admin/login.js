@@ -54,7 +54,9 @@ const controller = [
       }
     );
 
-    res.end();
+    res.json({
+      message: "با موفقیت وارد شدید. خوش آمدید."
+    });
   }
 ];
 

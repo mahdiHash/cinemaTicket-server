@@ -63,7 +63,10 @@ const controller = [
             })
         }))
 
-        res.json(uploadedImgsUrls);
+        res.json({
+          urls: uploadedImgsUrls,
+          message: "تصاویر هنرمند آپلود شدند."
+        });
       })
       .finally(() => {
         req.files.forEach((file) => {

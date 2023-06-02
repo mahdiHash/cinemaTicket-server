@@ -62,7 +62,12 @@ const contoller = [
             ...res.locals.validBody,
           }
         })
-          .then(() => res.json(code));
+          .then(() => {
+            res.json({
+              code,
+              message: "درخواست ثبت مکان ایجاد شد."
+            })
+          });
       })
       .catch(next);
   }

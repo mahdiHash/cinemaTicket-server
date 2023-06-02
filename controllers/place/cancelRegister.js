@@ -13,7 +13,9 @@ const controller = [
       where: { code: req.params.code },
     })
       .then(() => {
-        res.end();
+        res.json({
+          message: "درخواست ثبت مکان لغو شد."
+        });
       })
       .catch(next);
   }

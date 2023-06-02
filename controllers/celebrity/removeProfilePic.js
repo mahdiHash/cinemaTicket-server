@@ -37,7 +37,9 @@ const controller = [
           }
         });
 
-        res.end();
+        res.json({
+          message: "عکس پروفایل هنرمند حذف شد."
+        });
       })
       .catch(next);
   }

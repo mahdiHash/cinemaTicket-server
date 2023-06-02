@@ -33,7 +33,10 @@ const controller = [
         res.locals.validBody.id = admin.id;
         res.locals.validBody.profile_pic_url = admin.profile_pic_url;
 
-        res.json(res.locals.validBody);
+        res.json({
+          admin: res.locals.validBody,
+          message: 'پروفایل ادمین با موفقیت ایجاد شد.'
+        });
       })
       .catch(next);
   }

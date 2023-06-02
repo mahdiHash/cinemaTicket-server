@@ -51,15 +51,18 @@ const controller = [
     })
       .then((admin) => {
         res.json({
-          id: req.params.adminId,
-          access_level: res.locals.validBody.access_level,
-          full_name: res.locals.validBody.full_name,
-          tel: res.locals.validBody.tel,
-          email: res.locals.validBody.email,
-          national_id: res.locals.validBody.national_id,
-          home_tel: res.locals.validBody.home_tel,
-          full_address: res.locals.validBody.full_address,
-          profile_pic_url: admin.profile_pic_url,
+          admin: {
+            id: req.params.adminId,
+            access_level: res.locals.validBody.access_level,
+            full_name: res.locals.validBody.full_name,
+            tel: res.locals.validBody.tel,
+            email: res.locals.validBody.email,
+            national_id: res.locals.validBody.national_id,
+            home_tel: res.locals.validBody.home_tel,
+            full_address: res.locals.validBody.full_address,
+            profile_pic_url: admin.profile_pic_url,
+          },
+          message: "اطلاعات ادمین با موفقیت تغییر کرد."
         });
       })
       .catch(next);

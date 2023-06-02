@@ -63,7 +63,9 @@ const controller = [
           }
         );
 
-        res.end();
+        res.json({
+          message: "اطلاعات با موفقیت تغییر کرد."
+        });
       })
       .catch(next);
   },

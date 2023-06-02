@@ -53,7 +53,10 @@ const controller = [
           }
         });
 
-        res.json(upCeleb);
+        res.json({
+          celeb: upCeleb,
+          message: "پروفایل هنرمند با موفقیت ایجاد شد."
+        });
       })
       .catch(next)
       .finally(() => {

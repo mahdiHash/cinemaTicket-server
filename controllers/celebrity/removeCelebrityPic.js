@@ -37,7 +37,9 @@ const controller = [
           where: { url: `/${req.params.folder}/${req.params.fileName}` },
         });
 
-        res.end();
+        res.json({
+          message: "تصویر هنرمند حذف شد."
+        });
       })
       .catch(next);
   }

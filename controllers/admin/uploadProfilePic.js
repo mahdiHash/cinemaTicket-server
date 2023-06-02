@@ -38,7 +38,10 @@ const controller = [
           }
         })
           .then(() => {
-            res.json(fileInfo.filePath);
+            res.json({
+              url: fileInfo.filePath,
+              message: "عکس پروفایل با موفقیت تغییر کرد."
+            });
           })
           .catch(next);
       })

@@ -40,7 +40,11 @@ const controller = [
         })
         .catch(next);
       })
-      .then(() => res.end())
+      .then(() => {
+        res.json({
+          message: "عکس پروفایل کاربر با موفقیت حذف شد."
+        })
+      })
       .catch(next);
   }
 ];

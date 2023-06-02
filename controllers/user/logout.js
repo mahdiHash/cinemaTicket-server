@@ -18,7 +18,9 @@ const controller = [
       domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     });
 
-    res.end();
+    res.json({
+      message: "با موفقیت خارج شدید."
+    });
   }
 ];
 
