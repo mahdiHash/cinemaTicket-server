@@ -20,7 +20,7 @@ const controller = [
     );
 
     // decrypt some vlaues for the client
-    let descryptedUser = {
+    let decryptedUser = {
       id: req.user.id,
       full_name: unescape(req.user.full_name),
       tel: decrypt(req.user.tel),
@@ -31,10 +31,29 @@ const controller = [
       profile_pic_url: req.user.profile_pic_url,
     }
 
-    res.json({
-      token,
-      user: descryptedUser,
+    res.clearCookie('adminData', {
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
     });
+
+    res.cookie('authToken', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      httpOnly: true,
+      signed: true,
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    });
+
+    res.cookie('userData', JSON.stringify(decryptedUser), {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    })
+
+    res.end();
   }
 ];
 

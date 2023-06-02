@@ -18,6 +18,7 @@
   "paths": {
     "/getapikey": {
       "get": {
+        "tags": [ "Api key" ],
         "security": [{}],
         "description": "Get an api key from the server. You need to provide this key in \"apikey\" header of your requests headers.",
         "summary": "Api key for other requests",
@@ -39,6 +40,7 @@
     },
     "/auth/signup": {
       "post": {
+        "tags": [ "Auth" ],
         "security": [
           { "apikey": ["apikey"] }
         ],
@@ -73,63 +75,16 @@
         },
         "responses": {
           "200": {
-            "description": "The response contains two fileds: token (JWT) and user object.",
+            "description": "The response Set-Cookie header contains two fileds: authToken (server-usage) and userData object (you can store it).",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": { 
-                      "type": "string",
-                      "description": "This token will be used by routes that need it. Store it in the user's browser.",
-                      "example": "fadsf879a8f79da7fs897df987ads9f7d98a7f" 
-                    },
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "The id of user in database.",
-                          "example": "123"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "description": "You need to get the user's name for all submission actions.",
-                          "example": null
-                        },
-                        "tel": {
-                          "type": "string",
-                          "description": "User's phone number.",
-                          "example": "09120000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "description": "User's email.",
-                          "example": null
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
-                          "example": null
-                        },
-                        "credit_card_num": {
-                          "type": "string",
-                          "description": "User's credit card number.",
-                          "example": null
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "description": "User's national id.",
-                          "example": null
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": null
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -142,6 +97,7 @@
     },
     "/auth/login": {
       "post": {
+        "tags": [ "Auth" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
@@ -170,64 +126,16 @@
         },
         "responses": {
           "200": {
-            "description": "The response has 2 fields: \"token\" (JWT) and \"user\". You need to store the token.",
+            "description": "The response Set-Cookie header contains two fileds: authToken (server-usage) and userData object (you can store it).",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string",
-                      "description": "This the JWT. You need to store it in the browser for further usecases.",
-                      "example": "a8f7d7f8ds8afd78f8ad8f78adsf8dadaf9sd8fa"
-                    },
-                    "user": {
-                      "type": "object",
-                      "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "The id of user in database.",
-                          "example": "123"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "description": "User's full name. Needed for submission actions like writing a comments.",
-                          "example": "Jack Nicholson"
-                        },
-                        "tel": {
-                          "type": "string",
-                          "description": "User's phone number.",
-                          "example": "09120000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "description": "User's email.",
-                          "example": "jack@example.com"
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
-                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
-                        },
-                        "credit_card_num": {
-                          "type": "string",
-                          "description": "User's credit card number.",
-                          "example": "1234123412341234"
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "description": "User's national id.",
-                          "example": "00000000000"
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": "/path/to/image"
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -243,9 +151,10 @@
     },
     "/user/profile": {
       "get": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get user's information",
         "description": "Use this route for getting any information on user's profile.",
@@ -310,14 +219,15 @@
     },
     "/user/update": {
       "put": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Use this route to update user's profile information. You only need to send the fields you want to update, the rest of the fileds won't be updated.",
         "summary": "Update user's profile info",
         "requestBody": {
-          "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. Note that \"profile_pic_url\" can't be updated using this form. To update user's profile image, you need to send a PUT request to \"/user/profilePic/upload\".",
+          "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. For the \"img\" field: the file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp.",
           "content": {
             "body": {
               "schema": {
@@ -350,6 +260,10 @@
                     "type": "string",
                     "example": "0000000000",
                     "description": "Must contain 10 characters"
+                  },
+                  "img": {
+                    "type": "Image file",
+                    "description": "The image file to upload. Pay attention to the description provided above in the request body."
                   }
                 }
               }
@@ -358,64 +272,16 @@
         },
         "responses": {
           "200": {
-            "description": "The response object contains \"token\" and \"user\" object properties. If the \"tel\" field was provided in the request body, you have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status).",
+            "description": "The response Set-Cookie header contains two fileds: authToken (server-usage) and userData object (you can store it). If the \"tel\" field was provided in the request body, you have to store the token, otherwise it's up to you (it's better you store it, since it's fresh and therefore the user has 90 days of logged in status).",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string",
-                      "description": "This the JWT. You need to store it in the browser for further usecases.",
-                      "example": "a8f7d7f8ds8afd78f8ad8f78adsf8dadaf9sd8fa"
-                    },
-                    "user": {
-                      "type": "object",
-                      "description": "The values of these object properties depends on how complete the user's profile is. Apart from \"tel\" field, the rest could be null.",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "The id of user in database.",
-                          "example": "123"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "description": "User's full name. Needed for submission actions like writing a comments.",
-                          "example": "Jack Nicholson"
-                        },
-                        "tel": {
-                          "type": "string",
-                          "description": "User's phone number.",
-                          "example": "09120000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "description": "User's email.",
-                          "example": "jack@example.com"
-                        },
-                        "birthday": {
-                          "type": "string",
-                          "description": "This field is a Date(). It's converted to string by prisma so you may want to convert it back: new Date(birthday).",
-                          "example": "Sat Feb 04 2023 23:12:12 GMT+0330"
-                        },
-                        "credit_card_num": {
-                          "type": "string",
-                          "description": "User's credit card number.",
-                          "example": "1234123412341234"
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "description": "User's national id.",
-                          "example": "00000000000"
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": "/path/to/image"
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -431,9 +297,10 @@
     },
     "/user/resetPass": {
       "put": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Reset user's password",
         "description": "Use this route to reset user's password. If the process is successful, an OK 200 response will be sent to you without any detail.",
@@ -476,49 +343,12 @@
         }
       }
     },
-    "/user/profilePic/upload": {
-      "put": {
-        "security": [
-          { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
-        ],
-        "summary": "Upload user's profile pic",
-        "description": "The file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp. If the user has already uploaded a photo, it'll be deleted.",
-        "requestBody": {
-          "content": {
-            "body": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "img": {
-                    "type": "image file",
-                    "description": "The image file to upload."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
-            "content": {
-              "application/json": {
-                "example": "/path/to/image"
-              }
-            }
-          },
-          "400": {
-            "description": "The file you uploaded is not valid against one of the specified limitations. More information on the error will be sent to you on response. You can see the schema down this page."
-          }
-        }
-      }
-    },
     "/user/profilePic/remove": {
       "delete": {
+        "tags": [ "User" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove user's profile pic",
         "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
@@ -535,8 +365,35 @@
         }
       }
     },
+    "/user/logout": {
+      "post": {
+        "tags": [ "User" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "description": "Use this route to logout user. User must be logged-in.",
+        "summary": "User logout",
+        "responses": {
+          "200": {
+            "description": "If the logout is successful, the authToken and userData cookies will be removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The JWT you provided is not valid. No error message will be provided."
+          }
+        }
+      }
+    },
     "/img/{imageUrl}": {
       "get": {
+        "tags": [ "Image" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
@@ -575,6 +432,7 @@
     },
     "/admin/login": {
       "post": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
@@ -603,58 +461,15 @@
         "responses": {
           "200": {
             "description": "The response contains two fields: \"token\" and \"admin\". You may want to store the token for further actions.",
+            "headers": {
+              "Set-Cookie": {
+                "$ref": "#/components/schemas/Set-Cookie-Admin"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string",
-                      "example": "f9d7f9d7fd9a8f7d9as87fd98af7d9sf7d9as8f7d98s7af9d8s7fasf9da8s7fd987f9s8da7f98d7s9f"
-                    },
-                    "admin": {
-                      "type": "object",
-                      "properties": {
-                        "id": { 
-                          "type": "integer",
-                          "example": 123 
-                        },
-                        "access_level": {
-                          "type": "string",
-                          "description": "Possible values: super, play, comment"
-                        },
-                        "full_name": {
-                          "type": "string",
-                          "example": "محمد کمالی"
-                        },
-                        "tel": {
-                          "type": "string",
-                          "example": "09000000000"
-                        },
-                        "email": {
-                          "type": "string",
-                          "example": "myemail@example.com"
-                        },
-                        "national_id": {
-                          "type": "string",
-                          "example": "0123456789"
-                        },
-                        "home_tel": {
-                          "type": "string",
-                          "example": "01234567890"
-                        },
-                        "full_address": {
-                          "type": "string",
-                          "example": "Iran, Tehran, Azadi sq."
-                        },
-                        "profile_pic_url": {
-                          "type": "string",
-                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                          "example": "/path/to/image"
-                        }
-                      }
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -670,9 +485,10 @@
     },
     "/admin/profile/{admin_id}": {
       "get": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get admin's profile",
         "description": "JWT must be provided. Normal admins can't get other admins profile info.",
@@ -745,9 +561,10 @@
     },
     "/admin/profile/all": {
       "get": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get all admins profiles",
         "description": "Normal admins can't get other admins profile info. This route is for super admins only.",
@@ -812,9 +629,10 @@
     },
     "/admin/create": {
       "post": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Create admin by super admin",
         "description": "Only the admins with \"super\" access level can send a request to this route.",
@@ -934,9 +752,10 @@
     },
     "/admin/update/{admin_id}": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Update an admin's info",
         "description": "Super admins can update normal admins info but not other super admins.",
@@ -949,7 +768,7 @@
           }
         ],
         "requestBody": {
-          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values.",
+          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values. If the tel field is changed you need to store the authToken cookie.",
           "content": {
             "body": {
               "schema": {
@@ -994,50 +813,19 @@
         },
         "responses": {
           "200": {
-            "description": "\"profile_pic_url\" will be null if the admin hasn't uploaded any image.",
+            "headers": {
+              "Set-Cookie": {
+                "description": "If the current logged-in admin profile info is changed, the JWT is stored in \"authToken\" cookie(you need to provide it in routes that need it for authorization) and the admin's profile info is stored in \"adminData\" cookie.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "\"profile_pic_url\" of the adminData cookie will be null if the admin hasn't uploaded any image.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer",
-                      "example": 123 
-                    },
-                    "access_level": {
-                      "type": "string",
-                      "description": "Possible values: super, play, comment"
-                    },
-                    "full_name": {
-                      "type": "string",
-                      "example": "محمد کمالی"
-                    },
-                    "tel": {
-                      "type": "string",
-                      "example": "09000000000"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "myemail@example.com"
-                    },
-                    "national_id": {
-                      "type": "string",
-                      "example": "0123456789"
-                    },
-                    "home_tel": {
-                      "type": "string",
-                      "example": "01234567890"
-                    },
-                    "full_address": {
-                      "type": "string",
-                      "example": "ایران، تهران، میدان آزادی"
-                    },
-                    "profile_pic_url": {
-                      "type": "string",
-                      "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
-                      "example": "/path/to/image"
-                    }
-                  }
+                  "type": "object"
                 }
               }
             }
@@ -1056,9 +844,10 @@
     },
     "/admin/remove/{admin_id}": {
       "delete": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove a normal admin by super admin",
         "description": "Only super admins can use this route, and they can't remove other super admins. If the operation is successful, you'll get an OK 200 response.",
@@ -1088,9 +877,10 @@
     },
     "/admin/resetPass": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Reset admin password",
         "description": "If the process is successful, an OK 200 response will be sent to you with no additional information.",
@@ -1135,9 +925,10 @@
     },
     "/admin/profilePic/upload": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Upload admin's profile pic",
         "description": "The file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp. If the user has already uploaded a photo, it'll be deleted.",
@@ -1176,9 +967,10 @@
     },
     "/admin/profilePic/remove": {
       "delete": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove admin's profile pic",
         "description": "You only need to provide the JWT. If the operation is successful, you'll get just an OK 200 response without any info.",
@@ -1197,9 +989,10 @@
     },
     "/admin/userProfile/{user_id}/removeProfilePic": {
       "delete": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Remove a user's profile pic by super admin",
         "description": "Super admins can remove users profile pic using this route. If the process is successful, an OK 200 response will be given to the client.",
@@ -1229,9 +1022,10 @@
     },
     "/admin/userProfile/{user_id}/setDefaultFullName": {
       "put": {
+        "tags": [ "Admin" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Set user's full name to a default value",
         "description": "This route can be used by super admins to set a default value (کاربر سینماتیکت) to a user's full name. If the process is successful, the default value will be given to the client.",
@@ -1266,9 +1060,10 @@
     },
     "/place/register": {
       "post": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Register a new place by user",
         "description": "The users can register for their licensed cinema/theater using this route.",
@@ -1294,11 +1089,6 @@
                   "address": {
                     "type": "string",
                     "description": "Full address of the place. Must contain at least 10 characters."
-                  },
-                  "city": {
-                    "type": "string",
-                    "description": "The city where the place is located.",
-                    "example": "تهران"
                   }
                 }
               }
@@ -1325,9 +1115,10 @@
     },
     "/place/register/status/{code}": {
       "get": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Track the status of a place registeration",
         "description": "Only the creator of process or super admins can see the status.",
@@ -1384,9 +1175,10 @@
     },
     "/place/register/cancel/{code}": {
       "delete": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Cancel a pending place registeration",
         "description": "Only the owner of request can cancel a registeration process.",
@@ -1416,9 +1208,10 @@
     },
     "/place/register/all": {
       "get": {
+        "tags": [ "Place" ],
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "summary": "Get all pending new place registerations",
         "description": "Only super admins can access this route.",
@@ -1556,10 +1349,11 @@
     },
     "/place/register/approve/{register_id}": {
       "post": {
+        "tags": [ "Place" ],
         "summary": "Approve a pending place register",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super admins can access this route.",
         "parameters": [
@@ -1592,10 +1386,11 @@
     },
     "/place/register/deny/{register_id}": {
       "put": {
+        "tags": [ "Place" ],
         "summary": "Deny a pending place register",
         "security": [
           { "apikey": [ "apieky" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super admins can access this route.",
         "parameters": [
@@ -1628,10 +1423,11 @@
     },
     "/celebrity/create": {
       "post": {
+        "tags": [ "Celebrity" ],
         "summary": "Create a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super/play admins can access this route.",
         "requestBody": {
@@ -1732,10 +1528,11 @@
     },
     "/celebrity/all": {
       "get": {
+        "tags": [ "Celebrity" ],
         "summary": "Get all the celebrities profiles",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -1828,6 +1625,7 @@
     },
     "/celebrity/{celeb_id}": {
       "get": {
+        "tags": [ "Celebrity" ],
         "summary": "Get a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]}
@@ -1897,10 +1695,11 @@
     },
     "/celebrity/{celeb_id}/update": {
       "post": {
+        "tags": [ "Celebrity" ],
         "summary": "Update a celebrity profile",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only super/play admins can access this route.",
         "parameters": [
@@ -2013,10 +1812,11 @@
     },
     "/celebrity/{celeb_id}/profilePic/remove": {
       "delete": {
+        "tags": [ "Celebrity" ],
         "summary": "Remove a celebrity profile pic",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -2049,10 +1849,11 @@
     },
     "/celebrity/{celeb_id}/pics/upload": {
       "post": {
+        "tags": [ "Celebrity" ],
         "summary": "Upload pics of a celebrity",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -2114,6 +1915,7 @@
     },
     "/celebrity/{celeb_id}/pics": {
       "get": {
+        "tags": [ "Celebrity" ],
         "summary": "Get all a celebrity pics",
         "security": [
           { "apikey": [ "apikey" ]}
@@ -2151,10 +1953,11 @@
     },
     "/celebrity/{celeb_id}/pics/remove/{pic_url}": {
       "delete": {
+        "tags": [ "Celebrity" ],
         "summary": "Delete a specific celebrity pic",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route. If you want to delete all celebrity pics, place \"all\" in {pic_url}.",
         "parameters": [
@@ -2194,10 +1997,11 @@
     },
     "/celebrity/{celeb_id}/remove": {
       "delete": {
+        "tags": [ "Celebrity" ],
         "summary": "Remove a celebrity prfile",
         "security": [
           { "apikey": [ "apikey" ]},
-          { "jwt": [ "jwt" ]}
+          { "authToken": [] }
         ],
         "description": "Only play/super admins can access this route.",
         "parameters": [
@@ -2247,6 +2051,18 @@
           "body": { "type": "object" },
           "parameters": { "type": "object" }
         }
+      },
+      "Set-Cookie": {
+        "description": "The JWT is stored in \"authToken\" cookie(you need to provide it in routes that need it for authorization). The user's profile info is stored in \"userData\" cookie.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Set-Cookie-Admin": {
+        "description": "The JWT is stored in \"authToken\" cookie(you need to provide it in routes that need it for authorization). The admin's profile info is stored in \"adminData\" cookie.",
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "securitySchemes": {
@@ -2256,10 +2072,12 @@
         "type": "apiKey",
         "in": "header"
       },
-      "jwt": {
-        "description": "The value of your JWT must go inside \"Authorization\" header with the format of \"Bearer {token}\".",
-        "type": "http",
-        "scheme": "bearer"      }
+      "authToken": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "authToken",
+        "description": "This field must be provided in cookies for authorization of the protected routes."
+      }
     }
   },
   "security": [
@@ -2267,7 +2085,7 @@
       "apikey": [ "apikey" ]
     },
     {
-      "jwt": [ "jwt" ]
+      "authToken": [] 
     }
   ]
 }

@@ -19,22 +19,30 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(cors());
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cors({
+  origin: process.env.ENV === 'dev' ? 'http://localhost:3000' : 'domain.ir',
+  optionsSuccessStatus: 200,
+  credentials: true
+}));
 
 passport.initialize();
 
 // swagger docs
 app.use('/apidocs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
-// check and create api keys
+// create api keys
 app.get('/getapikey', getApiKey);
+
+// access image route without checking apikey
+app.use('/img', imgRouter);
+
+// check client's api key
 app.use('/', authorizeApiKey);
 
 // set routers
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
-app.use('/img', imgRouter);
 app.use('/admin', adminRouter);
 app.use('/place', placeRouter);
 app.use('/celebrity', celebrityRouter);

@@ -12,16 +12,30 @@ const controller = [
 
   // authentication successful
   (req, res, next) => {
+    res.clearCookie('userData', {
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    });
+
     let token = jwt.sign(
       { id: req.user.id, tel: req.user.tel },
       process.env.JWT_TOKEN_SECRET,
       { expiresIn: '7d'},
     );
 
-    res.json({
-      token,
-      // decrypt some values for the client
-      admin: {
+    res.cookie('authToken', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      httpOnly: true,
+      signed: true,
+      sameSite: 'lax',
+      secret: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    });
+
+    res.cookie(
+      'adminData', 
+      {
         id: req.user.id,
         access_level: req.user.access_level,
         full_name: req.user.full_name,
@@ -31,8 +45,16 @@ const controller = [
         home_tel: decrypt(req.user.home_tel),
         full_address: decrypt(req.user.full_address),
         profile_pic_url: req.user.profile_pic_url,
+      }, 
+      {
+        maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+        sameSite: 'lax',
+        secret: process.env.ENV === 'production',
+        domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
       }
-    });
+    );
+
+    res.end();
   }
 ];
 

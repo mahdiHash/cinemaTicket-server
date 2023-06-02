@@ -1,6 +1,7 @@
 const prisma = require('../../config/prismaConfig');
 const passport = require('../../config/passportConfig');
 const inputValidator = require('../../utils/inputValidators/updateAdmin');
+const jwt = require('jsonwebtoken');
 const storeValidatedInputs = require('../../utils/middleware/storeValidatedInputs');
 const { encrypt } = require('../../utils/cipherFunc');
 
@@ -27,17 +28,42 @@ const controller = [
       data: upAdmin,
     })
       .then((admin) => {
-        res.json({
-          id: req.user.id,
-          access_level: res.locals.validBody.access_level,
-          full_name: res.locals.validBody.full_name,
-          tel: res.locals.validBody.tel,
-          email: res.locals.validBody.email,
-          national_id: res.locals.validBody.national_id,
-          home_tel: res.locals.validBodyadmin.home_tel,
-          full_address: res.locals.validBody.full_address,
-          profile_pic_url: admin.profile_pic_url,
+        let token = jwt.sign(
+          { id: admin.id, tel: admin.tel}, 
+          process.env.JWT_TOKEN_SECRET
+        );
+
+        res.cookie('authToken', token, {
+          maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+          httpOnly: true,
+          signed: true,
+          sameSite: 'lax',
+          secret: process.env.ENV === 'production',
+          domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
         });
+
+        res.cookie(
+          'adminData', 
+          {
+            id: admin.id,
+            access_level: admin.access_level,
+            full_name: admin.full_name,
+            tel: decrypt(admin.tel),
+            email: decrypt(admin.email),
+            national_id: decrypt(admin.national_id),
+            home_tel: decrypt(admin.home_tel),
+            full_address: decrypt(admin.full_address),
+            profile_pic_url: admin.profile_pic_url,
+          }, 
+          {
+            maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+            sameSite: 'lax',
+            secret: process.env.ENV === 'production',
+            domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+          }
+        );
+
+        res.end();
       })
       .catch(next);
   },
