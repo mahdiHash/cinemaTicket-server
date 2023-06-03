@@ -24,6 +24,12 @@ const controller = [
       { expiresIn: '7d'},
     );
 
+    res.clearCookies('userData', {
+      sameSite: "lax",
+      secure: process.env.ENV === 'production',
+      domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    });
+
     res.cookie('authToken', token, {
       maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
       httpOnly: true,
