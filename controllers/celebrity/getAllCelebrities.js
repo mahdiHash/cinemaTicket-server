@@ -30,7 +30,7 @@ const controller = [
       cursor: req.query.cursor
         ? { id: +res.locals.validQuery.cursor + -takeSign }
         : undefined,
-      take: takeSign * 15, // because of desc order we should reverse the take sign    
+      take: takeSign * 15,
     })
       .catch(next);
     let lastRecordCursor = celebrities[celebrities.length - 1]?.id ?? -1;
