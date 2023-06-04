@@ -32,7 +32,11 @@ const controller = [
       where: { id: register.id },
       data: { status: 'denied' },
     })
-      .then(() => res.end())
+      .then(() => {
+        res.json({
+          message: "درخواست ثبت مکان رد شد."
+        })
+      })
       .catch(next);
   }
 ];

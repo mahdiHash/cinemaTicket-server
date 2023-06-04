@@ -25,7 +25,9 @@ const controller = [
       data: { password: newPassHash },
     })
       .then(() => {
-        res.end();
+        res.json({
+          message: "رمز با موفقیت تغییر کرد."
+        })
       })
       .catch(next);
   }

@@ -29,7 +29,9 @@ const controller = [
             .then(() => prisma.celebrity_pics.delete({ where: { url } }));
         }));
 
-        res.end();
+        res.json({
+          message: "تمام تصاویر هنرمند حذف شدند."
+        });
       })
       .catch(next);
   }

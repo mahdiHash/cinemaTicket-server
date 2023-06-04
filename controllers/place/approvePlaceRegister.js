@@ -46,7 +46,11 @@ const controller = [
       where: { id: register.id },
       data: { status: 'approved' },
     })
-      .then(() => res.end())
+      .then(() => {
+        res.json({
+          message: "درخواست ثبت مکان تأیید شد."
+        })
+      })
       .catch(next);
   }
 ];

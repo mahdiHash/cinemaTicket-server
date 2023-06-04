@@ -61,7 +61,10 @@ const controller = [
         });
         
         delete upCeleb.profile_pic_fileId;
-        res.json(upCeleb);
+        res.json({
+          celeb: upCeleb,
+          message: "اطلاعات هنرمند تغییر کرد."
+        });
       })
       .catch(next)
       .finally(() => {

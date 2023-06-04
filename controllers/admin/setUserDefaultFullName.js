@@ -32,7 +32,10 @@ const controller = [
       },
     })
       .then((user) => {
-        res.json(user.full_name);
+        res.json({
+          fullName: user.full_name,
+          message: "نام کاربر با موفقیت تغییر کرد."
+        });
       })
       .catch(next);
   }

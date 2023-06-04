@@ -27,7 +27,11 @@ const controller = [
             profile_pic_url: null,
           }
         })
-          .then(() => res.end())
+          .then(() => {
+            res.json({
+              message: "عکس پروفایل با موفقیت حذف شد."
+            })
+          })
           .catch(next);
       })
       .catch(next);

@@ -34,7 +34,9 @@ const controller = [
       where: { id: +req.params.adminId },
     })
       .then(() => {
-        res.end();
+        res.json({
+          message: "ادمین با موفقیت حذف شد.",
+        })
       })
       .catch(next);
   }

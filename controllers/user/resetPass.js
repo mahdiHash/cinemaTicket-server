@@ -31,7 +31,11 @@ const controller = [
         password: newHashedPass,
       },
     })
-      .then(() => res.end())
+      .then(() => {
+        res.json({
+          message: "رمز عبور تغییر کرد."
+        });
+      })
       .catch(next);
   }
 ];
