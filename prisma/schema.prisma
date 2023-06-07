@@ -14,7 +14,7 @@ model plays {
   director      String
   producer      String
   duration      Int       @db.SmallInt
-  genre         String
+  genre         genres
   type          playType
   intro         String
   publish_date  DateTime? @db.Date
@@ -299,4 +299,21 @@ enum non_approved_places_status {
   waiting
   approved
   denied
+}
+
+enum genres {
+  drama
+  romantic
+  action
+  horror
+  sci_fi
+  adventure
+  mystery
+  comedy
+  historical
+  biography
+  social
+  animation
+  kids
+  documentery
 }
