@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "es2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "useUnknownInCatchVariables": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    // "exactOptionalPropertyTypes": true,
+  },
+  "include": ["./src"],
+  "ts-node": {
+    "transpileOnly": true,
+  }
+}

@@ -107,3 +107,7 @@ dist
 not-code
 
 prisma/seed.js
+
+built
+
+.vscode
