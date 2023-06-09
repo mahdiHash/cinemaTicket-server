@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DB_URL")
+  url      = "postgresql://root:Ba3h69EzAxBVNnvnW0fcyNuJ@alfie.iran.liara.ir:33928/postgres"
 }
 
 model plays {
@@ -281,6 +281,7 @@ enum adminAccess {
   super
   play
   comment
+  review
 }
 
 enum transactionType {

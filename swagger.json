@@ -686,14 +686,14 @@
         "summary": "Create admin by super admin",
         "description": "Only the admins with \"super\" access level can send a request to this route.",
         "requestBody": {
-          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values.",
+          "description": "All the fields are needed. \"access_level\" can have one of \"play\", \"comment\" or \"review\" values.",
           "content": {
             "body": {
               "schema": {
                 "properties": {
                   "access_level": {
                     "type": "string",
-                    "description": "Allowed values: play and comment.",
+                    "description": "Allowed values: play, comment and review.",
                     "example": "play"
                   },
                   "full_name": {
@@ -756,7 +756,7 @@
                         },
                         "access_level": {
                           "type": "string",
-                          "description": "Possible values: super, play, comment",
+                          "description": "Possible values: super, play, comment, review.",
                           "example": "play"
                         },
                         "full_name": {
@@ -825,14 +825,14 @@
           }
         ],
         "requestBody": {
-          "description": "All the fields are needed. \"access_level\" can have one of \"play\" or \"comment\" values. If the tel field is changed you need to store the authToken cookie.",
+          "description": "All the fields are needed. \"access_level\" can have one of \"play\", \"comment\" or \"review\" values. If the tel field is changed you need to store the authToken cookie.",
           "content": {
             "body": {
               "schema": {
                 "properties": {
                   "access_level": {
                     "type": "string",
-                    "description": "Allowed values: play and comment. In case of a super admin, this field will be ignored.",
+                    "description": "Allowed values: play, comment and review. In case of a super admin, this field will be ignored.",
                     "example": "play"
                   },
                   "full_name": {
@@ -897,7 +897,7 @@
                         },
                         "access_level": {
                           "type": "string",
-                          "description": "Possible values: super, play, comment",
+                          "description": "Possible values: super, play, comment, review",
                           "example": "play"
                         },
                         "full_name": {
