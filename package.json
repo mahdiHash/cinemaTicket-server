@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "dotenv -e .env node ./built/src/server.js",
-    "devstart": "dotenv -e .env.dev node ./built/src/server.js",
+    "dev": "dotenv -e .env.dev node ./built/src/server.js",
     "devdbseed": "dotenv -e .env.dev node ./src/prisma/seed.js"
   },
   "dependencies": {
