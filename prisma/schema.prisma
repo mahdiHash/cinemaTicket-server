@@ -5,24 +5,22 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://root:Ba3h69EzAxBVNnvnW0fcyNuJ@alfie.iran.liara.ir:33928/postgres"
+  url      = env("DB_URL")
 }
 
 model plays {
-  id            Int       @id @default(autoincrement())
-  title         String
-  director      String
-  producer      String
-  duration      Int       @db.SmallInt
-  genre         genres
-  type          playType
-  intro         String
-  publish_date  DateTime? @db.Date
-  review        String?
-  review_writer String?
-  cover_url     String?
-  cover_fileId  String?
-  trailer_url   String?
+  id           Int       @id @default(autoincrement())
+  title        String
+  director     String
+  producer     String
+  duration     Int       @db.SmallInt
+  genre        genres
+  type         playType
+  intro        String
+  publish_date DateTime? @db.Date
+  cover_url    String?
+  cover_fileId String?
+  trailer_url  String?
 
   play_ratings     play_ratings[]
   play_celebrities play_celebrities[]
@@ -57,6 +55,15 @@ model play_pics {
   play     plays           @relation(fields: [play_id], references: [id], onDelete: Cascade)
   play_id  Int
   position playPicPosition
+}
+
+model play_reviews {
+  id           Int     @id
+  writer_id    admins  @relation(fields: [adminsId], references: [id])
+  text         String
+  is_published Boolean
+
+  adminsId Int
 }
 
 model comments {
@@ -180,17 +187,18 @@ model users {
 }
 
 model admins {
-  id                 Int         @id @default(autoincrement())
+  id                 Int            @id @default(autoincrement())
   full_name          String
   password           String
-  tel                String      @unique
-  email              String      @unique
-  national_id        String      @unique
+  tel                String         @unique
+  email              String         @unique
+  national_id        String         @unique
   home_tel           String
   full_address       String
   profile_pic_url    String?
   profile_pic_fileId String?
   access_level       adminAccess
+  play_reviews       play_reviews[]
 }
 
 model non_approved_places {
