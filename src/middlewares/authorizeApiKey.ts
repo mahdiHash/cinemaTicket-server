@@ -1,5 +1,5 @@
 import { Request, Response} from 'express';
-import { ApiKeyErr, BadRequestErr } from '../helpers/errors';
+import { ApiKeyErr } from '../helpers/errors';
 import { prisma } from '../config';
 
 async function middleware(req: Request, res: Response) {
