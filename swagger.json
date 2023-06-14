@@ -109,16 +109,16 @@
         "description": "This route is used for user login.",
         "summary": "User login",
         "requestBody": {
-          "description": "The \"tel\" field must contain 11 characters.",
+          "description": "The \"login\" field must be the user's tel or email and not be empty.",
           "content": {
             "body": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "tel": {
-                    "description": "This field must contain 11 characters",
+                  "login": {
+                    "description": "This field must contain user's tel or email.",
                     "type": "string",
-                    "example": "09120000000"
+                    "example": "09120000000 | someEmail@example.com"
                   },
                   "password": {
                     "type": "string",
@@ -181,10 +181,15 @@
                       "description": "The id of user in database.",
                       "example": "123"
                     },
-                    "full_name": {
+                    "first_name": {
                       "type": "string",
-                      "description": "User's full name. Needed for submission actions like writing a comments.",
-                      "example": "Jack Nicholson"
+                      "description": "User's first name. Needed for submission actions like writing a comments.",
+                      "example": "Jack"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "description": "User's last name. Needed for submission actions like writing a comments.",
+                      "example": "Nicholson"
                     },
                     "tel": {
                       "type": "string",
@@ -243,9 +248,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "full_name": {
+                  "first_name": {
                     "type": "string",
-                    "example": "Jack Nicholson"
+                    "example": "Jack"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "example": "Nicholson"
                   },
                   "tel": {
                     "type": "string",
@@ -1143,7 +1152,7 @@
           { "authToken": [] }
         ],
         "summary": "Set user's full name to a default value",
-        "description": "This route can be used by super admins to set a default value (کاربر سینماتیکت) to a user's full name. If the process is successful, the default value will be given to the client.",
+        "description": "This route can be used by super admins to set a default value (کاربر سینماتیکت) to a user's first and last name. If the process is successful, the default value will be given to the client.",
         "parameters": [
           {
             "name": "user_id",
@@ -1160,9 +1169,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "fullName": {
+                    "first_name": {
                       "type": "string",
-                      "example": "کاربر سینماتیکت"
+                      "example": "کاربر"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "example": "سینماتیکت"
                     },
                     "message": {
                       "$ref": "#/components/schemas/message"
@@ -1456,9 +1469,13 @@
                                 "type": "integer",
                                 "example": 123
                               },
-                              "full_name": {
+                              "first_name": {
                                 "type": "string",
-                                "example": "فریبا محسنی"
+                                "example": "فریبا"
+                              },
+                              "last_name": {
+                                "type": "string",
+                                "example": "نادری"
                               },
                               "tel": {
                                 "type": "string",
