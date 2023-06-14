@@ -1,5 +1,5 @@
 import { passport } from '../../config';
-import { loginInpValidator } from '../../validation/inputValidators';
+import { adminLoginInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
 import { decrypt } from '../../helpers';
 import { sign } from 'jsonwebtoken';
@@ -7,7 +7,7 @@ import { NextFunction, Request, Response } from 'express';
 import { admins } from '@prisma/client';
 
 const controller = [
-  middlewareWrapper(storeValidatedInputs(loginInpValidator)),
+  middlewareWrapper(storeValidatedInputs(adminLoginInpValidator)),
 
   // authentication
   passport.authenticate('adminLocal', { session: false }),
