@@ -5,7 +5,7 @@ const schema = Joi.object({
     .required()
     .trim()
     .custom((value: string, helpers) => {
-      let validValues = ['play', 'comment', 'review'];
+      let validValues = ['play', 'comment', 'review', 'credit_card'];
 
       if (!validValues.includes(value)) {
         return helpers.error('any.only');
