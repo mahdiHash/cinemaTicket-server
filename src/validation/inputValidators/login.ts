@@ -4,11 +4,9 @@ const schema = Joi.object({
     .required()
     .trim()
     .empty()
-    .length(11)
     .messages({
       "any.required": "شمارۀ همراه باید وارد شود.",
       "string.empty": "شمارۀ همراه نمی‌تواند خالی باشد.",
-      "string.length": "شمارۀ همراه باید شامل 11 رقم باشد.",
     }),
 
   password: Joi.string()
