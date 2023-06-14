@@ -189,7 +189,7 @@ model users {
 }
 
 model credit_card_auth {
-  id                 Int    @id
+  id                 Int    @id @default(autoincrement())
   user               users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id            Int
   credit_card_number String
