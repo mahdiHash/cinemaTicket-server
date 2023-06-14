@@ -5,13 +5,13 @@ import { UnauthorizedErr } from '../helpers/errors/index.js';
 import { prisma } from './';
 
 let strategy = new LocalStrategy(
-  { usernameField: "tel" },
-  async (tel, pass, cb) => {
-    let encryptedTel = encrypt(tel) as string;
-    let user = await prisma.users.findUnique({
+  { usernameField: 'login' },
+  async (login, pass, cb) => {
+    let encryptedLogin = encrypt(login) as string;
+    let user = await prisma.users.findFirst({
       where: {
-        tel: encryptedTel,
-      }
+        OR: [{ tel: encryptedLogin }, { email: encryptedLogin }],
+      },
     });
 
     if (!user) {
@@ -22,8 +22,7 @@ let strategy = new LocalStrategy(
 
     if (isPassMatch) {
       cb(null, user);
-    }
-    else {
+    } else {
       cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
     }
   }
