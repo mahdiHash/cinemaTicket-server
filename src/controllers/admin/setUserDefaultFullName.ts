@@ -21,7 +21,6 @@ async function middleware(req: Request, res: Response) {
 
   let user = await prisma.users.findUnique({
     where: { id: +req.params.userId },
-    select: { full_name: true, id: true },
   });
 
   if (user === null) {
@@ -31,12 +30,14 @@ async function middleware(req: Request, res: Response) {
   let upUser = await prisma.users.update({
     where: { id: user.id },
     data: {
-      full_name: 'کاربر سینماتیکت',
+      first_name: 'کاربر',
+      last_name: 'سینماتیکت',
     },
   });
 
   res.json({
-    fullName: upUser.full_name,
+    first_name: upUser.first_name,
+    last_name: upUser.last_name,
     message: "نام کاربر تغییر کرد."
   });
 }
