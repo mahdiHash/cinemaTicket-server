@@ -35,7 +35,8 @@ async function middleware(req: Request, res: Response) {
       owner: {
         select: {
           id: true,
-          full_name: true,
+          first_name: true,
+          last_name: true,
           tel: true,
           email: true,
           national_id: true,
