@@ -18,7 +18,8 @@ async function middleware(req: Request, res: Response) {
   // decrypt some vlaues for the client
   let descryptedUser = {
     id: reqUserObj.id,
-    full_name: unescape(reqUserObj.full_name),
+    first_name: unescape(reqUserObj.first_name),
+    last_name: unescape(reqUserObj.last_name),
     tel: decrypt(reqUserObj.tel),
     email: decrypt(reqUserObj.email),
     birthday: reqUserObj.birthday,

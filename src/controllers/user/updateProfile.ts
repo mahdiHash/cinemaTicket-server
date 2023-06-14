@@ -76,7 +76,8 @@ async function middleware(req: Request, res: Response) {
   // if undefined is passed to a field while updateing a record,
   // prisma won't update that field
   let updateData = {
-    full_name: escape(res.locals.validBody.full_name) || undefined,
+    first_name: escape(res.locals.validBody.first_name) || undefined,
+    last_name: escape(res.locals.validBody.last_name) || undefined,
     tel: encrypt(res.locals.validBody.tel) || undefined,
     email: encrypt(res.locals.validBody.email) || undefined,
     birthday: res.locals.validBody.birthday
@@ -123,7 +124,8 @@ async function middleware(req: Request, res: Response) {
   // decrypt possible encrypted values for the client
   let decryptedUser = {
     id: upUser.id,
-    full_name: unescape(upUser.full_name),
+    first_name: unescape(upUser.first_name),
+    last_name: unescape(upUser.last_name),
     tel: decrypt(upUser.tel),
     email: decrypt(upUser.email),
     birthday: upUser.birthday,
