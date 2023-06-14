@@ -166,9 +166,10 @@ model place_schedule {
 
 model users {
   id                 Int       @id @default(autoincrement())
-  full_name          String?
+  first_name         String?
+  last_name          String?
   tel                String    @unique
-  email              String?
+  email              String?   @unique
   birthday           DateTime? @db.Date
   password           String
   credit_card_num    String?
@@ -184,6 +185,15 @@ model users {
   tickets             tickets[]
   places              places[]
   non_approved_places non_approved_places[]
+  credit_card_auth    credit_card_auth[]
+}
+
+model credit_card_auth {
+  id                 Int    @id
+  user               users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id            Int
+  credit_card_number String
+  national_id        String
 }
 
 model admins {
@@ -290,6 +300,7 @@ enum adminAccess {
   play
   comment
   review
+  credit_card
 }
 
 enum transactionType {
