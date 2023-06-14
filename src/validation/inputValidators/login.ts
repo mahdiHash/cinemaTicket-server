@@ -5,8 +5,8 @@ const schema = Joi.object({
     .trim()
     .empty()
     .messages({
-      "any.required": "شمارۀ همراه باید وارد شود.",
-      "string.empty": "شمارۀ همراه نمی‌تواند خالی باشد.",
+      "any.required": "شمارۀ همراه یا ایمیل باید وارد شود.",
+      "string.empty": "شمارۀ همراه یا ایمیل نمی‌تواند خالی باشد.",
     }),
 
   password: Joi.string()
