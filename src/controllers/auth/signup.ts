@@ -47,7 +47,8 @@ async function middleware(req: Request, res: Response) {
   );
   let resUserObj = {
     id: user.id,
-    full_name: user.full_name,
+    first_name: user.first_name,
+    last_name: user.last_name,
     tel: res.locals.validBody.tel,
     email: user.email,
     birthday: user.birthday,
