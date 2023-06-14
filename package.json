@@ -9,7 +9,7 @@
   "scripts": {
     "start": "dotenv -e .env node ./built/src/server.js",
     "dev": "dotenv -e .env.dev node ./built/src/server.js",
-    "devdbseed": "dotenv -e .env.dev node ./src/prisma/seed.js"
+    "devdbseed": "dotenv -e .env.dev node ./prisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
