@@ -1,11 +1,18 @@
 import Joi = require('joi');
 
 const schema = Joi.object({
-  full_name: Joi.string()
+  first_name: Joi.string()
     .trim()
     .empty()
     .messages({
-      'string.empty': 'نام کامل نمی‌تواند خالی باشد.',
+      'string.empty': 'نام نمی‌تواند خالی باشد.',
+    }),
+  
+  last_name: Joi.string()
+    .trim()
+    .empty()
+    .messages({
+      'string.empty': 'نام خانوادگی نمی‌تواند خالی باشد.',
     }),
 
   tel: Joi.string()
