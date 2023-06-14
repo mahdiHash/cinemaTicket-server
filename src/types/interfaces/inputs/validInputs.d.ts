@@ -7,7 +7,8 @@ import {
   adminProfileUpdateInputs,
   placeRegisterInputs,
   createCelebrityInputs,
-  updateCelebrityInputs
+  updateCelebrityInputs,
+  adminLogin,
 } from './';
 
 type validInputs =
@@ -19,6 +20,7 @@ type validInputs =
   | adminProfileUpdateInputs
   | placeRegisterInputs
   | createCelebrityInputs
-  | updateCelebrityInputs;
+  | updateCelebrityInputs
+  | adminLogin;
 
 export { validInputs };
