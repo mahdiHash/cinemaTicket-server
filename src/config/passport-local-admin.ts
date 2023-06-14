@@ -1,28 +1,31 @@
-import { Request } from "express";
-import { Strategy, VerifiedCallback } from "passport-custom";
-import { prisma } from "./index.js";
-import { UnauthorizedErr } from "../helpers/errors/index.js";
-import { encrypt } from "../helpers/index.js";
-import { compare } from "bcryptjs";
+import { Strategy as LocalStrategy } from 'passport-local';
+import { compare } from 'bcryptjs';
+import { encrypt } from '../helpers/index.js';
+import { UnauthorizedErr } from '../helpers/errors/index.js';
+import { prisma } from './';
 
-const adminLocalStrategy = new Strategy(async (req: Request, cb: VerifiedCallback) => {
-  let { tel, password } = req.body;
-  let admin = await prisma.admins.findUnique({
-    where: { tel: encrypt(tel) as string }
-  });
+let strategy = new LocalStrategy(
+  { usernameField: 'tel' },
+  async (tel, pass, cb) => {
+    let encryptedTel = encrypt(tel) as string;
+    let user = await prisma.admins.findFirst({
+      where: {
+        tel: encryptedTel
+      },
+    });
 
-  if (admin === null) {
-    return cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
+    if (!user) {
+      return cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
+    }
+
+    let isPassMatch = await compare(pass, user.password);
+
+    if (isPassMatch) {
+      cb(null, user);
+    } else {
+      cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
+    }
   }
+);
 
-  let doesPassMatch = await compare(password, admin.password);
-
-  if (doesPassMatch) {
-    cb(null, admin);
-  }
-  else {
-    cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
-  }
-});
-
-export { adminLocalStrategy };
+export { strategy as adminLocalStrategy };
