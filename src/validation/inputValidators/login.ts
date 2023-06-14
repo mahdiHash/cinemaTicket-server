@@ -1,6 +1,6 @@
 import Joi = require('joi');
 const schema = Joi.object({
-  tel: Joi.string()
+  login: Joi.string()
     .required()
     .trim()
     .empty()
