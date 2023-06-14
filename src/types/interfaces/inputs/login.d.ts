@@ -1,5 +1,5 @@
 interface loginInputs {
-  tel: string;
+  login: string;
   password: string;
 }
 
