@@ -7,8 +7,8 @@
   "author": "mahdiHash <mahdihashemiii939@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "dotenv -e .env node ./built/src/server.js",
-    "dev": "dotenv -e .env.dev node ./built/src/server.js",
+    "start": "tsc && dotenv -e .env node ./built/src/server.js",
+    "dev": "tsc && yarn prisma generate && dotenv -e .env.dev node ./built/src/server.js",
     "devdbseed": "dotenv -e .env.dev node ./prisma/seed.js"
   },
   "dependencies": {
