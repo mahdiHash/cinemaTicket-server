@@ -3,3 +3,4 @@ export * from './logout';
 export * from './removeProfilePic';
 export * from './resetPass';
 export * from './updateProfile';
+export * from './submitCreditCard';

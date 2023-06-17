@@ -413,6 +413,62 @@
         }
       }
     },
+    "/user/creditCard/submit": {
+      "post": {
+        "tags": [ "User" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Submit credit card authentication check",
+        "description": "Using this route the user can request for a credit card authentication using a national ID.",
+        "requestBody": {
+          "description": "All fields are required.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "creditCard": {
+                    "type": "string",
+                    "example": "1234123412341234",
+                    "description": "Must contain 16 characters."
+                  },
+                  "nationalId": {
+                    "type": "string",
+                    "example": "0123456789",
+                    "description": "Must contain 10 characters."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The sumission is done.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The inputs you provided are not valid. More information on the error will be sent to you on response. You can see the schema down this page."
+          },
+          "401": {
+            "description": "The authToken cookie value is not valid. No error message will be provided."
+          }
+        }
+      }
+    },
     "/user/logout": {
       "post": {
         "tags": [ "User" ],
