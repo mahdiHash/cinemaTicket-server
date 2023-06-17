@@ -23,28 +23,6 @@ function middlewareWrapper(
     catch (err) {
       next(err);
     }
-      // .then(next)
-      // .then((...values) => {
-      //   if (res.statusCode === 200 || res.statusCode === 302) {
-      //     res.end();
-      //   }
-      //   else {
-      //     next(...values);
-      //   }
-      // })
-      // .catch(next);
-      
-      // console.log('response: ', response);
-      // console.log('status code:', res.statusCode);
-      // console.log('headers sent:', res.headersSent);
-      // console.log('-'.repeat(10));
-
-      // if (res.headersSent) {
-      //   res.end();
-      // }
-      // else {
-      //   next();
-      // }
   };
 }
 
