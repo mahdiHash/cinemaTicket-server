@@ -13,6 +13,7 @@ import {
   updateNormalAdminProfileInfo,
   updateProfileInfo,
   logout,
+  getAllCreditCardReqs,
 } from '../controllers/admin';
 
 router.post('/login', login);
@@ -40,5 +41,7 @@ router.delete('/userProfile/:userId/removeProfilePic', removeUserProfilePic);
 router.put('/userProfile/:userId/setDefaultFullName', setUserDefaultFullName);
 
 router.post('/logout', logout);
+
+router.get('/creditCard/reqs', getAllCreditCardReqs);
 
 export { router as adminRouter };

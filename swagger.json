@@ -1253,6 +1253,72 @@
         }        
       }
     },
+    "/admin/creditCard/reqs": {
+      "get": {
+        "tags": [ "Admin" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Get all credit card authentication requests",
+        "description": "The pagination is done with cursor. Each request will have 15 records.",
+        "parameters": [
+          {
+            "name": "cursor",
+            "description": "This property is used for pagination. It should be the last id field of the last record you receive.",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "example": "123"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Each request will contain 15 records containig an array of the object below.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "creditCard": {
+                        "type": "string",
+                        "example": "1234123412341234"
+                      },
+                      "nationalId": {
+                        "type": "string",
+                        "example": "0123456789"
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "first_name": {
+                            "type": "string",
+                            "example": "حسین"
+                          },
+                          "last_name": {
+                            "type": "string",
+                            "example": "افتخاری"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The cursor you provided is not valid."
+          },
+          "401": {
+            "description": "The authToken value is not valid. No more information will be sent on response."
+          }
+        }
+      }
+    },
     "/place/register": {
       "post": {
         "tags": [ "Place" ],
