@@ -9,6 +9,7 @@ import {
   createCelebrityInputs,
   updateCelebrityInputs,
   adminLogin,
+  submitCreditCard
 } from './';
 
 type validInputs =
@@ -21,6 +22,7 @@ type validInputs =
   | placeRegisterInputs
   | createCelebrityInputs
   | updateCelebrityInputs
-  | adminLogin;
+  | adminLogin
+  | submitCreditCard;
 
 export { validInputs };

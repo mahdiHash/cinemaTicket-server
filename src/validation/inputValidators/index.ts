@@ -9,3 +9,4 @@ export * from './signup.js';
 export * from './updateAdmin.js';
 export * from './updateCeleb.js';
 export * from './updateUserProfile.js';
+export * from './submitCreditCard';

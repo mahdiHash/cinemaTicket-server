@@ -8,3 +8,4 @@ export * from './placeRegister';
 export * from './createCelebrity';
 export * from './updateCelebrity';
 export * from './adminLogin';
+export * from './submitCreditCard';

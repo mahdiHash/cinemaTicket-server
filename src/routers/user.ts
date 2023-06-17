@@ -4,7 +4,8 @@ import {
   updateProfile,
   resetPass,
   removeProfilePic,
-  logout
+  logout,
+  submitCreditCard
 } from '../controllers/user';
 
 const router = Router();
@@ -18,5 +19,7 @@ router.put('/resetPass', resetPass);
 router.delete('/profilePic/remove', removeProfilePic);
 
 router.post('/logout', logout);
+
+router.post('/submitCreditCard', submitCreditCard);
 
 export { router as userRouter };
