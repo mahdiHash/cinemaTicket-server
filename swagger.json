@@ -1361,6 +1361,48 @@
         }
       }
     },
+    "/admin/creditCard/deny/{request_id}": {
+      "delete": {
+        "tags": [ "Admin" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Deny credit card authentication request",
+        "description": "Only admins with credit_card access level can use this route.",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "description": "The id of the request you want to deny.",
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation is successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request_id you provided is not valid."
+          },
+          "401": {
+            "description": "You are not authorized to take is action. No more information will be provided to you."
+          }
+        }
+      }
+    },
     "/place/register": {
       "post": {
         "tags": [ "Place" ],
