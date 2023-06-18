@@ -5,3 +5,4 @@ export * from './storeValidatedInputs.js';
 export * from './storeValidatedQuery.js';
 export * from './superAdminAuth.js';
 export * from './middlewareWrapper';
+export * from './creditCardAdminAuth';

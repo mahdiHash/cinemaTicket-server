@@ -10,4 +10,4 @@ async function middleware(req: Request, res: Response) {
   }
 }
 
-export { middleware as playAdminAuth };
+export { middleware as creditCardAdminAuth };
