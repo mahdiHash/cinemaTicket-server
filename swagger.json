@@ -270,16 +270,6 @@
                     "example": "Sat Feb 04 2023 23:12:12 GMT+0330",
                     "description": "If provided, you should convert your Date to string."
                   },
-                  "credit_card_num": {
-                    "type": "string",
-                    "example": "1234123412341234",
-                    "description": "Must contain 16 characters."
-                  },
-                  "national_id": {
-                    "type": "string",
-                    "example": "0000000000",
-                    "description": "Must contain 10 characters"
-                  },
                   "img": {
                     "type": "Image file",
                     "description": "The image file to upload. Pay attention to the description provided above in the request body."

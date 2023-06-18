@@ -37,22 +37,6 @@ const schema = Joi.object({
     .messages({
       'string.isoDate': 'تاریخ تولد معتبر نیست.',
     }),
-
-  credit_card_num: Joi.string()
-    .trim()
-    .length(16)
-    .messages({
-      'string.length': 'شمارۀ کارت باید شامل 16 رقم باشد.',
-      'string.empty': 'شمارۀ کارت نمی‌تواند خالی باشد.',
-    }),
-
-  national_id: Joi.string()
-    .trim()
-    .length(10)
-    .messages({
-      'string.length': 'کد ملی باید شامل 10 رقم باشد.',
-      'string.empty': 'کد ملی نمی‌تواند خالی باشد.',
-    }),
 });
 
 export { schema as updateUserProfileInpValidator };

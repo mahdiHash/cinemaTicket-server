@@ -83,9 +83,6 @@ async function middleware(req: Request, res: Response) {
     birthday: res.locals.validBody.birthday
       ? new Date(res.locals.validBody.birthday)
       : undefined,
-    credit_card_num:
-      encrypt(res.locals.validBody.credit_card_num) || undefined,
-    national_id: encrypt(res.locals.validBody.national_id) || undefined,
     profile_pic_url: reqUserObj.profile_pic_url,
     profile_pic_fileId: reqUserObj.profile_pic_fileId,
   };
