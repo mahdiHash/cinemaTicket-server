@@ -5,7 +5,8 @@ import {
   resetPass,
   removeProfilePic,
   logout,
-  submitCreditCard
+  submitCreditCard,
+  checkCreditCardReqStatus,
 } from '../controllers/user';
 
 const router = Router();
@@ -20,6 +21,8 @@ router.delete('/profilePic/remove', removeProfilePic);
 
 router.post('/logout', logout);
 
-router.post('/submitCreditCard', submitCreditCard);
+router.post('/creditCard/submit', submitCreditCard);
+
+router.get('/creditCard/status', checkCreditCardReqStatus);
 
 export { router as userRouter };
