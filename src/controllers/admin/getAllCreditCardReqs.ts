@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
-import { middlewareWrapper, storeValidatedQuery } from "../../middlewares";
+import { middlewareWrapper, storeValidatedQuery, creditCardAdminAuth } from "../../middlewares";
 import { getAllCreditCardReqsQuValidator } from "../../validation/queryValidators";
 import { prisma, passport } from "../../config";
 import { decrypt } from "../../helpers";
 
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
+
+  middlewareWrapper(creditCardAdminAuth),
 
   middlewareWrapper(storeValidatedQuery(getAllCreditCardReqsQuValidator)),
 
