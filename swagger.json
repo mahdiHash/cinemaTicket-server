@@ -1319,6 +1319,48 @@
         }
       }
     },
+    "/admin/creditCard/approve/{request_id}": {
+      "put": {
+        "tags": [ "Admin" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Approve credit card authentication request",
+        "description": "Only admins with credit-card-level access can send a request to this route.",
+        "parameters": [
+          {
+            "name": "request_id",
+            "description": "The id of the request you want to approve.",
+            "in": "path",
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation is successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request_id you provided is not valid."
+          },
+          "401": {
+            "description": "You are not authorized to take is action. No more information will be provided to you."
+          }
+        }
+      }
+    },
     "/place/register": {
       "post": {
         "tags": [ "Place" ],
