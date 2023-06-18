@@ -469,6 +469,39 @@
         }
       }
     },
+    "/user/creditCard/status": {
+      "get": {
+        "tags": [ "User" ],
+        "security": [
+          { "apieky": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Check credit card authentication request status",
+        "description": "If the request is still on waiting status, the reponse will contain request info. If not, response will be null.",
+        "responses": {
+          "200": {
+            "description": "If the request is not on waiting status, the reponse will be null.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creditCardNum": {
+                      "type": "string",
+                      "example": "1234123412341234"
+                    },
+                    "nationalId": {
+                      "type": "string",
+                      "example": "0123456789"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/logout": {
       "post": {
         "tags": [ "User" ],
