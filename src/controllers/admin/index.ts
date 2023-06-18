@@ -12,3 +12,4 @@ export * from './updateNormalAdminProfileInfo';
 export * from './updateProfileInfo';
 export * from './logout';
 export * from './getAllCreditCardReqs';
+export * from './approveCreditCardReq';

@@ -14,6 +14,7 @@ import {
   updateProfileInfo,
   logout,
   getAllCreditCardReqs,
+  approveCreditCardReq,
 } from '../controllers/admin';
 
 router.post('/login', login);
@@ -43,5 +44,7 @@ router.put('/userProfile/:userId/setDefaultFullName', setUserDefaultFullName);
 router.post('/logout', logout);
 
 router.get('/creditCard/reqs', getAllCreditCardReqs);
+
+router.put('/creditCard/approve/:reqId', approveCreditCardReq);
 
 export { router as adminRouter };
