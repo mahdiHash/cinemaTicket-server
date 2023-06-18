@@ -15,6 +15,7 @@ import {
   logout,
   getAllCreditCardReqs,
   approveCreditCardReq,
+  denyCreditCardReq,
 } from '../controllers/admin';
 
 router.post('/login', login);
@@ -46,5 +47,7 @@ router.post('/logout', logout);
 router.get('/creditCard/reqs', getAllCreditCardReqs);
 
 router.put('/creditCard/approve/:reqId', approveCreditCardReq);
+
+router.delete('/creditCard/deny/:reqId', denyCreditCardReq);
 
 export { router as adminRouter };
