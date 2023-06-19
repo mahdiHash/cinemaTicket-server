@@ -62,6 +62,9 @@ async function middleware(req: Request, res: Response) {
               data: {
                 url: fileInfo.filePath,
                 fileId: fileInfo.fileId,
+                alt: celeb.full_name,
+                width: fileInfo.width,
+                height: fileInfo.height,
                 celebrity_id: celeb.id,
               },
             });

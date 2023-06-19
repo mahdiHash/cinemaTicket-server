@@ -2424,14 +2424,27 @@
         ],
         "responses": {
           "200": {
-            "description": "The response would be an array of urls. You can access them via this route: {base_url}/img/{image_url}.",
+            "description": "The response would be an array of the object below. You can access them via this route: {base_url}/img/{image_url}.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string",
-                    "example": "path/to/image"
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "example": "path/to/image"
+                      },
+                      "width": {
+                        "type": "number",
+                        "example": 400
+                      },
+                      "height": {
+                        "type": "number",
+                        "example": 500
+                      }
+                    }
                   }
                 }
               }

@@ -14,8 +14,12 @@ async function middleware(req: Request, res: Response) {
 
   let urls = await prisma.celebrity_pics.findMany({
     where: { celebrity_id: +req.params.id },
-    select: { url: true },
+    select: { 
+      url: true,
+      width: true,
+      height: true,
+    },
   });
   
-  res.json(urls.map((record) => record.url));
+  res.json(urls);
 }
