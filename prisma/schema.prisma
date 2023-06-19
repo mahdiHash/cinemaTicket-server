@@ -21,6 +21,7 @@ model plays {
   cover_url    String?
   cover_fileId String?
   trailer_url  String?
+  isFeatured   Boolean
 
   play_ratings     play_ratings[]
   play_celebrities play_celebrities[]
@@ -52,6 +53,9 @@ model play_celebrities {
 model play_pics {
   url      String          @id
   fileId   String
+  width    Int
+  height   Int
+  alt      String
   play     plays           @relation(fields: [play_id], references: [id], onDelete: Cascade)
   play_id  Int
   position playPicPosition
@@ -117,6 +121,9 @@ model celebrities {
 model celebrity_pics {
   url          String      @id
   fileId       String
+  width        Int
+  height       Int
+  alt          String
   celeb        celebrities @relation(fields: [celebrity_id], references: [id], onDelete: Cascade)
   celebrity_id Int
 }
