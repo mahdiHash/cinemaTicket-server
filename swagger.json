@@ -455,6 +455,9 @@
           },
           "401": {
             "description": "The authToken cookie value is not valid. No error message will be provided."
+          },
+          "403": {
+            "description": "The user has already submitted a request. Only one request can be submitted at a time."
           }
         }
       }
