@@ -18,7 +18,7 @@ This repository only contains the back-end app. To access the client app please 
 
 The technologies used in client app:
 - [Next.js](https://nextjs.org/) framework,
-- [Tailwidn CSS](https://tailwindcss.com/) framework,
+- [Tailwind CSS](https://tailwindcss.com/) framework,
 - Context,
 - [Axios](https://axios-http.com/),
 - [styled-components](https://styled-components.com/),
