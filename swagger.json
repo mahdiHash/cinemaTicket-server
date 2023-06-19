@@ -459,6 +459,40 @@
         }
       }
     },
+    "/user/creditCard/cancel": {
+      "delete": {
+        "tags": [ "User" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Cancel a credit card authentication request",
+        "description": "Only one request per user can be submitted. Use this route to remove the request to submit a new one.",
+        "responses": {
+          "200": {
+            "description": "The request is removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authToken cookie is not valid. No more information will be provided."
+          },
+          "404": {
+            "description": "The user hasn't submitted any request."
+          }
+        }
+      }
+    },
     "/user/creditCard/status": {
       "get": {
         "tags": [ "User" ],
