@@ -14,6 +14,18 @@ The technologies I used:
 - [Swagger](https://swagger.io/) for api documentation,
 - [Passport.js](http://www.passportjs.org/) for authentication (using [local](https://www.passportjs.org/packages/passport-local/) and [JWT](http://www.passportjs.org/packages/passport-jwt/) strategies).
 
+This repository only contains the back-end app. To access the client app please visit this [repo](https://github.com/peymanath/cinematicket.org).
+
+The technologies used in client app:
+- [Next.js](https://nextjs.org/) framework,
+- [Tailwidn CSS](https://tailwindcss.com/) framework,
+- Context,
+- [Axios](https://axios-http.com/),
+- [styled-components](https://styled-components.com/),
+- [NProgress](https://www.npmjs.com/package/nprogress),
+- [Formik](https://formik.org/),
+- [HeadlessUI](https://headlessui.com/).
+
 ## How to run
 
 To run this api and see if it works well, you need to take a few steps.
