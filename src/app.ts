@@ -14,6 +14,7 @@ import {
   adminRouter,
   placeRouter,
   celebrityRouter,
+  playRouter,
 } from './routers';
 
 const app = express();
@@ -43,6 +44,7 @@ app.use('/img', imgRouter);
 app.use('/admin', adminRouter);
 app.use('/place', placeRouter);
 app.use('/celebrity', celebrityRouter);
+app.use('/play', playRouter);
 
 /*
   if the route is not found, create a 404 error
