@@ -51,17 +51,20 @@ cd cinemaTicket-server
 ```
 
 Now you need to create a `.env` file in the root directory. Here's the list of variables you need to create:
-- `PORT`: the port that the app should be runned on,
-- `ENV`: the runtime environment of the app (set it to "production"),
-- `DB_URL`: the URL to your database,
-- `JWT_TOKEN_SECRET`: a secret to be used for asigning JWTs,
-- `COOKIE_SECRET`: a secret to be used for cookies,
-- `CIPHER_KEY`: the key to be used by cipher functions for encryption/decryption,
-- `CIPHER_ALGORITHM`: the algorithm that the cipher functions must use,
-- `CIPHER_IV`: an initialization vector for the cipher functions to use,
-- `IMAGEKIT_STORAGE_PUBLIC_KEY`: the public key you get after setting up ImageKit free tier,
-- `IMAGEKIT_STORAGE_PRIVATE_KEY`: the private key you get after setting up ImageKit free tier,
-- `IMAGEKIT_STORAGE_URL_ENDPOINT`: the url endpoint of your could storage.
+
+```env
+PORT="the port that the app should be runned on"
+ENV="the runtime environment of the app (set it to \"production\")"
+DB_URL="the URL to your database"
+JWT_TOKEN_SECRE="a secret to be used for asigning JWTs"
+COOKIE_SECRET="a secret to be used for cookies"
+CIPHER_KEY="the key to be used by cipher functions for encryption/decryption"
+CIPHER_ALGORITHM="the algorithm that the cipher functions must use"
+CIPHER_IV="an initialization vector for the cipher functions to use"
+IMAGEKIT_STORAGE_PUBLIC_KEY="the public key you get after setting up ImageKit free tier"
+IMAGEKIT_STORAGE_PRIVATE_KEY="the private key you get after setting up ImageKit free tier"
+IMAGEKIT_STORAGE_URL_ENDPOINT="the url endpoint of your could storage"
+```
 
 You can get the `JWT_TOKEN_SECRET`, `COOKIE_SECRET`, `CIPHER_KEY` and `CIPHER_IV` from [here](https://randomkeygen.com/). And for `CIPHER_ALGORITHM` please visit [here](https://stackoverflow.com/a/32618629/14191153).
 
