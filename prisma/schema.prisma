@@ -21,8 +21,8 @@ model plays {
   cover_url      String?
   cover_fileId   String?
   trailer_url    String?
-  trailer_fileId String
-  isFeatured     Boolean
+  trailer_fileId String?
+  isFeatured     Boolean?
 
   play_ratings     play_ratings[]
   play_celebrities play_celebrities[]
