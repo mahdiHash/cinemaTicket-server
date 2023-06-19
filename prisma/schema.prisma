@@ -14,7 +14,7 @@ model plays {
   director     String
   producer     String
   duration     Int       @db.SmallInt
-  genre        genres
+  genre        String
   type         playType
   intro        String
   publish_date DateTime? @db.Date
