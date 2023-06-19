@@ -63,6 +63,8 @@ Now you need to create a `.env` file in the root directory. Here's the list of v
 - `IMAGEKIT_STORAGE_PRIVATE_KEY`: the private key you get after setting up ImageKit free tier,
 - `IMAGEKIT_STORAGE_URL_ENDPOINT`: the url endpoint of your could storage.
 
+You can get the `JWT_TOKEN_SECRET`, `COOKIE_SECRET`, `CIPHER_KEY` and `CIPHER_IV` from [here](https://randomkeygen.com/). And for `CIPHER_ALGORITHM` please visit [here](https://stackoverflow.com/a/32618629/14191153).
+
 **NOTE:** if you haven't installed TypeScript on your local system yet, please do it by install it globally: `npm install -g typescript`.
 
 **NOTE:** to use ImageKit cloud services you need to use a VPN or a DNS changer (run the server with either of them enabled).
