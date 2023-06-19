@@ -9,19 +9,20 @@ datasource db {
 }
 
 model plays {
-  id           Int       @id @default(autoincrement())
-  title        String
-  director     String
-  producer     String
-  duration     Int       @db.SmallInt
-  genre        String
-  type         playType
-  intro        String
-  publish_date DateTime? @db.Date
-  cover_url    String?
-  cover_fileId String?
-  trailer_url  String?
-  isFeatured   Boolean
+  id             Int       @id @default(autoincrement())
+  title          String
+  director       String
+  producer       String
+  duration       Int       @db.SmallInt
+  genre          String
+  type           playType
+  intro          String
+  publish_date   DateTime? @db.Date
+  cover_url      String?
+  cover_fileId   String?
+  trailer_url    String?
+  trailer_fileId String
+  isFeatured     Boolean
 
   play_ratings     play_ratings[]
   play_celebrities play_celebrities[]
