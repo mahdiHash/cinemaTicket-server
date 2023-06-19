@@ -2560,6 +2560,198 @@
           }
         }
       }
+    },
+    "/play/create": {
+      "post": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Create a new play",
+        "description": "Using this route, an admin with \"play\" access level can create new plays.",
+        "requestBody": {
+          "description": "The required fields are marked with * in schema section of request body.",
+          "content": {
+            "body": {
+              "schema": {
+                "required": [
+                  "title",
+                  "director",
+                  "producer",
+                  "duration",
+                  "genre",
+                  "type",
+                  "intro"
+                ],
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "بارکد"
+                  },
+                  "director": {
+                    "type": "string",
+                    "example": "مصطفی کیایی"
+                  },
+                  "producer": {
+                    "type": "string",
+                    "example": "مصطفی کیایی"
+                  },
+                  "duration": {
+                    "type": "number",
+                    "example": 103
+                  },
+                  "genre": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "drama",
+                        "romantic",
+                        "action",
+                        "horror",
+                        "sci_fi",
+                        "adventure",
+                        "mystery",
+                        "comedy",
+                        "historical",
+                        "biography",
+                        "social",
+                        "animation",
+                        "kids",
+                        "documentary"
+                      ],
+                      "example": "action"
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "movie",
+                      "show"
+                    ],
+                    "example": "movie"
+                    
+                  },
+                  "intro": {
+                    "type": "string",
+                    "example": "پشت هر آدمی یه داستانی هست و پشت هر داستانی یه آدم، بهتره قبل از هر قضاوتی یکم صبر داشته باشیم."
+                  },
+                  "publish_date": {
+                    "type": "string",
+                    "description": "A valid Date object converted to string.",
+                    "example": "2016-01-11T00:00:00.000Z"
+                  },
+                  "img": {
+                    "type": "Image File",
+                    "description": "The image you want to upload for the play cover."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The play is created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    },
+                    "play": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "example": "بارکد"
+                        },
+                        "director": {
+                          "type": "string",
+                          "example": "مصطفی کیایی"
+                        },
+                        "producer": {
+                          "type": "string",
+                          "example": "مصطفی کیایی"
+                        },
+                        "duration": {
+                          "type": "number",
+                          "example": 120
+                        },
+                        "genre": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "drama",
+                              "romantic",
+                              "action",
+                              "horror",
+                              "sci_fi",
+                              "adventure",
+                              "mystery",
+                              "comedy",
+                              "historical",
+                              "biography",
+                              "social",
+                              "animation",
+                              "kids",
+                              "documentary"
+                            ],
+                            "example": "action"
+                          }
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "movie",
+                            "show"
+                          ],
+                          "example": "movie"
+                          
+                        },
+                        "intro": {
+                          "type": "string",
+                          "example": "پشت هر آدمی یه داستانی هست و پشت هر داستانی یه آدم، بهتره قبل از هر قضاوتی یکم صبر داشته باشیم."
+                        },
+                        "publish_date": {
+                          "type": "string",
+                          "description": "A valid Date object converted to string.",
+                          "example": "2016-01-11T00:00:00.000Z"
+                        },
+                        "cover_url": {
+                          "type": "string",
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{cover_url}\".",
+                          "example": "/path/to/image"
+                        },
+                        "trailer_url": {
+                          "type": "string",
+                          "description": "This is a relative path to the video web address. Use it like this: \"{api-url}/video/{trailer_url}\".",
+                          "example": "/path/to/video"
+                        },
+                        "isFeatured": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Your request doesn't have the required conditions of request body."
+          },
+          "401": {
+            "description": "The authToken you provided is not valid. No more information will be sent on response."
+          }
+        }
+      }
     }
   },
   "components": {
