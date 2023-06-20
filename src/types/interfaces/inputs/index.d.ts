@@ -9,3 +9,5 @@ export * from './createCelebrity';
 export * from './updateCelebrity';
 export * from './adminLogin';
 export * from './submitCreditCard';
+export * from './createPlay';
+export * from './updatePlay';
