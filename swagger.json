@@ -2943,6 +2943,52 @@
           }
         }
       }
+    },
+    "/play/{play_id}/coverPic/remove": {
+      "delete": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Remove a play's cover image",
+        "description": "Only admins with play access level can access this route.",
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation is successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The play_id you provided is not valid."
+          },
+          "401": {
+            "description": "The authToken you provided is not valid."
+          },
+          "404": {
+            "description": "No play was found with this play_id."
+          }
+        }
+      }
     }
   },
   "components": {
