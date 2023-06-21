@@ -98,6 +98,14 @@ const schema = Joi.object({
   publish_date: Joi.string().isoDate().messages({
     'string.isoDate': 'تاریخ انتشار معتبر نیست.',
   }),
+
+  celebrities: Joi.array()
+    .items(Joi.number().required())
+    .min(1)
+    .messages({
+      'array.includes': 'محتوای بازیگران معتبر نیست.',
+      'array.min': 'حداقل یک بازیگر باید وارد شود.',
+    }),
 });
 
 export { schema as createPlayInpValidator };

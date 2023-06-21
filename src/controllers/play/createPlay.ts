@@ -8,6 +8,7 @@ import { createPlayInpValidator } from '../../validation/inputValidators/createP
 import { prisma, passport, storeImgLocally, imageKit } from '../../config';
 import { createReadStream } from 'fs';
 import { rm } from 'fs/promises';
+import { celebrities } from '@prisma/client';
 
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
@@ -24,13 +25,13 @@ const controller = [
 
 export { controller as createPlay };
 
-async function middleware(req: Request, res: Response) {  
+async function middleware(req: Request, res: Response) {
   let uploadedFileInfo: {
     [prop: string]: any;
     filePath: string;
     fileId: string;
   } | null = null;
-  const { img, genre, ...creationData } = res.locals.validBody;
+  const { img, genre, celebrities, ...creationData } = res.locals.validBody;
   let newPlay = await prisma.plays.create({
     data: {
       // convert genre array into string for storing in database
@@ -56,7 +57,24 @@ async function middleware(req: Request, res: Response) {
     data: {
       cover_fileId: uploadedFileInfo?.fileId,
       cover_url: uploadedFileInfo?.filePath,
-    }
+    },
+  });
+
+  // set the celebrities to play
+  await prisma.play_celebrities.createMany({
+    data: res.locals.validBody.celebrities.map((celebId: number) => {
+      return {
+        play_id: resObj.id,
+        celebrity_id: celebId,
+      };
+    }),
+  });
+
+  let playCelebs = await prisma.play_celebrities.findMany({
+    where: { play_id: resObj.id },
+    select: {
+      celebrity: true,
+    },
   });
 
   res.json({
@@ -65,6 +83,10 @@ async function middleware(req: Request, res: Response) {
       ...resObj,
       // overwrite genre field of resObj, convert it to an array
       genre: resObj.genre.split(','),
-    }
+      celebrities: playCelebs.map(({ celebrity }) => {
+        let { profile_pic_fileId, ...celebInfo } = celebrity;
+        return celebInfo;
+      })
+    },
   });
 }
