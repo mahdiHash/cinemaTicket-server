@@ -23,11 +23,33 @@ export { controller as getAllCelebrities };
 async function middleware(req: Request, res: Response) {
   let takeSign = res.locals.validQuery.backward ? -1 : 1;
   let celebrities = await prisma.celebrities.findMany({
-    where: {
-      full_name: {
-        search: res.locals.validQuery.full_name?.split(' ').join(' | '),
-      },
-    },
+    /*
+      full_name query explained (if it exists is url query):
+      
+      Take this full name: "Jack Sparrow". The query works as:
+      1) user searches for "Jack" -> the record is found.
+      2) user searches for "Sparrow" -> the record is found.
+      3) user searches for "Jac" or "Spa" (non-complete full name) -> the record is found.
+
+      The first two works with "search" filter operator, and the third works with "contains"
+      filter operator.
+    */
+    where: res.locals.validQuery.full_name
+      ? {
+          OR: [
+            {
+              full_name: {
+                search: res.locals.validQuery.full_name?.split(' ').join(' | '),
+              },
+            },
+            {
+              full_name: {
+                contains: res.locals.validQuery.full_name,
+              },
+            },
+          ],
+        }
+      : {},
     orderBy: { id: 'desc' },
     select: {
       id: true,
