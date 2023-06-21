@@ -20,7 +20,7 @@ async function middleware(req: Request, res: Response) {
   }
 
   let celebMovie = await prisma.play_celebrities.findFirst({
-    where: { celebrity_Id: +req.params.id },
+    where: { celebrity_id: +req.params.id },
   });
 
   if (celebMovie) {
