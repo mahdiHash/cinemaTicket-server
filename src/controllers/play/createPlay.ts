@@ -8,7 +8,7 @@ import { createPlayInpValidator } from '../../validation/inputValidators/createP
 import { prisma, passport, storeImgLocally, imageKit } from '../../config';
 import { createReadStream } from 'fs';
 import { rm } from 'fs/promises';
-import { celebrities } from '@prisma/client';
+import { errorLogger } from '../../helpers/errors';
 
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
@@ -32,32 +32,27 @@ async function middleware(req: Request, res: Response) {
     fileId: string;
   } | null = null;
   const { img, genre, celebrities, ...creationData } = res.locals.validBody;
-  let newPlay = await prisma.plays.create({
-    data: {
-      // convert genre array into string for storing in database
-      genre: res.locals.validBody.genre.join(','),
-      ...creationData,
-    },
-  });
+  let newPlayData = creationData;
+  newPlayData.genre = genre.join(',');
 
   if (req.file) {
     let fileReqdStream = createReadStream(req.file.path);
     uploadedFileInfo = await imageKit.upload({
       file: fileReqdStream,
-      fileName: `play${newPlay.id}`,
+      fileName: `playPic`,
       folder: 'play',
     });
 
+    newPlayData.cover_fileId = uploadedFileInfo.fileId;
+    newPlayData.cover_url = uploadedFileInfo.filePath;
+
     fileReqdStream.destroy();
-    rm(req.file.path);
+    rm(req.file.path)
+      .catch(errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
   }
 
-  let { cover_fileId, trailer_fileId, ...resObj } = await prisma.plays.update({
-    where: { id: newPlay.id },
-    data: {
-      cover_fileId: uploadedFileInfo?.fileId,
-      cover_url: uploadedFileInfo?.filePath,
-    },
+  let { cover_fileId, trailer_fileId, ...resObj } = await prisma.plays.create({
+    data: newPlayData,
   });
 
   // set the celebrities to play
@@ -86,7 +81,7 @@ async function middleware(req: Request, res: Response) {
       celebrities: playCelebs.map(({ celebrity }) => {
         let { profile_pic_fileId, ...celebInfo } = celebrity;
         return celebInfo;
-      })
+      }),
     },
   });
 }

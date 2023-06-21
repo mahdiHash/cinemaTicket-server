@@ -8,7 +8,8 @@ import {
 import { createCelebInpValidator } from '../../validation/inputValidators';
 import { createReadStream } from 'fs';
 import { rm } from 'fs/promises';
-import { errorLogger, UnauthorizedErr } from '../../helpers/errors';
+import { errorLogger } from '../../helpers/errors';
+import { celebrities } from '@prisma/client';
 
 const controller = [
   // authorization
@@ -32,29 +33,32 @@ async function middleware(req: Request, res: Response) {
     filePath: string;
     fileId: string;
   } | null = null;
-  let newCeleb = await prisma.celebrities.create({
-    data: res.locals.validBody,
-  });
+  let newCelebData: celebrities = {
+    ...res.locals.validBody,
+  };
 
   if (req.file) {
     const fileReasStream = createReadStream(req.file.path);
     uploadedFileInfo = await imageKit.upload({
       file: fileReasStream,
-      fileName: `celebPic${newCeleb.id}`,
+      fileName: `celebPic`,
       folder: 'celeb',
     });
+
+    newCelebData.profile_pic_fileId = uploadedFileInfo.fileId;
+    newCelebData.profile_pic_url = uploadedFileInfo.filePath;
+
+    fileReasStream.destroy();
+    rm(req.file.path)
+      .catch(errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
   }
 
-  let upCeleb = await prisma.celebrities.update({
-    where: { id: newCeleb.id },
-    data: {
-      profile_pic_fileId: uploadedFileInfo?.fileId ?? null,
-      profile_pic_url: uploadedFileInfo?.filePath ?? null,
-    },
+  let newCeleb = await prisma.celebrities.create({
+    data: newCelebData,
   });
 
   res.json({
-    celeb: upCeleb,
+    celeb: newCeleb,
     message: 'پروفایل هنرمند با موفقیت ایجاد شد.',
   });
 }

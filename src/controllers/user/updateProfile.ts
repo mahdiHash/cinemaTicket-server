@@ -91,7 +91,7 @@ async function middleware(req: Request, res: Response) {
     let fileReadStream = createReadStream(req.file.path);
     let fileInfo = await imageKit.upload({
       file: fileReadStream,
-      fileName: `userPic${reqUserObj.id}`,
+      fileName: `userPic`,
       folder: 'user',
     });
     

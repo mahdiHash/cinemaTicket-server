@@ -51,13 +51,14 @@ async function middleware(req: Request, res: Response) {
 
     let uploadedFileInfo = await imageKit.upload({
       file: fileReasStream,
-      fileName: `celebPic${celeb.id}`,
+      fileName: `celebPic`,
       folder: 'celeb',
     });
 
     rm(req.file.path).catch(
       errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' })
     );
+
     upData.profile_pic_fileId = uploadedFileInfo.fileId;
     upData.profile_pic_url = uploadedFileInfo.filePath;
 
