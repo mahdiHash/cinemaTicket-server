@@ -45,10 +45,10 @@ model play_celebrities {
   id           Int         @id @default(autoincrement())
   play         plays       @relation(fields: [play_id], references: [id], onDelete: Cascade)
   play_id      Int
-  celebrity    celebrities @relation(fields: [celebrity_Id], references: [id], onDelete: Restrict)
-  celebrity_Id Int
+  celebrity    celebrities @relation(fields: [celebrity_id], references: [id], onDelete: Restrict)
+  celebrity_id Int
 
-  @@unique([play_id, celebrity_Id])
+  @@unique([play_id, celebrity_id])
 }
 
 model play_pics {
