@@ -3037,6 +3037,75 @@
           }
         }
       }
+    },
+    "/play/{play_id/pics/upload": {
+      "post": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Upload play pics",
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "description": "Using this route, only play admins can upload pics for plays. Each pic has a predefined position that you can know more about in the request body description.",
+        "requestBody": {
+          "description": "Positions for each pic: <br>1) celebNoBackground: a celebrity pic for featured plays (in main page slider, on left side of each play). <br>2) topPlayBackground: top play is the play above of each category title of the main page. <br>3) featuredBackground: background of the plays in the main page slider. <br>4) background: the top background image of each play. <br>5) morePics: pics of the play in its own page.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "imgs": {
+                    "type": "array",
+                    "description": "The images you want to upload. Each file limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp.",
+                    "items": {
+                      "type": "Image File"
+                    }
+                  },
+                  "position": {
+                    "type": "string",
+                    "example": "background"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The pic is uploaded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Position field or the image condition is not valid."
+          },
+          "401": {
+            "description": "The authToken is not valid. No more information will be sent on response."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this route/action."
+          }
+        }
+      }
     }
   },
   "components": {
