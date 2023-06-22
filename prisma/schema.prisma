@@ -284,6 +284,8 @@ enum commentType {
 }
 
 enum playPicPosition {
+  topPlayBackground
+  featuredBackground
   background
   review
   morePics
