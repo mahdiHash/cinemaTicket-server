@@ -3106,6 +3106,53 @@
           }
         }
       }
+    },
+    "/play/{play_id}/pics/remove/all": {
+      "delete": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Remove all play pics",
+        "description": "Only play admins can access this route.",
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All pics are removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "play_id is not a valid number."
+          },
+          "401": {
+            "description": "The authToken is not valid. No more information will be sent on response."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this route/action."
+          }
+
+        }
+      }
     }
   },
   "components": {
