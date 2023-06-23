@@ -3396,7 +3396,7 @@
         ],
         "description": "Only play admins can access this route.",
         "requestBody": {
-          "description": "File limitations: max file size is 40MB, supported formats are .mp4, .mkv, .wmv, .webm.",
+          "description": "File limitations: max file size is 25MB, supported formats are .mp4, .webm.",
           "content": {
             "body": {
               "schema": {
