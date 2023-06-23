@@ -3089,6 +3089,14 @@
                   "properties": {
                     "message": {
                       "$ref": "#/components/schemas/message"
+                    },
+                    "urls": {
+                      "type": "array",
+                      "description": "The url of the images you uploaded in an array.",
+                      "items": {
+                        "type": "string",
+                        "example": "/path/to/image"
+                      }
                     }
                   }
                 }
