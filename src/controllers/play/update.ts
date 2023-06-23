@@ -69,7 +69,7 @@ async function middleware(req: Request, res: Response) {
   });
 
   res.json({
-    message: 'نمایش ایجاد شد.',
+    message: 'اطلاعات نمایش بروزرسانی شد.',
     play: {
       ...resObj,
       // overwrite genre field of resObj, convert it to an array
