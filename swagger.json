@@ -562,7 +562,7 @@
     },
     "/img/{imageUrl}": {
       "get": {
-        "tags": [ "Image" ],
+        "tags": [ "Media" ],
         "security": [
           { "apikey": [ "apikey" ]}
         ],
