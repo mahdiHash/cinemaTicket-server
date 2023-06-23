@@ -2801,6 +2801,141 @@
         }
       }
     },
+    "/play/{play_id}": {
+      "get": {
+        "tags": [ "Play" ],
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "description": "Everyone can access this route.",
+        "responses": {
+          "200": {
+            "description": "The pics field is an array of play pics uploaded. The \"position\" field of each pic record could be one of: <br>1) celebNoBackground: a celebrity pic for featured plays (in main page slider, on left side of each play). <br>2) topPlayBackground: top play is the play above of each category title of the main page. <br>3) featuredBackground: background of the plays in the main page slider. <br>4) background: the top background image of each play. <br>5) morePics: pics of the play in its own page. <br>Use these to place the pics in the right place.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "play": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "example": "بارکد"
+                        },
+                        "director": {
+                          "type": "string",
+                          "example": "مصطفی کیایی"
+                        },
+                        "producer": {
+                          "type": "string",
+                          "example": "مصطفی کیایی"
+                        },
+                        "duration": {
+                          "type": "number",
+                          "example": 120
+                        },
+                        "genre": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "drama",
+                              "romantic",
+                              "action",
+                              "horror",
+                              "sci_fi",
+                              "adventure",
+                              "mystery",
+                              "comedy",
+                              "historical",
+                              "biography",
+                              "social",
+                              "animation",
+                              "kids",
+                              "documentary"
+                            ],
+                            "example": "action"
+                          }
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "movie",
+                            "show"
+                          ],
+                          "example": "movie" 
+                        },
+                        "intro": {
+                          "type": "string",
+                          "example": "پشت هر آدمی یه داستانی هست و پشت هر داستانی یه آدم، بهتره قبل از هر قضاوتی یکم صبر داشته باشیم."
+                        },
+                        "publish_date": {
+                          "type": "string",
+                          "description": "A valid Date object converted to string.",
+                          "example": "2016-01-11T00:00:00.000Z"
+                        },
+                        "cover_url": {
+                          "type": "string",
+                          "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{cover_url}\".",
+                          "example": "/path/to/image"
+                        },
+                        "trailer_url": {
+                          "type": "string",
+                          "description": "This is a relative path to the video web address. Use it like this: \"{api-url}/video/{trailer_url}\".",
+                          "example": "/path/to/video"
+                        },
+                        "isFeatured": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    },
+                    "pics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "description": "The url to the image. You need to send a request to \"/img/{img_url}\" to get the pic.",
+                            "example": "/path/to/image"
+                          },
+                          "width": {
+                            "type": "number",
+                            "example": 400
+                          },
+                          "height": {
+                            "type": "number",
+                            "example": 500
+                          },
+                          "alt": {
+                            "type": "string",
+                            "description": "The alt text of the pic.",
+                            "example": "title of the play"
+                          },
+                          "position": {
+                            "type": "string",
+                            "description": "The position of the pic.",
+                            "example": "background"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/play/{play_id}/update": {
       "put": {
         "tags": [ "Play" ],
