@@ -15,6 +15,7 @@ import {
   placeRouter,
   celebrityRouter,
   playRouter,
+  videoRouter
 } from './routers';
 
 const app = express();
@@ -41,6 +42,7 @@ app.use(middlewareWrapper(authorizeApiKey));
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/img', imgRouter);
+app.use('/video', videoRouter);
 app.use('/admin', adminRouter);
 app.use('/place', placeRouter);
 app.use('/celebrity', celebrityRouter);

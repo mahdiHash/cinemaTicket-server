@@ -5,3 +5,4 @@ export * from './img.js';
 export * from './user.js';
 export * from './place.js';
 export * from './play';
+export * from './video';
