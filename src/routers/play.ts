@@ -5,6 +5,7 @@ import {
   removeCoverPic,
   uploadPlayPics,
   removeAllPlayPics,
+  removePlayPic,
 } from '../controllers/play';
 
 const router = Router();
@@ -18,5 +19,7 @@ router.delete('/:playId/coverPic/remove', removeCoverPic);
 router.post('/:playId/pics/upload', uploadPlayPics);
 
 router.delete('/:playId/pics/remove/all', removeAllPlayPics);
+
+router.delete('/:playId/pics/remove/:folder/:fileName', removePlayPic);
 
 export { router as playRouter };

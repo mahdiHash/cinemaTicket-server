@@ -3,3 +3,4 @@ export * from './update';
 export * from './removeCoverPic';
 export * from './uploadPlayPics';
 export * from './removeAllPlayPics';
+export * from './removePlayPic';
