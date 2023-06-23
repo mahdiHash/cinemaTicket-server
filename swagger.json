@@ -3213,6 +3213,72 @@
           }
         }
       }
+    },
+    "/play/{play_id}/trailer/upload": {
+      "post": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "summary": "Upload a trailer video for a play",
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "description": "Only play admins can access this route.",
+        "requestBody": {
+          "description": "File limitations: max file size is 40MB, supported formats are .mp4, .mkv, .wmv, .webm.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "vid": {
+                    "type": "Video File"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The video is successfully uploaded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "The path to trailer.",
+                      "example": "/path/to/trailer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Video is not valid."
+          },
+          "401": {
+            "description": "The authToken is not valid. No more information will be sent on response."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this route/action."
+          }
+        }
+      }
     }
   },
   "components": {
