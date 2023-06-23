@@ -6,3 +6,4 @@ export * from './removeAllPlayPics';
 export * from './removePlayPic';
 export * from './uploadPlayTrailer';
 export * from './removePlayTrailer';
+export * from './getPlay';
