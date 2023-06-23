@@ -30,6 +30,7 @@ async function middleware(req: Request, res: Response) {
     throw new BadRequestErr('شناسه نمایش معتبر نیست.');
   }
 
+  let urls: string[] = [];
   let play = await prisma.plays.findUnique({
     where: { id: +req.params.playId },
     select: {
@@ -53,6 +54,7 @@ async function middleware(req: Request, res: Response) {
       folder: 'play',
     });
 
+    urls.push(uploadedFileInfo.filePath);
     fileReadStream.destroy();
     rm(file.path)
       .catch(errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
@@ -72,5 +74,6 @@ async function middleware(req: Request, res: Response) {
 
   res.json({
     message: 'تصاویر آپلود شدند.',
+    urls,
   });
 }
