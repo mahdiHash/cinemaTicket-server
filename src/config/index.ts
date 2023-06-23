@@ -6,3 +6,4 @@ export * from './passport-local-admin.js';
 export * from './passport-local.js';
 export * from './passportConfig.js';
 export * from './prismaConfig.js';
+export * from './multer-video';
