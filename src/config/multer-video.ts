@@ -22,7 +22,7 @@ const disk = multer.diskStorage({
 const upload = multer({
   storage: disk,
   limits: {
-    fileSize: 40 * 1024 * 1024, // 40MB
+    fileSize: 25 * 1024 * 1024, // 25MB
   },
   fileFilter: (req: Request, file, cb: multer.FileFilterCallback) => {
     let validForamts = ['.mp4', '.webm'];
