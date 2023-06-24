@@ -3583,6 +3583,100 @@
         }
       }
     },
+    "/play/{play_id}/review/update": {
+      "put": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "summary": "Update a review of a play",
+        "description": "Only admins with review access level can access this route.",
+        "requestBody": {
+          "description": "For uploading images in the review, send POST requests to \"/play/{play_id}/review/pics/upload\". The content of review must have at least 100 characters.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The review is submitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    },
+                    "review": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "description": "The id of the submitted review.",
+                          "example": 123
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "The content of the review."
+                        },
+                        "writer": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 123 
+                            },
+                            "full_name": {
+                              "type": "string",
+                              "example": "محمد کمالی"
+                            },
+                            "profile_pic_url": {
+                              "type": "string",
+                              "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                              "example": "/path/to/image"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The play_id is not valid or the content contains less than 100 characters."
+          },
+          "401": {
+            "description": "The authToken is not valid. No more information will be sent on response."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this route/action."
+          }
+
+        }
+      }
+    },
     "/play/{play_id}/review/{review_id}/publish": {
       "put": {
         "tags": [ "Play" ],
