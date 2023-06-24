@@ -3506,7 +3506,7 @@
             "example": 123
           }
         ],
-        "description": "Only admins with review access level can access this route.",
+        "description": "Only admins with review access level can access this route. Only one review can be submitted for a play.",
         "requestBody": {
           "description": "For uploading images in the review, send POST requests to \"/play/{play_id}/review/pics/upload\". The content of review must have at least 100 characters.",
           "content": {
@@ -3571,7 +3571,7 @@
             }
           },
           "400": {
-            "description": "play_id is not valid or the content contains less than 100 characters."
+            "description": "play_id is not valid, the content contains less than 100 characters or there's already a review for this play."
           },
           "401": {
             "description": "The authToken is not valid. No more information will be sent on response."

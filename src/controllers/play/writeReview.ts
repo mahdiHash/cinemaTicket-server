@@ -37,6 +37,14 @@ async function middleware(req: Request, res: Response) {
     throw new NotFoundErr('نمایشی با این شناسه یافت نشد.');
   }
 
+  const duplicateReview = await prisma.play_reviews.findFirst({
+    where: { play_id: play.id },
+  });
+
+  if (duplicateReview !== null) {
+    throw new BadRequestErr('یک نقد از قبل برای نمایش ثبت شده است.');
+  }
+
   const review = await prisma.play_reviews.create({
     data: {
       text: escape(res.locals.validBody.content) as string,
