@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DB_URL")
+  url      = "postgresql://root:Ba3h69EzAxBVNnvnW0fcyNuJ@alfie.iran.liara.ir:34136/postgres"
 }
 
 model plays {
@@ -64,11 +64,10 @@ model play_pics {
 
 model play_reviews {
   id           Int     @id @default(autoincrement())
-  writer_id    admins  @relation(fields: [adminsId], references: [id])
+  writer    admins  @relation(fields: [writer_id], references: [id])
+  writer_id Int
   text         String
   is_published Boolean @default(false)
-
-  adminsId Int
 }
 
 model comments {
