@@ -43,11 +43,22 @@ async function middleware(req: Request, res: Response) {
       writer_id: reqAdminObj.id,
       is_published: false,
       play_id: play.id,
+    },
+    select: {
+      id: true,
+      text: true,
+      writer: {
+        select: {
+          id: true,
+          full_name: true,
+          profile_pic_url: true,
+        }
+      }
     }
   });
 
   res.json({
     message: 'نقد نمایش ثبت شد.',
-    content: unescape(review.text),
+    review,
   });
 }
