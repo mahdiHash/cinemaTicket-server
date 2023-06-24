@@ -3533,9 +3533,37 @@
                     "message": {
                       "$ref": "#/components/schemas/message"
                     },
-                    "content": {
-                      "type": "string",
-                      "description": "The content of the review."
+                    "review": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "description": "The id of the submitted review.",
+                          "example": 123
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "The content of the review."
+                        },
+                        "writer": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 123 
+                            },
+                            "full_name": {
+                              "type": "string",
+                              "example": "محمد کمالی"
+                            },
+                            "profile_pic_url": {
+                              "type": "string",
+                              "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{profile_pic_url}\".",
+                              "example": "/path/to/image"
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
