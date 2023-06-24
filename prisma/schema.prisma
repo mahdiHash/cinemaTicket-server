@@ -22,7 +22,7 @@ model plays {
   cover_fileId   String?
   trailer_url    String?
   trailer_fileId String?
-  isFeatured     Boolean?
+  isFeatured     Boolean? @default(false)
 
   play_ratings     play_ratings[]
   play_celebrities play_celebrities[]
@@ -66,7 +66,7 @@ model play_reviews {
   id           Int     @id
   writer_id    admins  @relation(fields: [adminsId], references: [id])
   text         String
-  is_published Boolean
+  is_published Boolean @default(false)
 
   adminsId Int
 }
