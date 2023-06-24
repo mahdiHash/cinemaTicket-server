@@ -63,7 +63,7 @@ model play_pics {
 }
 
 model play_reviews {
-  id           Int     @id
+  id           Int     @id @default(autoincrement())
   writer_id    admins  @relation(fields: [adminsId], references: [id])
   text         String
   is_published Boolean @default(false)
