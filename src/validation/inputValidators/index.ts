@@ -12,3 +12,4 @@ export * from './updateUserProfile.js';
 export * from './submitCreditCard';
 export * from './updatePlay';
 export * from './uploadPlayPics';
+export * from './writeReview';
