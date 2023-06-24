@@ -22,13 +22,14 @@ model plays {
   cover_fileId   String?
   trailer_url    String?
   trailer_fileId String?
-  isFeatured     Boolean? @default(false)
+  isFeatured     Boolean?  @default(false)
 
   play_ratings     play_ratings[]
   play_celebrities play_celebrities[]
   play_pics        play_pics[]
   place_schedule   place_schedule[]
   tickets          tickets[]
+  play_reviews     play_reviews[]
 }
 
 model play_ratings {
@@ -64,8 +65,10 @@ model play_pics {
 
 model play_reviews {
   id           Int     @id @default(autoincrement())
-  writer    admins  @relation(fields: [writer_id], references: [id])
-  writer_id Int
+  writer       admins  @relation(fields: [writer_id], references: [id])
+  writer_id    Int
+  play         plays   @relation(fields: [play_id], references: [id])
+  play_id      Int
   text         String
   is_published Boolean @default(false)
 }
