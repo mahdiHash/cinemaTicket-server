@@ -36,7 +36,7 @@ router.post('/:playId/review/write', writeReview);
 
 router.put('/:playId/review/update', updateReview);
 
-router.put('/:playId/review/:reviewId/publish', publishReview);
+router.put('/:playId/review/publish', publishReview);
 
 router.get('/:playId', getPlay);
 

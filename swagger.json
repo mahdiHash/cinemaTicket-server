@@ -3677,7 +3677,7 @@
         }
       }
     },
-    "/play/{play_id}/review/{review_id}/publish": {
+    "/play/{play_id}/review/publish": {
       "put": {
         "tags": [ "Play" ],
         "security": [
@@ -3691,16 +3691,9 @@
             "required": true,
             "description": "The id of the play you want to update",
             "example": 123
-          },
-          {
-            "name": "review_id",
-            "in": "path",
-            "required": true,
-            "description": "The id of the review you want to publish",
-            "example": 123
           }
         ],
-        "description": "Only play admins can access this route. If there's already a published review, there will be a 403 http error. In this case, you need to hide it.",
+        "description": "Only play admins can access this route.",
         "responses": {
           "200": {
             "description": "The review is now published.",
@@ -3718,13 +3711,13 @@
             }
           },
           "400": {
-            "description": "play_id or review_id is not valid."
+            "description": "play_id is not valid."
           },
           "401": {
             "description": "The authToken is not valid. No more information will be sent on response."
           },
           "403": {
-            "description": "You are not authorized to access/take this route/action or there's already a published review"
+            "description": "You are not authorized to access/take this route/action."
           }
         }
       }
