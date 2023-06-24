@@ -11,6 +11,7 @@ import {
   getPlay,
   writeReview,
   publishReview,
+  updateReview,
 } from '../controllers/play';
 
 const router = Router();
@@ -32,6 +33,8 @@ router.post('/:playId/trailer/upload', uploadPlayTrailer);
 router.delete('/:playId/trailer/remove', removePLayTrailer);
 
 router.post('/:playId/review/write', writeReview);
+
+router.put('/:playId/review/update', updateReview);
 
 router.put('/:playId/review/:reviewId/publish', publishReview);
 
