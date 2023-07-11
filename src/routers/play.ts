@@ -12,6 +12,7 @@ import {
   writeReview,
   publishReview,
   updateReview,
+  uploadReviewPic,
 } from '../controllers/play';
 
 const router = Router();
@@ -37,6 +38,8 @@ router.post('/:playId/review/write', writeReview);
 router.put('/:playId/review/update', updateReview);
 
 router.put('/:playId/review/publish', publishReview);
+
+router.post('/:playId/review/pics/upload', uploadReviewPic);
 
 router.get('/:playId', getPlay);
 

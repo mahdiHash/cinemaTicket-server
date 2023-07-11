@@ -10,3 +10,4 @@ export * from './getPlay';
 export * from './writeReview';
 export * from './publishReview';
 export * from './updateReview';
+export * from './uploadReviewPic';
