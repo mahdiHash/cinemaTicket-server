@@ -13,6 +13,7 @@ import {
   publishReview,
   updateReview,
   uploadReviewPic,
+  removeReviewPic,
 } from '../controllers/play';
 
 const router = Router();
@@ -40,6 +41,8 @@ router.put('/:playId/review/update', updateReview);
 router.put('/:playId/review/publish', publishReview);
 
 router.post('/:playId/review/pics/upload', uploadReviewPic);
+
+router.delete('/:playId/review/pics/remove/:folder/:fileName', removeReviewPic);
 
 router.get('/:playId', getPlay);
 

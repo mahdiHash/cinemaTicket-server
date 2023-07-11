@@ -11,3 +11,4 @@ export * from './writeReview';
 export * from './publishReview';
 export * from './updateReview';
 export * from './uploadReviewPic';
+export * from './removeReviewPic';
