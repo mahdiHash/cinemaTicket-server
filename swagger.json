@@ -3721,6 +3721,89 @@
           }
         }
       }
+    },
+    "/play/{play_id}/review/pics/upload": {
+      "post": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "summary": "Upload a pic for a review",
+        "description": "Only review admins can access this route. You can upload only one pic per request.",
+        "requestBody": {
+          "description": "File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp.",
+          "content": {
+            "body": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "img": {
+                    "type": "Image File"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The image is uploaded successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/components/schemas/message"
+                    },
+                    "pic": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "description": "The url to the image. Usage: \"/img/{image_url}\".",
+                          "example": "/path/to/image"
+                        },
+                        "width": {
+                          "type": "number",
+                          "example": 400
+                        },
+                        "height": {
+                          "type": "number",
+                          "example": "500"
+                        },
+                        "alt": {
+                          "type": "string",
+                          "example": "alternative text"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "play_id is not valid or the image condition is not accepted."
+          },
+          "401": {
+            "description": "The authToken is not valid. No more information will be sent on response."
+          },
+          "403": {
+            "description": "You are not authorized to access/take this route/action."
+          }
+        }
+      }
     }
   },
   "components": {
