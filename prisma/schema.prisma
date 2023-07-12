@@ -65,9 +65,9 @@ model play_pics {
 
 model play_reviews {
   id           Int     @default(autoincrement())
-  writer       admins  @relation(fields: [writer_id], references: [id])
-  writer_id    Int
-  play         plays   @relation(fields: [play_id], references: [id])
+  writer       admins?  @relation(fields: [writer_id], references: [id], onDelete: SetNull)
+  writer_id    Int?
+  play         plays   @relation(fields: [play_id], references: [id], onDelete: Cascade)
   play_id      Int     @id
   text         String
   is_published Boolean @default(false)
