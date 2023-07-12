@@ -279,10 +279,8 @@ enum playType {
 }
 
 enum commentType {
-  movie
-  show
-  cinema
-  theater
+  play
+  place
 }
 
 enum playPicPosition {
