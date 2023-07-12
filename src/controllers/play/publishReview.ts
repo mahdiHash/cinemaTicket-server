@@ -35,7 +35,7 @@ async function middleware(req: Request, res: Response) {
   }
 
   await prisma.play_reviews.update({
-    where: { id: review.id },
+    where: { play_id: review.play_id },
     data: { is_published: true },
   });
 

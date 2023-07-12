@@ -61,7 +61,7 @@ async function middleware(req: Request, res: Response) {
 
   const upReview = await prisma.play_reviews.update({
     where: {
-      id: review.id,
+      play_id: play.id,
     },
     data: {
       text: escape(res.locals.validBody.content) as string,
