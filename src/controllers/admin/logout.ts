@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { middlewareWrapper } from '../../middlewares';
-import { passport } from '../../config';
+import { passport, envVariables } from '../../config';
 
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
@@ -11,16 +11,16 @@ const controller = [
 async function middleware(req: Request, res: Response) {
   res.clearCookie('adminData', {
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.clearCookie('authToken', {
     httpOnly: true,
     signed: true,
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.json({

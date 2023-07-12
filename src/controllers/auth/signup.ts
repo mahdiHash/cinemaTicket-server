@@ -3,7 +3,7 @@ import { sign } from 'jsonwebtoken';
 import { hash } from 'bcryptjs';
 import { encrypt } from '../../helpers';
 import { BadRequestErr } from '../../helpers/errors';
-import { prisma } from '../../config';
+import { prisma, envVariables } from '../../config';
 import { signupInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
 
@@ -42,7 +42,7 @@ async function middleware(req: Request, res: Response) {
   });
   let token = sign(
     { id: user.id, tel: hashedTel },
-    process.env.JWT_TOKEN_SECRET as string,
+    envVariables.jwtTokenSecret,
     { expiresIn: '90d' }
   );
   let resUserObj = {
@@ -59,8 +59,8 @@ async function middleware(req: Request, res: Response) {
 
   res.clearCookie('adminData', {
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.cookie('authToken', token, {
@@ -68,15 +68,15 @@ async function middleware(req: Request, res: Response) {
     httpOnly: true,
     signed: true,
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.cookie('userData', JSON.stringify(resUserObj), {
     maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.json({

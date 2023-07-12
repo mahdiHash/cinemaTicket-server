@@ -1,4 +1,5 @@
 import crypto = require('crypto');
+import { envVariables } from '../config';
 
 function encrypt(input?: string | null) {
   if (input === null || input === undefined) {
@@ -6,9 +7,9 @@ function encrypt(input?: string | null) {
   }
 
   const cipher = crypto.createCipheriv(
-    process.env.CIPHER_ALGORITHM as string,
-    process.env.CIPHER_KEY as string,
-    process.env.CIPHER_IV as string
+    envVariables.cipherAlgorithm,
+    envVariables.cipherKey,
+    envVariables.cipherIV,
   );
 
   return cipher.update(input, 'utf-8', 'hex');
@@ -20,9 +21,9 @@ function decrypt(input?: string | null) {
   }
   
   const decipher = crypto.createDecipheriv(
-    process.env.CIPHER_ALGORITHM as string,
-    process.env.CIPHER_KEY as string,
-    process.env.CIPHER_IV as string
+    envVariables.cipherAlgorithm,
+    envVariables.cipherKey,
+    envVariables.cipherIV,
   );
 
   return decipher.update(input, 'hex', 'utf-8');

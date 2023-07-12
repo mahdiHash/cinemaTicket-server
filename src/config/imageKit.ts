@@ -1,9 +1,10 @@
 import ImageKit = require('imagekit');
+import { envVariables } from './envVariables';
 
 const storage = new ImageKit({
-  publicKey: process.env.IMAGEKIT_STORAGE_PUBLIC_KEY as string,
-  privateKey: process.env.IMAGEKIT_STORAGE_PRIVATE_KEY as string,
-  urlEndpoint: process.env.IMAGEKIT_STORAGE_URL_ENDPOINT as string,
+  publicKey: envVariables.imageKitStoragePublicKey as string,
+  privateKey: envVariables.imageKitStoragePrivateKey as string,
+  urlEndpoint: envVariables.imageKitStorageUrlEndpoint as string,
 });
 
 export { storage as imageKit };

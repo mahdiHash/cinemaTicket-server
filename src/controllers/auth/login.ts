@@ -4,7 +4,7 @@ import { decrypt, unescape } from '../../helpers';
 import { users } from '@prisma/client';
 import { loginInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
-import { passport } from '../../config';
+import { passport, envVariables } from '../../config';
 
 const controller: RequestHandler[] = [
   middlewareWrapper(storeValidatedInputs(loginInpValidator)),
@@ -23,7 +23,7 @@ async function middleware(req: Request, res: Response) {
   let userObj = req.user as users;
   let token = sign(
     { id: userObj.id, tel: userObj.tel },
-    process.env.JWT_TOKEN_SECRET as string,
+    envVariables.jwtTokenSecret,
     { expiresIn: '90d' }
   );
 
@@ -42,8 +42,8 @@ async function middleware(req: Request, res: Response) {
 
   res.clearCookie('adminData', {
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.cookie('authToken', token, {
@@ -51,15 +51,15 @@ async function middleware(req: Request, res: Response) {
     httpOnly: true,
     signed: true,
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.cookie('userData', JSON.stringify(decryptedUser), {
     maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.json({

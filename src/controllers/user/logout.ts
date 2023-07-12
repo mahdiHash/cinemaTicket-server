@@ -1,4 +1,4 @@
-import { passport } from "../../config";
+import { passport, envVariables } from "../../config";
 import { Request, Response, NextFunction } from "express";
 import { middlewareWrapper } from "../../middlewares";
 
@@ -13,16 +13,16 @@ export { controller as logout };
 async function middleware(req: Request, res: Response) {
   res.clearCookie('userData', {
     sameSite: "lax",
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.clearCookie('authToken', {
     httpOnly: true,
     signed: true,
     sameSite: "lax",
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.json({

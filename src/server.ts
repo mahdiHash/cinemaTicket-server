@@ -1,15 +1,16 @@
 import http = require('http');
 import app from './app.js';
 import { NodeSystemError } from './types/interfaces/node';
+import { envVariables } from './config';
 
-app.set('port', process.env.PORT);
+app.set('port', envVariables.port);
 
 const server = http.createServer(app);
 
-server.listen(process.env.PORT);
+server.listen(envVariables.port);
 
 server.on('listening', () => {
-  console.log(`server is running at 127.0.0.1:${process.env.PORT}`);
+  console.log(`server is running at 127.0.0.1:${envVariables.port}`);
 });
 
 server.on('error', (err: NodeSystemError) => {
@@ -19,10 +20,10 @@ server.on('error', (err: NodeSystemError) => {
 
   switch (err.code) {
     case 'EACCESS':
-      console.error(`Port ${process.env.PORT} requires elavated privileges`);
+      console.error(`Port ${envVariables.port} requires elavated privileges`);
       process.exit(1);
     case 'EADDRINUSE':
-      console.error(`Port ${process.env.PORT} is already in use`);
+      console.error(`Port ${envVariables.port} is already in use`);
       process.exit(1);
     default:
       throw err;

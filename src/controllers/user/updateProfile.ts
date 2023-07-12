@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { prisma, passport, imageKit, storeImgLocally } from '../../config';
+import { prisma, passport, imageKit, storeImgLocally, envVariables } from '../../config';
 import { updateUserProfileInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
 import { BadRequestErr, errorLogger } from '../../helpers/errors';
@@ -115,7 +115,7 @@ async function middleware(req: Request, res: Response) {
       tel: upUser.tel,
       exp: 1000 * 60 * 60 * 24 * 90, // 90 days
     },
-    process.env.JWT_TOKEN_SECRET as string,
+    envVariables.jwtTokenSecret,
   );
 
   // decrypt possible encrypted values for the client
@@ -136,15 +136,15 @@ async function middleware(req: Request, res: Response) {
     httpOnly: true,
     signed: true,
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.cookie('userData', JSON.stringify(decryptedUser), {
     maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: process.env.ENV === 'dev' ? 'localhost' : 'example.com',
+    secure: envVariables.env === 'production',
+    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
   });
 
   res.json({
