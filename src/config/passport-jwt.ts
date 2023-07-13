@@ -1,4 +1,4 @@
-import { Strategy, ExtractJwt, VerifiedCallback } from "passport-jwt";
+import { Strategy, VerifiedCallback } from "passport-jwt";
 import { JwtPayload } from "jsonwebtoken";
 import { UnauthorizedErr } from "../helpers/errors/index.js";
 import { jwtExtractorFromCookie } from "../helpers";

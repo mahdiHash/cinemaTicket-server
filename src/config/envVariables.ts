@@ -1,7 +1,3 @@
-import { config } from "dotenv";
-
-config();
-
 const variables = {
   port: process.env.PORT as string,
   env: process.env.ENV as string,
@@ -16,4 +12,4 @@ const variables = {
   imageKitStorageUrlEndpoint: process.env.IMAGEKIT_STORAGE_URL_ENDPOINT as string,
 };
 
-export { variables as envVariables };
+export default variables;
