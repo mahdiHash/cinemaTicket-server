@@ -33,6 +33,14 @@ async function middleware(req: Request, res: Response) {
     await imageKit.deleteFile(play.cover_fileId as string);
   }
 
+  await prisma.plays.update({
+    where: { id: +req.params.playId },
+    data: {
+      cover_url: null,
+      cover_fileId: null,
+    }
+  });
+
   res.json({
     message: 'عکس نمایش حذف شد.',
   });
