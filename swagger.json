@@ -3583,6 +3583,61 @@
         }
       }
     },
+    "/play/{play_id}/review": {
+      "get": {
+        "tags": [ "Play" ],
+        "security": [
+          { "apikey": [] },
+          { "authToken": [] }
+        ],
+        "parameters": [
+          {
+            "name": "play_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the play you want to update",
+            "example": 123
+          }
+        ],
+        "summary": "Get a review of a play",
+        "description": "Anyone can access this route.",
+        "responses": {
+          "200": {
+            "description": "The review text is unescaped.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "writer": {
+                      "type": "object",
+                      "properties": {
+                        "full_name": {
+                          "type": "string",
+                          "example": "مهدی شهسواری"
+                        }
+                      }
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "The review text."
+                    },
+                    "is_published": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/play/{play_id}/review/update": {
       "put": {
         "tags": [ "Play" ],
