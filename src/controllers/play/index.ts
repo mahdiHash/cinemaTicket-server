@@ -15,3 +15,4 @@ export * from './removeReviewPic';
 export * from './removeReview';
 export * from './removePlay';
 export * from './getReview';
+export * from './getReviewForAdmins';

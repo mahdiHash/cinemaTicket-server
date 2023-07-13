@@ -17,6 +17,7 @@ import {
   removeReview,
   removePlay,
   getReview,
+  getReviewForAdmins,
 } from '../controllers/play';
 
 const router = Router();
@@ -50,6 +51,8 @@ router.delete('/:playId/review/pics/remove/:folder/:fileName', removeReviewPic);
 router.delete('/:playId/review/remove', removeReview);
 
 router.get('/:playId/review', getReview);
+
+router.get('/:playId/review/admins', getReviewForAdmins);
 
 router.delete('/:playId/remove', removePlay);
 
