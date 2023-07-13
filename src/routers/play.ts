@@ -16,6 +16,7 @@ import {
   removeReviewPic,
   removeReview,
   removePlay,
+  getReview,
 } from '../controllers/play';
 
 const router = Router();
@@ -47,6 +48,8 @@ router.post('/:playId/review/pics/upload', uploadReviewPic);
 router.delete('/:playId/review/pics/remove/:folder/:fileName', removeReviewPic);
 
 router.delete('/:playId/review/remove', removeReview);
+
+router.get('/:playId/review', getReview);
 
 router.delete('/:playId/remove', removePlay);
 
