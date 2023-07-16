@@ -3,7 +3,9 @@ import { prisma, passport } from '../../config';
 import { decrypt } from '../../helpers';
 import { superAdminAuth, middlewareWrapper } from "../../middlewares";
 import { admins } from "@prisma/client";
+import { AdminService } from "../../services";
 
+const Admin = new AdminService();
 const controller = [
   // authorization
   passport.authenticate('adminJwt', { session: false }),
@@ -18,10 +20,7 @@ export { controller as getAllAdminsProfiles }
 
 async function middleware(req: Request, res: Response) {
   let reqAdminObj = req.user as admins;
-  let admins = await prisma.admins.findMany({
-    where: { id: { not: reqAdminObj.id }},
-    orderBy: [ { access_level: 'asc'}, { full_name: 'asc' } ],
-  });
+  let admins = await Admin.getAllAdminsExceptID(reqAdminObj.id);
   
   for (let admin of admins) {
     admin.tel = decrypt(admin.tel) as string;

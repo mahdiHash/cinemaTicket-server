@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import { middlewareWrapper, creditCardAdminAuth } from "../../middlewares";
 import { BadRequestErr, NotFoundErr } from "../../helpers/errors";
 import { prisma, passport } from "../../config";
+import { AdminService } from "../../services";
 
+const Admin = new AdminService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
@@ -18,10 +20,8 @@ async function middleware(req:Request, res: Response) {
     throw new BadRequestErr('شناسه درخواست معتبر نیست.');
   }
 
-  let creditCardReq = await prisma.credit_card_auth.delete({
-    where: { id: +req.params.reqId }
-  });
-
+  let creditCardReq = await Admin.deleteCreditCardById(+req.params.reqId)
+;
   if (creditCardReq === null) {
     throw new NotFoundErr('درخواست بررسی کارت بانکی پیدا نشد.');
   }
