@@ -7,7 +7,6 @@ import { Request, Response, NextFunction } from 'express';
 import { middlewareWrapperParam } from '../types/types/middlewareWrapperParam';
 import { rm } from 'fs/promises';
 import { errorLogger } from '../helpers/errors';
-import { File } from 'buffer';
 
 function middlewareWrapper(middleware: middlewareWrapperParam) {
   return async (req: Request, res: Response, next: NextFunction) => {
