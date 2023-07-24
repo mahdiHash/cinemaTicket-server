@@ -7,3 +7,8 @@ export * from './getAdminById';
 export * from './deleteAdminById';
 export * from './removeAdminProfilePicById';
 export * from './resetPass';
+export * from './updateAdminById';
+export * from './getAdminByTel';
+export * from './getAdminByEmail';
+export * from './getAdminByNationalId';
+export * from './uploadProfilePicById';
