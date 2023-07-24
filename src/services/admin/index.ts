@@ -2,3 +2,8 @@ export * from './getCreditCardById';
 export * from './deleteCreditCardById';
 export * from './createAdmin';
 export * from './getAllAdminsExceptId';
+export * from './getAllCreditCardReqs';
+export * from './getAdminById';
+export * from './deleteAdminById';
+export * from './removeAdminProfilePicById';
+export * from './resetPass';
