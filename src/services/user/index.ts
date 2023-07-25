@@ -4,3 +4,4 @@ export * from './removeUserProfilePicById';
 export * from './setUserDefaultFullNameById';
 export * from './getUserByEmail';
 export * from './getUserByTel';
+export * from './updateUserFinInfo';

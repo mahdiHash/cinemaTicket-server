@@ -24,11 +24,9 @@ const controller = [
     }
 
     // credit card request is found, so update the target user info
-    await User.updateUserById(creditCardReq.user_id, {
-      data: {
-        credit_card_num: creditCardReq.credit_card_number,
-        national_id: creditCardReq.national_id,
-      },
+    await User.updateUserFinInfoById(creditCardReq.user_id, {
+      credit_card_num: creditCardReq.credit_card_number,
+      national_id: creditCardReq.national_id,
     });
 
     await Admin.deleteCreditCardById(creditCardReq.id);

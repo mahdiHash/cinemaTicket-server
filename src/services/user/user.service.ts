@@ -5,6 +5,7 @@ import {
   setUserDefaultFullNameById,
   getUserByEmail,
   getUserByTel,
+  updateUserFinInfoById,
 } from "./";
 
 class User {
@@ -14,6 +15,7 @@ class User {
   public setUserDefaultFullNameById = setUserDefaultFullNameById;
   public getUserByEmail = getUserByEmail;
   public getUserByTel = getUserByTel;
+  public updateUserFinInfoById = updateUserFinInfoById;
 }
 
 export { User as UserService };
