@@ -17,7 +17,7 @@ const controller = [
       throw new BadRequestErr('شناسۀ کاربر باید یک عدد باشد.');
     }
 
-    let user = await User.getUserById(+req.params.userId);
+    let user = await User.getFullUserDataById(+req.params.userId);
 
     if (user === null) {
       throw new NotFoundErr('کاربر یافت نشد.');

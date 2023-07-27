@@ -6,6 +6,12 @@ import {
   getUserByEmail,
   getUserByTel,
   updateUserFinInfoById,
+  generateUserJWT,
+  signup,
+  checkDuplicateTel,
+  decryptUserData,
+  getFullUserDataById,
+  login,
 } from "./";
 
 class User {
@@ -16,6 +22,12 @@ class User {
   public getUserByEmail = getUserByEmail;
   public getUserByTel = getUserByTel;
   public updateUserFinInfoById = updateUserFinInfoById;
+  public generateUserJWT = generateUserJWT;
+  public signup = signup;
+  public checkDuplicateTel = checkDuplicateTel;
+  public decryptUserData = decryptUserData;
+  public getFullUserDataById = getFullUserDataById;
+  public login = login; 
 }
 
 export { User as UserService };

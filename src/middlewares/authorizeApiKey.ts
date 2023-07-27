@@ -1,15 +1,9 @@
 import { Request, Response} from 'express';
 import { ApiKeyErr } from '../helpers/errors';
-import { prisma } from '../config';
+import { ApiKeyService } from '../services/apikey/apikey.service';
 
 async function middleware(req: Request, res: Response) {
-  let key = req.headers.apikey as string;
-
-  if (key === null || key === undefined || typeof key !== 'string') {
-    throw new ApiKeyErr();
-  }
-
-  let record = await prisma.api_keys.findUnique({ where: { key } });
+  let record = await ApiKeyService.findApiKeyByKey(req.headers.apikey as string);
   
   if (record === null) {
     throw new ApiKeyErr();
