@@ -7,3 +7,4 @@ export * from './superAdminAuth.js';
 export * from './middlewareWrapper';
 export * from './creditCardAdminAuth';
 export * from './reviewAdminAuth';
+export * from './checkRouteParamType';
