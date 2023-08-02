@@ -4,9 +4,9 @@ import { rm } from "fs/promises";
 import { errorLogger } from "../../helpers/errors";
 import { CelebrityService } from "./celebrity.service";
 
-async function uploadProfilePic(this: CelebrityService, fileInfo: Express.Multer.File) {
+async function uploadProfilePicById(this: CelebrityService, id: number, fileInfo: Express.Multer.File) {
   const fileReadStream = createReadStream(fileInfo.path);
-  const upFileInfo = await imageKit.upload({
+  const { filePath, fileId } = await imageKit.upload({
     file: fileReadStream,
     fileName: 'celebPic',
     folder: 'celeb',
@@ -16,10 +16,15 @@ async function uploadProfilePic(this: CelebrityService, fileInfo: Express.Multer
   rm(fileInfo.path)
     .catch(errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
 
+  await this.updateProfileById(id, {
+    profile_pic_fileId: fileId,
+    profile_pic_url: filePath,
+  });
+
   return {
-    url: upFileInfo.filePath,
-    fileId: upFileInfo.fileId,
+    url: filePath,
+    fileId,
   };
 }
 
-export { uploadProfilePic };
+export { uploadProfilePicById };
