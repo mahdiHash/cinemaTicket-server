@@ -19,31 +19,25 @@ function middlewareWrapper(middleware: middlewareWrapperParam) {
         next();
       }
     } catch (err) {
+      next(err);
+    } finally {
       if (req.file) {
-        rm(req.file.path).catch(
-          errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' })
-        );
+        rm(req.file.path).catch(errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
       }
 
       if (req.files) {
         if (Array.isArray(req.files)) {
           for (let file of req.files) {
-            rm(file.path).catch(
-              errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' })
-            );
+            rm(file.path).catch(errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
           }
         } else {
           for (let key in req.files) {
             for (let file of req.files[key]) {
-              rm(file.path).catch(
-                errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' })
-              );
+              rm(file.path).catch(errorLogger.bind(null, { title: 'FILE REMOVAL ERROR' }));
             }
           }
         }
       }
-
-      next(err);
     }
   };
 }
