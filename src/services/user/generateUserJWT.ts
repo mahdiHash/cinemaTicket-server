@@ -4,7 +4,7 @@ import { envVariables } from '../../config';
 
 async function generateUserJWT(data: Pick<users, 'tel' | 'id'>) {
   const token = sign(
-    data, 
+    { tel: data.tel, id: data.id }, 
     envVariables.jwtTokenSecret, 
     { expiresIn: '90d' }
   );
