@@ -1,5 +1,4 @@
 import { Request, Response, RequestHandler } from 'express';
-import { sign } from 'jsonwebtoken';
 import { users } from '@prisma/client';
 import { loginInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
@@ -18,7 +17,7 @@ const controller: RequestHandler[] = [
     // this is done to avoid this error: https://stackoverflow.com/questions/76296575/user-object-req-user-structure-doesnt-match-the-database-model-schema-after-a
     let userObj = req.user as users;
     let token = await User.generateUserJWT(userObj);
-  
+
     res.clearCookie('adminData', {
       sameSite: 'lax',
       secure: envVariables.env === 'production',
