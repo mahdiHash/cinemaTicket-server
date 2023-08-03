@@ -3,6 +3,7 @@ import { JwtPayload } from "jsonwebtoken";
 import { UnauthorizedErr } from "../helpers/errors/index.js";
 import { jwtExtractorFromCookie } from "../helpers";
 import { prisma, envVariables } from "./";
+import { encrypt } from "../helpers";
 
 const jwtStrategy = new Strategy(
   {
@@ -13,7 +14,7 @@ const jwtStrategy = new Strategy(
     let user = await prisma.users.findFirst({
       where: {
         id: payload.id,
-        tel: payload.tel,
+        tel: encrypt(payload.tel) as string,
       }
     });
 
