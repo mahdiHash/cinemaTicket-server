@@ -1706,93 +1706,83 @@
         ],
         "responses": {
           "200": {
-            "description": "All the registerations info will be sent in an array of the scheme below (up to 10 records for each request). You can use \"haveMore\" field to know when there's no more data to retrieve.",
+            "description": "All the registerations info will be sent in an array of the scheme below (up to 10 records for each request).",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "haveMore": {
-                      "type": "boolean",
-                      "description": "This field determines wether there's more records to get or not.",
-                      "example": true
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 123
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "سینما"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "This field can only have values of \"cinema\" or \"theater\".",
+                        "example": "cinema"
+                      },
+                      "license_id": {
+                        "type": "string",
+                        "example": "0123456789"
+                      },
+                      "address": {
+                        "type": "string",
+                        "example": "ایران، تهران"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "The values of this field can be one of the following: waiting, approved, denied.",
+                        "example": "waiting"
+                      },
+                      "code": {
+                        "type": "string",
+                        "example": "XF2US0AD" 
+                      },
+                      "issue_date": {
+                        "type": "string",
+                        "description": "The date of registeration submission. You may put it inside \"new Date()\".",
+                        "example": "2020-01-01T12:00:00.000Z"
+                      },
+                      "owner": {
+                        "type": "object",
                         "properties": {
                           "id": {
                             "type": "integer",
                             "example": 123
                           },
-                          "name": {
+                          "first_name": {
                             "type": "string",
-                            "example": "سینما"
+                            "example": "فریبا"
                           },
-                          "type": {
+                          "last_name": {
                             "type": "string",
-                            "description": "This field can only have values of \"cinema\" or \"theater\".",
-                            "example": "cinema"
+                            "example": "نادری"
                           },
-                          "license_id": {
+                          "tel": {
+                            "type": "string",
+                            "example": "09010000000"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "f.mohseni@example.com"
+                          },
+                          "national_id": {
                             "type": "string",
                             "example": "0123456789"
                           },
-                          "address": {
+                          "profile_pic_url": {
                             "type": "string",
-                            "example": "ایران، تهران"
-                          },
-                          "status": {
-                            "type": "string",
-                            "description": "The values of this field can be one of the following: waiting, approved, denied.",
-                            "example": "waiting"
-                          },
-                          "code": {
-                            "type": "string",
-                            "example": "XF2US0AD" 
-                          },
-                          "issue_date": {
-                            "type": "string",
-                            "description": "The date of registeration submission. You may put it inside \"new Date()\".",
-                            "example": "2020-01-01T12:00:00.000Z"
-                          },
-                          "owner": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "integer",
-                                "example": 123
-                              },
-                              "first_name": {
-                                "type": "string",
-                                "example": "فریبا"
-                              },
-                              "last_name": {
-                                "type": "string",
-                                "example": "نادری"
-                              },
-                              "tel": {
-                                "type": "string",
-                                "example": "09010000000"
-                              },
-                              "email": {
-                                "type": "string",
-                                "example": "f.mohseni@example.com"
-                              },
-                              "national_id": {
-                                "type": "string",
-                                "example": "0123456789"
-                              },
-                              "profile_pic_url": {
-                                "type": "string",
-                                "description": "This field is a relative path to the image.",
-                                "example": "/path/to/image"
-                              }
-                            }
+                            "description": "This field is a relative path to the image.",
+                            "example": "/path/to/image"
                           }
-                        }  
+                        }
                       }
-                    }
+                    }  
                   }
                 }
               }
