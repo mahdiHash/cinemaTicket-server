@@ -2885,6 +2885,27 @@
                         "isFeatured": {
                           "type": "boolean",
                           "example": false
+                        },
+                        "celebrities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 123
+                              },
+                              "full_name": {
+                                "type": "string",
+                                "example": "کامران تفتی"
+                              },
+                              "profile_pic_url": {
+                                "type": "string",
+                                "description": "If the upload is successful, the relative link to the image will be sent to you. You can use it as \"{baseURL}/img/{imageUrl}.",
+                                "example": "path/to/image"
+                              }
+                            }  
+                          }
                         }
                       }
                     },
