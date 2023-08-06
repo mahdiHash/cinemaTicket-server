@@ -13,15 +13,14 @@ const controller = [
 
   middlewareWrapper(storeValidatedQuery(getAllPlacesRegistersQuValidator)),
 
-  middlewareWrapper(middleware),
+  middlewareWrapper(async function middleware(req: Request, res: Response) {
+    /* since status field of req.query is a type of union, I ignored it here */
+    // @ts-ignore
+    const registersReqs = await Place.getAllRegistersReqsByQuery(req.query);
+  
+    res.json(registersReqs);
+  }
+  ),
 ];
 
 export { controller as getAllRegisters };
-
-async function middleware(req: Request, res: Response) {
-  /* since status field of req.query is a type of union, I ignored it here */
-  // @ts-ignore
-  const registersReqs = await Place.getAllRegistersReqsByQuery(req.query);
-
-  res.json(registersReqs);
-}

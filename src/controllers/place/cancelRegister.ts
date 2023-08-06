@@ -10,15 +10,14 @@ const controller = [
 
   middlewareWrapper(placeRegisterOwnerAuth),
 
-  middlewareWrapper(middleware),
+  middlewareWrapper(async (req: Request, res: Response) => {
+    await Place.removeRegisterReqByCode(req.params.code);
+    
+    res.json({
+      message: "درخواست ثبت مکان لغو شد."
+    });
+  }
+  ),
 ];
 
 export { controller as cancelRegister };
-
-async function middleware(req: Request, res: Response) {
-  await Place.removeRegisterReqByCode(req.params.code);
-  
-  res.json({
-    message: "درخواست ثبت مکان لغو شد."
-  });
-}
