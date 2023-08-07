@@ -100,6 +100,7 @@ const schema = Joi.object({
   }),
 
   celebrities: Joi.array()
+    .required()
     .items(Joi.number().required())
     .min(1)
     .messages({
