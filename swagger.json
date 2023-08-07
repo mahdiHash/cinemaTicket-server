@@ -3575,6 +3575,10 @@
                               "example": "/path/to/image"
                             }
                           }
+                        },
+                        "is_published": {
+                          "type": "boolean",
+                          "example": true
                         }
                       }
                     }
@@ -3789,6 +3793,10 @@
                               "example": "/path/to/image"
                             }
                           }
+                        },
+                        "is_published": {
+                          "type": "boolean",
+                          "example": true
                         }
                       }
                     }
