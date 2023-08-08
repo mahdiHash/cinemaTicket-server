@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { middlewareWrapper, reviewAdminAuth } from "../../middlewares";
+import { middlewareWrapper, reviewAdminAuth, checkRouteParamType } from "../../middlewares";
 import { passport, prisma, imageKit, storeImgLocally } from "../../config";
 import { BadRequestErr, NotFoundErr } from "../../helpers/errors";
 import { createReadStream } from "fs";
@@ -10,6 +10,8 @@ const controller = [
 
   middlewareWrapper(reviewAdminAuth),
 
+  middlewareWrapper(checkRouteParamType({ playId: 'number'})),
+
   storeImgLocally.single('img'),
 
   middlewareWrapper(middleware),
@@ -18,10 +20,6 @@ const controller = [
 export { controller as uploadReviewPic };
 
 async function middleware(req: Request, res: Response) {
-  if (!Number.isFinite(+req.params.playId)) {
-    throw new BadRequestErr('شناسه نمایش معتبر نیست.');
-  }
-
   const play = await prisma.plays.findUnique({
     where: { id: +req.params.playId }
   });
