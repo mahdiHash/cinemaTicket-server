@@ -19,3 +19,4 @@ export * from './updatePlayReviewById';
 export * from './uploadPlayPicsById';
 export * from './uploadPlayTrailerById';
 export * from './writePlayReviewById';
+export * from './uploadPleyReviewPIc';

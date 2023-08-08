@@ -21,6 +21,7 @@ import {
   uploadPlayPicsById,
   uploadPlayTrailerById,
   writePlayReviewById,
+  uploadPlayReviewPic,
 } from './';
 
 class PlayService {
@@ -51,6 +52,7 @@ class PlayService {
   public uploadPlayPicsById = uploadPlayPicsById;
   public uploadPlayTrailerById = uploadPlayTrailerById;
   public writePlayReviewById = writePlayReviewById;
+  public uploadPlayReviewPic = uploadPlayReviewPic;
 }
 
 export { PlayService };
