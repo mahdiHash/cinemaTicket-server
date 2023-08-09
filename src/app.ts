@@ -25,7 +25,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(envVariables.cookieSecret));
 app.use(cors({
-    origin: envVariables.env === 'dev' ? 'http://localhost:3000' : 'domain.com',
+    // origin: envVariables.env === 'dev' ? 'http://localhost:3000' : 'domain.com',
+    origin: '*',
     optionsSuccessStatus: 200,
     credentials: true,
 }));
