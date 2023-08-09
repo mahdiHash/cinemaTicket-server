@@ -8,16 +8,18 @@ async function setUserDefaultFullNameById(this: UserService, id: number) {
     data: {
       first_name: 'کاربر',
       last_name: 'سینماتیکت',
+    },
+    select: {
+      first_name: true,
+      last_name: true,
     }
   });
 
   if (user === null) {
     throw new NotFoundErr('کاربری با این شناسه پیدا نشد');
   }
-
-  const { password, profile_pic_fileId, ...userInfo} = await this.decryptUserData(user);
   
-  return userInfo;
+  return user;
 }
 
 export { setUserDefaultFullNameById };

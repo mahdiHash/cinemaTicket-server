@@ -1,24 +1,22 @@
 import { prisma, imageKit } from "../../config";
-import { NotFoundErr } from "../../helpers/errors";
+import { BadRequestErr } from "../../helpers/errors";
 import { UserService } from "./user.service";
 
-async function removeUserProfilePicById(this: UserService, id: number, fileId: string) {
-  await imageKit.deleteFile(fileId);
-  const user = await prisma.users.update({
-    where: { id },
+async function removeUserProfilePicById(this: UserService, id: number) {
+  const user = await this.getUserById(id, false);
+ 
+  if (user.profile_pic_fileId === null) {
+    throw new BadRequestErr('کاربر تصویر پروفایل ندارد');
+  }
+
+  await imageKit.deleteFile(user.profile_pic_fileId as string);
+  await prisma.users.update({
+    where: { id: user.id },
     data: {
       profile_pic_fileId: null,
       profile_pic_url: null,
     }
   });
-
-  if (user === null) {
-    throw new NotFoundErr('کاربری با این شناسه پیدا نشد');
-  }
-
-  const { password, profile_pic_fileId, ...userInfo} = await this.decryptUserData(user);
-  
-  return userInfo;
 }
 
 export { removeUserProfilePicById };

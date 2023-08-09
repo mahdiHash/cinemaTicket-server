@@ -1,12 +1,11 @@
 import { UserService } from './user.service';
 import { encrypt } from '../../helpers';
-import { prisma } from '../../config';
 import { UnauthorizedErr } from '../../helpers/errors';
 import { compare } from 'bcryptjs';
 
 async function login(this: UserService, login: string, password: string) {
   const encryptedLogin = encrypt(login) as string;
-  const user = await prisma.users.findFirst({
+  const user = await this.users.findFirst({
     where: {
       OR: [{ tel: encryptedLogin }, { email: encryptedLogin }],
     },

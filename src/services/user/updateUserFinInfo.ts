@@ -13,7 +13,7 @@ async function updateUserFinInfoById(this: UserService, id: number, data: userFi
     throw new NotFoundErr('کاربری با این شناسه پیدا نشد');
   }
 
-  const { password, profile_pic_fileId, ...userInfo} = await this.decryptUserData(user);
+  const { profile_pic_fileId, ...userInfo} = await this.decryptUserData(user);
   
   return userInfo;
 }

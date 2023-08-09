@@ -1,3 +1,4 @@
+import { prisma } from "../../config/prismaConfig";
 import { 
   updateUserById,
   getUserById,
@@ -10,11 +11,18 @@ import {
   signup,
   checkDuplicateTel,
   decryptUserData,
-  getFullUserDataById,
   login,
+  cancelCreditCardReq,
+  getCreditCardReqStatus,
+  resetPass,
+  createCreditCardReq,
+  uploadProfilePic,
 } from "./";
 
 class User {
+  protected users = prisma.users;
+  protected creditCards = prisma.credit_card_auth;
+
   public updateUserById = updateUserById;
   public getUserById = getUserById;
   public removeUserProfilePicById = removeUserProfilePicById;
@@ -26,8 +34,12 @@ class User {
   public signup = signup;
   public checkDuplicateTel = checkDuplicateTel;
   public decryptUserData = decryptUserData;
-  public getFullUserDataById = getFullUserDataById;
-  public login = login; 
+  public login = login;
+  public cancelCreditCardReq = cancelCreditCardReq;
+  public getCreditCardReqStatus = getCreditCardReqStatus;
+  public resetPass = resetPass;
+  public createCreditCardReq = createCreditCardReq;
+  public uploadProfilePic = uploadProfilePic;
 }
 
 export { User as UserService };

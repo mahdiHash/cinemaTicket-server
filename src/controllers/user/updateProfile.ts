@@ -1,15 +1,11 @@
 import { Request, Response } from 'express';
-import { prisma, passport, imageKit, storeImgLocally, envVariables } from '../../config';
+import { passport, storeImgLocally, envVariables } from '../../config';
 import { updateUserProfileInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
-import { BadRequestErr, errorLogger } from '../../helpers/errors';
-import { encrypt, decrypt, escape, unescape } from '../../helpers';
-import { sign } from 'jsonwebtoken';
-import { ValidationError } from 'joi';
-import { createReadStream } from 'fs';
-import { rm } from 'fs/promises';
 import { users } from '@prisma/client';
+import { UserService } from '../../services';
 
+const User = new UserService();
 const controller = [
   passport.authenticate('jwt', { session: false }),
 
@@ -17,137 +13,37 @@ const controller = [
 
   middlewareWrapper(storeValidatedInputs(updateUserProfileInpValidator)),
 
-  middlewareWrapper(delFileOnInpErrorMiddleware),
-
-  middlewareWrapper(checkDuplicateTelMiddleware),
-
-  middlewareWrapper(middleware),
+  middlewareWrapper(async (req: Request, res: Response) => {
+    const reqUserObj = req.user as users;
+    
+    if (req.file) {
+      await User.uploadProfilePic(reqUserObj.id, req.file);
+    }
+    
+    const upUser = await User.updateUserById(reqUserObj.id, res.locals.validBody);
+    const token = await User.generateUserJWT(upUser);
+  
+    res.cookie('authToken', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      httpOnly: true,
+      signed: true,
+      sameSite: 'lax',
+      secure: envVariables.env === 'production',
+      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
+    });
+  
+    res.cookie('userData', JSON.stringify(upUser), {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      sameSite: 'lax',
+      secure: envVariables.env === 'production',
+      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
+    });
+  
+    res.json({
+      message: 'اطلاعات پروفایل تغییر کرد.',
+    });
+  }
+  ),
 ];
 
 export { controller as updateProfile };
-
-// if there's an input validation error, remove the uploaded file
-// if there were any
-async function delFileOnInpErrorMiddleware(req: Request, res: Response) {
-  if (req instanceof ValidationError) {
-    if (req.file) {
-      rm(req.file.path).catch(
-        errorLogger.bind(null, { title: 'File Removal Error' })
-      );
-    }
-  }
-}
-
-// if req.body.tel is provided and is not the same as before,
-// look up for a duplicate phone number
-async function checkDuplicateTelMiddleware(req: Request, res: Response) {
-  const reqUserObj = req.user as users;
-
-  if (
-    !res.locals.validBody.tel ||
-    encrypt(res.locals.validBody.tel) === reqUserObj.tel
-  ) {
-    return;
-  }
-
-  let duplicate = await prisma.users.findFirst({
-    where: { tel: encrypt(res.locals.validBody.tel) as string },
-  });
-
-  if (duplicate) {
-    if (req.file) {
-      rm(req.file.path).catch(
-        errorLogger.bind(null, { title: 'File Removal Error' })
-      );
-    }
-
-    res.status(400);
-    throw new BadRequestErr(
-      'قبلاً یک کاربر با این شمارۀ همراه ثبت نام کرده است. لطفاً شمارۀ دیگری را انتخاب کنید.'
-    );
-  }
-  else {
-    return;
-  }
-}
-
-async function middleware(req: Request, res: Response) {
-  const reqUserObj = req.user as users;
-  // if undefined is passed to a field while updateing a record,
-  // prisma won't update that field
-  let updateData = {
-    first_name: escape(res.locals.validBody.first_name) || undefined,
-    last_name: escape(res.locals.validBody.last_name) || undefined,
-    tel: encrypt(res.locals.validBody.tel) || undefined,
-    email: encrypt(res.locals.validBody.email) || undefined,
-    birthday: res.locals.validBody.birthday
-      ? new Date(res.locals.validBody.birthday)
-      : undefined,
-    profile_pic_url: reqUserObj.profile_pic_url,
-    profile_pic_fileId: reqUserObj.profile_pic_fileId,
-  };
-
-  if (req.file) {
-    let fileReadStream = createReadStream(req.file.path);
-    let fileInfo = await imageKit.upload({
-      file: fileReadStream,
-      fileName: `userPic`,
-      folder: 'user',
-    });
-    
-    if (reqUserObj.profile_pic_url) {
-      imageKit.deleteFile(reqUserObj.profile_pic_fileId as string);
-    }
-
-    fileReadStream.destroy();
-    rm(req.file.path);
-    updateData.profile_pic_url = fileInfo.filePath;
-    updateData.profile_pic_fileId = fileInfo.fileId;
-  }
-
-  let upUser = await prisma.users.update({
-    where: { id: reqUserObj.id },
-    data: updateData,
-  });
-  let token = sign(
-    {
-      id: upUser.id,
-      tel: upUser.tel,
-      exp: 1000 * 60 * 60 * 24 * 90, // 90 days
-    },
-    envVariables.jwtTokenSecret,
-  );
-
-  // decrypt possible encrypted values for the client
-  let decryptedUser = {
-    id: upUser.id,
-    first_name: unescape(upUser.first_name),
-    last_name: unescape(upUser.last_name),
-    tel: decrypt(upUser.tel),
-    email: decrypt(upUser.email),
-    birthday: upUser.birthday,
-    credit_card_num: decrypt(upUser.credit_card_num),
-    national_id: decrypt(upUser.national_id),
-    profile_pic_url: upUser.profile_pic_url,
-  };
-
-  res.cookie('authToken', token, {
-    maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
-    httpOnly: true,
-    signed: true,
-    sameSite: 'lax',
-    secure: envVariables.env === 'production',
-    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-  });
-
-  res.cookie('userData', JSON.stringify(decryptedUser), {
-    maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
-    sameSite: 'lax',
-    secure: envVariables.env === 'production',
-    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-  });
-
-  res.json({
-    message: 'اطلاعات شما تغییر کرد.',
-  });
-}
