@@ -49,7 +49,7 @@
         "requestBody": {
           "description": "The \"tel\" field must contain 11 characters and the \"password\" field must contain at least 6 characters. \"password\" and \"repeatPass\" fields must be the same.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -111,7 +111,7 @@
         "requestBody": {
           "description": "The \"login\" field must be the user's tel or email and not be empty.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -244,7 +244,7 @@
         "requestBody": {
           "description": "These are all the fields you can provide. There's no need to provide them all, just the ones you need to update. For the \"img\" field: the file has to be sent normally (not base64). File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -321,7 +321,7 @@
         "requestBody": {
           "description": "\"newPass\" and \"repeatNewPass\" fields must be the same and contain at least 6 characters.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -415,7 +415,7 @@
         "requestBody": {
           "description": "All fields are required.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -638,7 +638,7 @@
         "requestBody": {
           "description": "The tel field must contain 11 characters.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -841,7 +841,7 @@
         "requestBody": {
           "description": "All the fields are needed. \"access_level\" can have one of \"play\", \"comment\" or \"review\" values.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "properties": {
                   "access_level": {
@@ -980,7 +980,7 @@
         "requestBody": {
           "description": "All the fields are needed. \"access_level\" can have one of \"play\", \"comment\" or \"review\" values. If the tel field is changed you need to store the authToken cookie.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "properties": {
                   "access_level": {
@@ -1161,7 +1161,7 @@
         "requestBody": {
           "description": "\"newPass\" and \"repeatNewPass\" fields must be the same and contain at least 8 characters.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -1503,7 +1503,7 @@
         "requestBody": {
           "description": "All the fields must be provided.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -1917,7 +1917,7 @@
         "requestBody": {
           "description": "Only \"full_name\" and \"role\" fields are mandatory. \"role\" can have these values (multiple checkboxes, as an array): actor, actress, writer, presenter, director.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -2206,7 +2206,7 @@
         "requestBody": {
           "description": "You can only provide the fields you want to update, the rest won't be changed. \"role\" can have these values (multiple checkboxes, as an array): actor, actress, writer, presenter, director.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -2601,7 +2601,7 @@
         "requestBody": {
           "description": "The required fields are marked with * in schema section of request body.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "required": [
                   "title",
@@ -2985,7 +2985,7 @@
         "requestBody": {
           "description": "All the fields are optional. You can provide only the ones you want to update.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -3222,7 +3222,7 @@
         "requestBody": {
           "description": "Positions for each pic: <br>1) celebNoBackground: a celebrity pic for featured plays (in main page slider, on left side of each play). <br>2) topPlayBackground: top play is the play above of each category title of the main page. <br>3) featuredBackground: background of the plays in the main page slider. <br>4) background: the top background image of each play. <br>5) morePics: pics of the play in its own page.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -3398,7 +3398,7 @@
         "requestBody": {
           "description": "File limitations: max file size is 25MB, supported formats are .mp4, .webm.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -3510,7 +3510,7 @@
         "requestBody": {
           "description": "For uploading images in the review, send POST requests to \"/play/{play_id}/review/pics/upload\". The content of review must have at least 100 characters.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -3724,7 +3724,7 @@
         "requestBody": {
           "description": "For uploading images in the review, send POST requests to \"/play/{play_id}/review/pics/upload\". The content of review must have at least 100 characters.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -3863,7 +3863,7 @@
         "requestBody": {
           "description": "File limitations: file size up to 2MB, supported formats are .jpg, .jpeg, .png, .webp.",
           "content": {
-            "body": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -4079,7 +4079,7 @@
             }
           },
           "headers": { "type": "object" },
-          "body": { "type": "object" },
+          "application/json": { "type": "object" },
           "parameters": { "type": "object" }
         }
       },
