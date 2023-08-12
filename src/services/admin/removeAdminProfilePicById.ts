@@ -1,8 +1,9 @@
-import { prisma, imageKit } from "../../config";
+import { AdminService } from "./admin.service";
+import { imageKit } from "../../config";
 
-async function removeAdminProfilePicById(id: number, fileId: string) {
+async function removeAdminProfilePicById(this: AdminService, id: number, fileId: string) {
   await imageKit.deleteFile(fileId);
-  return await prisma.admins.update({
+  return await this.admins.update({
     where: { id },
     data: {
       profile_pic_fileId: null,

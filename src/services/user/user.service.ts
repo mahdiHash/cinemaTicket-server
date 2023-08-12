@@ -12,10 +12,7 @@ import {
   checkDuplicateTel,
   decryptUserData,
   login,
-  cancelCreditCardReq,
-  getCreditCardReqStatus,
   resetPass,
-  createCreditCardReq,
   uploadProfilePic,
 } from "./";
 
@@ -35,10 +32,7 @@ class User {
   public checkDuplicateTel = checkDuplicateTel;
   public decryptUserData = decryptUserData;
   public login = login;
-  public cancelCreditCardReq = cancelCreditCardReq;
-  public getCreditCardReqStatus = getCreditCardReqStatus;
   public resetPass = resetPass;
-  public createCreditCardReq = createCreditCardReq;
   public uploadProfilePic = uploadProfilePic;
 }
 
