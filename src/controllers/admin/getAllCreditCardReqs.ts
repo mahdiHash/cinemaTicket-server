@@ -3,9 +3,9 @@ import { middlewareWrapper, storeValidatedQuery, creditCardAdminAuth } from '../
 import { getAllCreditCardReqsQuValidator } from '../../validation/queryValidators';
 import { passport } from '../../config';
 import { decrypt } from '../../helpers';
-import { AdminService } from '../../services';
+import { CreditCardService } from '../../services';
 
-const Admin = new AdminService();
+const CreditCard = new CreditCardService();
 
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
@@ -15,12 +15,7 @@ const controller = [
   middlewareWrapper(storeValidatedQuery(getAllCreditCardReqsQuValidator)),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    let reqs = await Admin.getAllCreditCardReqs(res.locals.validQuery?.cursor);
-
-    for (let req of reqs) {
-      req.credit_card_number = decrypt(req.credit_card_number) as string;
-      req.national_id = decrypt(req.national_id) as string;
-    }
+    let reqs = await CreditCard.getAllCreditCardReqs(res.locals.validQuery?.cursor);
 
     res.json(reqs);
   }),

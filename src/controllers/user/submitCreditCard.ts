@@ -3,9 +3,9 @@ import { middlewareWrapper, storeValidatedInputs } from '../../middlewares';
 import { passport } from '../../config';
 import { creditCardInpValidator } from '../../validation/inputValidators';
 import { users } from '@prisma/client';
-import { UserService } from '../../services';
+import { CreditCardService } from '../../services';
 
-const User = new UserService();
+const CreditCard = new CreditCardService();
 const controller = [
   passport.authenticate('jwt', { session: false }),
 
@@ -19,7 +19,7 @@ export { controller as submitCreditCard };
 async function middleware(req: Request, res: Response) {
   const reqUserObj = req.user as users;
 
-  await User.createCreditCardReq(reqUserObj.id, res.locals.validBody);
+  await CreditCard.createCreditCardReq(reqUserObj.id, res.locals.validBody);
 
   res.json({
     message: 'درخواست برای بررسی ثبت شد.',

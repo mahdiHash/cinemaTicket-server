@@ -1,7 +1,7 @@
-import { prisma } from "../../config";
+import { CreditCardService } from "./creditCard.service";
 
-async function getAllCreditCardReqs(cursor?: number) {
-  return await prisma.credit_card_auth.findMany({
+async function getAllCreditCardReqs(this: CreditCardService, cursor?: number) {
+  const creditCardReqs = await this.creditCardReqs.findMany({
     orderBy: { id: 'asc' },
     select: {
       id: true,
@@ -19,6 +19,12 @@ async function getAllCreditCardReqs(cursor?: number) {
       ? { id: cursor + 1 }
       : undefined,
   });
+
+  for (let req of creditCardReqs) {
+    await this.decryptCreditCardReqData(req);
+  }
+
+  return creditCardReqs;
 }
 
 export { getAllCreditCardReqs };

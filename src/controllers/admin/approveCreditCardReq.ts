@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { middlewareWrapper, creditCardAdminAuth } from '../../middlewares';
 import { passport } from '../../config';
-import { BadRequestErr, NotFoundErr } from '../../helpers/errors';
-import { AdminService, UserService } from '../../services';
+import { CreditCardService, UserService } from '../../services';
+import { encrypt } from '../../helpers';
 
-const Admin = new AdminService();
+const CreditCard = new CreditCardService();
 const User = new UserService();
 
 const controller = [
@@ -13,23 +13,15 @@ const controller = [
   middlewareWrapper(creditCardAdminAuth),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    if (!Number.isFinite(+req.params.reqId)) {
-      throw new BadRequestErr('شناسه درخواست نامعتبر است.');
-    }
-
-    let creditCardReq = await Admin.getCreditCardById(+req.params.reqId);
-
-    if (creditCardReq === null) {
-      throw new NotFoundErr('درخواست بررسی کارت بانکی پیدا نشد.');
-    }
+    let creditCardReq = await CreditCard.getCreditCardReqById(+req.params.reqId);
 
     // credit card request is found, so update the target user info
-    await User.updateUserFinInfoById(creditCardReq.user_id, {
-      credit_card_num: creditCardReq.credit_card_number,
-      national_id: creditCardReq.national_id,
+    await User.updateUserById(creditCardReq.user_id as number, {
+      credit_card_num: encrypt(creditCardReq.credit_card_number),
+      national_id: encrypt(creditCardReq.national_id),
     });
 
-    await Admin.deleteCreditCardById(creditCardReq.id);
+    await CreditCard.removeCreditCardReqById(creditCardReq.id);
 
     res.json({
       message: 'شماره کارت ثبت شد.',

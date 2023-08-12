@@ -1,8 +1,13 @@
-import { prisma } from '../../config';
-import { admins } from '@prisma/client';
+import { AdminService } from './admin.service';
+import { createAdminInputs } from '../../types/interfaces/inputs';
 
-async function createAdmin(data: Omit<admins, 'profile_pic_url' | 'profile_pic_fileId' | 'id'>) {
-  return await prisma.admins.create({ data });
+type createAdminDataType = Omit<createAdminInputs, 'repeatPass'>;
+
+async function createAdmin(this: AdminService, data:createAdminDataType) {
+  const newAdmin = await this.admins.create({ data });
+  const { password, profile_pic_fileId, ...adminInfo } = newAdmin;
+
+  return this.decryptAdminData(adminInfo);
 }
 
 export { createAdmin };

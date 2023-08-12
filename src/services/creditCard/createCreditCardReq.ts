@@ -1,9 +1,9 @@
-import { UserService } from "./user.service";
-import { decrypt, encrypt } from "../../helpers";
+import { CreditCardService } from "./creditCard.service";
+import { encrypt } from "../../helpers";
 import { submitCreditCard } from "../../types/interfaces/inputs";
 import { ForbiddenErr, NotFoundErr } from "../../helpers/errors";
 
-async function createCreditCardReq(this: UserService, id: number, inputs: submitCreditCard) {
+async function createCreditCardReq(this: CreditCardService, id: number, inputs: submitCreditCard) {
   try {
     const duplicateReq = await this.getCreditCardReqStatus(id);
 
@@ -15,7 +15,7 @@ async function createCreditCardReq(this: UserService, id: number, inputs: submit
       throw err;
     }
 
-    const creditCardReq = await this.creditCards.create({
+    const creditCardReq = await this.creditCardReqs.create({
       data: {
         user_id: id,
         credit_card_number: encrypt(inputs.creditCard) as string,
@@ -23,10 +23,7 @@ async function createCreditCardReq(this: UserService, id: number, inputs: submit
       }
     });
 
-    creditCardReq.credit_card_number = decrypt(creditCardReq.credit_card_number) as string;
-    creditCardReq.national_id = decrypt(creditCardReq.national_id) as string;
-
-    return creditCardReq;
+    return await this.decryptCreditCardReqData(creditCardReq);
   }
 }
 

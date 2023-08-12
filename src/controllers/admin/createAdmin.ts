@@ -27,13 +27,8 @@ const controller = [
       password: await hash(res.locals.validBody.password, 16),
     });
 
-    delete res.locals.validBody.password;
-    delete res.locals.validBody.repeatPass;
-    res.locals.validBody.id = admin.id;
-    res.locals.validBody.profile_pic_url = admin.profile_pic_url;
-
     res.json({
-      admin: res.locals.validBody,
+      admin,
       message: 'پروفایل ادمین ایجاد شد.',
     });
   }),
