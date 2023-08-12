@@ -1,31 +1,20 @@
 import { Strategy as LocalStrategy } from 'passport-local';
-import { compare } from 'bcryptjs';
-import { encrypt } from '../helpers/index.js';
 import { UnauthorizedErr } from '../helpers/errors/index.js';
-import { prisma } from './';
+import { AdminService } from '../services/index.js';
 
-let strategy = new LocalStrategy(
-  { usernameField: 'tel' },
-  async (tel, pass, cb) => {
-    let encryptedTel = encrypt(tel) as string;
-    let user = await prisma.admins.findFirst({
-      where: {
-        tel: encryptedTel
-      },
-    });
+const Admin = new AdminService();
+const strategy = new LocalStrategy({ usernameField: 'tel' }, async (tel, pass, cb) => {
+  try {
+    const admin = await Admin.login(tel, pass);
 
-    if (!user) {
-      return cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
-    }
-
-    let isPassMatch = await compare(pass, user.password);
-
-    if (isPassMatch) {
-      cb(null, user);
+    cb(null, admin);
+  } catch (err) {
+    if (err instanceof UnauthorizedErr) {
+      cb(err);
     } else {
-      cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
+      throw err;
     }
   }
-);
+});
 
 export { strategy as adminLocalStrategy };

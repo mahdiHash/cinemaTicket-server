@@ -1,10 +1,12 @@
-import { Strategy, VerifiedCallback } from "passport-jwt";
-import { JwtPayload } from "jsonwebtoken";
-import { UnauthorizedErr } from "../helpers/errors/index.js";
-import { jwtExtractorFromCookie } from "../helpers";
-import { prisma, envVariables } from "./";
-import { encrypt } from "../helpers";
+import { Strategy, VerifiedCallback } from 'passport-jwt';
+import { JwtPayload } from 'jsonwebtoken';
+import { UnauthorizedErr } from '../helpers/errors/index.js';
+import { jwtExtractorFromCookie } from '../helpers';
+import { prisma, envVariables } from './';
+import { encrypt } from '../helpers';
+import { UserService } from '../services/index.js';
 
+const User = new UserService();
 const jwtStrategy = new Strategy(
   {
     jwtFromRequest: jwtExtractorFromCookie,
@@ -14,15 +16,17 @@ const jwtStrategy = new Strategy(
     let user = await prisma.users.findFirst({
       where: {
         id: payload.id,
-        tel: encrypt(payload.tel) as string,
-      }
+        tel: payload.tel,
+      },
     });
 
     if (user === null) {
       cb(new UnauthorizedErr());
     }
     else {
-      cb(null, user);
+      // password field will be provided in JS
+      const decryptedUser = await User.decryptUserData(user);
+      cb(null, decryptedUser);
     }
   }
 );

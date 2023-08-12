@@ -3,7 +3,9 @@ import { JwtPayload } from "jsonwebtoken";
 import { UnauthorizedErr } from "../helpers/errors/index.js";
 import { jwtExtractorFromCookie } from "../helpers";
 import { prisma, envVariables } from "./";
+import { AdminService } from "../services/index.js";
 
+const Admin = new AdminService();
 const jwtStrategy = new Strategy(
   {
     jwtFromRequest: jwtExtractorFromCookie,
@@ -21,7 +23,9 @@ const jwtStrategy = new Strategy(
       cb(new UnauthorizedErr());
     }
     else {
-      cb(null, admin);
+      // password field will be provided in JS
+      const decryptedAdmin = await Admin.decryptAdminData(admin);
+      cb(null, decryptedAdmin);
     }
   }
 );
