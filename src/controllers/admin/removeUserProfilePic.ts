@@ -1,5 +1,5 @@
 import { passport } from '../../config';
-import { superAdminAuth, middlewareWrapper } from '../../middlewares';
+import { superAdminAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
 import { BadRequestErr } from '../../helpers/errors';
 import { Request, Response } from 'express';
 import { UserService } from '../../services';
@@ -12,11 +12,9 @@ const controller = [
 
   middlewareWrapper(superAdminAuth),
 
-  middlewareWrapper(async (req: Request, res: Response) => {
-    if (!Number.isFinite(+req.params.userId)) {
-      throw new BadRequestErr('شناسۀ کاربر باید یک عدد باشد.');
-    }
+  middlewareWrapper(checkRouteParamType({ userId: 'number' })),
 
+  middlewareWrapper(async (req: Request, res: Response) => {
     await User.removeUserProfilePicById(+req.params.userId);
 
     res.json({

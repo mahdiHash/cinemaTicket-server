@@ -1,30 +1,21 @@
 import { Request, Response } from 'express';
 import { passport } from '../../config';
-import { decrypt } from '../../helpers';
-import { NotFoundErr, BadRequestErr } from '../../helpers/errors';
-import { superAdminAuth, middlewareWrapper } from '../../middlewares';
-import { getAdminById } from '../../services/admin';
+import { superAdminAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
+import { AdminService } from '../../services';
 
+const Admin = new AdminService();
 const controller = [
   // authorization
   passport.authenticate('adminJwt', { session: false }),
 
   middlewareWrapper(superAdminAuth),
 
+  middlewareWrapper(checkRouteParamType({ adminId: 'number' })),
+
   middlewareWrapper(async (req: Request, res: Response) => {
-    if (!Number.isFinite(+req.params.adminId)) {
-      throw new BadRequestErr('شناسۀ ادمین باید یک عدد باشد.');
-    }
+    const admin = await Admin.getAdminById(+req.params.adminId);
 
-    let admin = await getAdminById(+req.params.adminId);
-
-    if (!admin) {
-      throw new NotFoundErr('ادمینی پیدا نشد.');
-    }
-
-    const { password, ...adminInfo } = admin;
-
-    res.json(adminInfo);
+    res.json(admin);
   }),
 ];
 
