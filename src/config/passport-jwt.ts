@@ -3,10 +3,8 @@ import { JwtPayload } from 'jsonwebtoken';
 import { UnauthorizedErr } from '../helpers/errors/index.js';
 import { jwtExtractorFromCookie } from '../helpers';
 import { prisma, envVariables } from './';
-import { encrypt } from '../helpers';
-import { UserService } from '../services/index.js';
+import { decrypt } from '../helpers';
 
-const User = new UserService();
 const jwtStrategy = new Strategy(
   {
     jwtFromRequest: jwtExtractorFromCookie,
@@ -25,8 +23,12 @@ const jwtStrategy = new Strategy(
     }
     else {
       // password field will be provided in JS
-      const decryptedUser = await User.decryptUserData(user);
-      cb(null, decryptedUser);
+      user.email = decrypt(user.email);
+      user.national_id = decrypt(user.national_id);
+      user.credit_card_num = decrypt(user.credit_card_num);
+      user.tel = decrypt(user.tel) as string;
+
+      cb(null, user);
     }
   }
 );
