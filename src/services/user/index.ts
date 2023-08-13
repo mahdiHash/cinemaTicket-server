@@ -10,8 +10,5 @@ export * from './signup';
 export * from './checkDuplicateTel';
 export * from './decryptUserData';
 export * from './login';
-export * from './cancelCreditCardReq';
-export * from './getCreditcardReqStatus';
 export * from './resetPass';
-export * from './createCreditCardReq';
 export * from './uploadProfliePic';

@@ -1,12 +1,9 @@
 import { prisma } from '../../config';
 import {
-  getCreditCardById,
-  deleteCreditCardById,
   createAdmin,
   getAllAdminsExceptId,
   deleteAdminById,
   getAdminById,
-  getAllCreditCardReqs,
   removeAdminProfilePicById,
   resetPassById,
   updateAdminById,
@@ -20,13 +17,10 @@ import {
 class AdminService {
   constructor(protected readonly admins = prisma.admins) {}
 
-  public getCreditCardById = getCreditCardById;
-  public deleteCreditCardById = deleteCreditCardById;
   public createAdmin = createAdmin;
   public getAllAdminsExceptID = getAllAdminsExceptId;
-  public deleteAdminById = deleteAdminById;
   public getAdminById = getAdminById;
-  public getAllCreditCardReqs = getAllCreditCardReqs;
+  public deleteAdminById = deleteAdminById;
   public removeAdminProfilePicById = removeAdminProfilePicById;
   public resetPassById = resetPassById;
   public updateAdminById = updateAdminById;
