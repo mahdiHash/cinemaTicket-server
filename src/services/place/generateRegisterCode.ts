@@ -1,13 +1,13 @@
-import { PlaceService } from "./place.service";
+import { PlaceRegisterService } from "./registers.place.service";
 import { randomBytes } from "crypto";
 
-async function generateRegisterCode(this: PlaceService) {
+async function generateRegisterCode(this: PlaceRegisterService) {
   let code: string;
 
   // generate a unique code
   while (true) {
     code = randomBytes(8).toString('hex');
-    let duplicate = await this.registerModel.findUnique({
+    let duplicate = await this.registerReqs.findUnique({
       where: { code },
     });
 

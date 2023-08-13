@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { prisma, passport } from "../../config";
+import { passport } from "../../config";
 import { placeRegisterOwnerAuth, middlewareWrapper } from "../../middlewares";
-import { PlaceService } from "../../services";
+import { PlaceRegisterService } from "../../services";
 
-const Place = new PlaceService();
+const PlaceRegister = new PlaceRegisterService();
 const controller = [
   // authorization
   passport.authenticate('jwt', { session: false }),
@@ -11,7 +11,7 @@ const controller = [
   middlewareWrapper(placeRegisterOwnerAuth),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    await Place.removeRegisterReqByCode(req.params.code);
+    await PlaceRegister.removeRegisterReqByCode(req.params.code);
     
     res.json({
       message: "درخواست ثبت مکان لغو شد."

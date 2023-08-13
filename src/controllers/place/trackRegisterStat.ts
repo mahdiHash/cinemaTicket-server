@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { passport } from '../../config';
 import { placeRegisterOwnerAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
-import { PlaceService } from '../../services';
+import { PlaceRegisterService } from '../../services';
 
-const Place = new PlaceService();
+const PlaceRegister = new PlaceRegisterService();
 const controller = [
   // authorization
   passport.authenticate('jwt', { session: false }),
@@ -13,7 +13,7 @@ const controller = [
   middlewareWrapper(checkRouteParamType({ code: 'string' })),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    const registerReq = await Place.getRegisterReqByCode(req.params.code);
+    const registerReq = await PlaceRegister.getRegisterReqByCode(req.params.code);
 
     res.json({
       name: registerReq.name,

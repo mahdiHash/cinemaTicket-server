@@ -3,9 +3,9 @@ import { passport } from "../../config";
 import { placeRegisterInpValidator } from "../../validation/inputValidators";
 import { storeValidatedInputs, middlewareWrapper } from "../../middlewares";
 import { users } from "@prisma/client";
-import { PlaceService } from "../../services";
+import { PlaceRegisterService } from "../../services";
 
-const Place = new PlaceService();
+const PlaceRegister = new PlaceRegisterService();
 const contoller = [
   // authorization
   passport.authenticate('jwt', { session: false }),
@@ -14,7 +14,7 @@ const contoller = [
 
   middlewareWrapper(async (req: Request, res: Response) => {
     const reqUserObj = req.user as users;
-    const code = await Place.createRegisterReqById(reqUserObj.id, req.body);
+    const code = await PlaceRegister.createRegisterReq(reqUserObj.id, req.body);
     
     res.json({
       code,

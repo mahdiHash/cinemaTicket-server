@@ -1,9 +1,15 @@
-import { prisma } from "../../config";
-import { NotFoundErr } from "../../helpers/errors";
-import { UserService } from "./user.service";
+import { prisma } from '../../config';
+import { NotFoundErr } from '../../helpers/errors';
+import { UserService } from './user.service';
 
-async function getUserById(this: UserService, id: number, hideFileId = true) {
-  const user =  await prisma.users.findUnique({
+interface options {
+  hideFileId?: boolean;
+  hidePass?: boolean;
+}
+
+async function getUserById(this: UserService, id: number, opts?: options) {
+  const { hideFileId = true, hidePass = true } = opts ?? {};
+  const user = await prisma.users.findUnique({
     where: { id },
     select: {
       id: true,
@@ -16,7 +22,8 @@ async function getUserById(this: UserService, id: number, hideFileId = true) {
       national_id: true,
       profile_pic_fileId: !hideFileId,
       profile_pic_url: true,
-    }
+      password: !hidePass,
+    },
   });
 
   if (user === null) {

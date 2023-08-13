@@ -1,14 +1,14 @@
-import { PlaceService } from "./place.service";
+import { PlaceRegisterService } from "./registers.place.service";
 import { BadRequestErr } from "../../helpers/errors";
 
-async function denyRegisterReqById(this: PlaceService, id: number) {
-  const registerReq = await this.getRegisterReqById(id);
+async function denyRegisterReq(this: PlaceRegisterService, regReqId: number) {
+  const registerReq = await this.getRegisterReqById(regReqId);
   
   if (registerReq!.status === 'approved' || registerReq!.status === 'denied') {
     throw new BadRequestErr('وضعیت ثبت این درخواست را نمی‌توان تغییر داد.');
   }
 
-  await this.updateRegisterReqById(id, 'denied');
+  await this.updateRegisterReq(regReqId, 'denied');
 }
 
-export { denyRegisterReqById };
+export { denyRegisterReq };

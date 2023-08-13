@@ -1,7 +1,7 @@
-import { PlaceService } from "./place.service";
+import { PlaceRegisterService } from "./registers.place.service";
 
-async function getOwnerRegisterReqCountById(this: PlaceService, id: number) {
-  return await this.registerModel.count({
+async function getOwnerRegisterReqCountById(this: PlaceRegisterService, id: number) {
+  return await this.registerReqs.count({
     where: { owner_id: id, status: 'waiting' },
   });
 }

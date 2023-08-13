@@ -1,8 +1,8 @@
 import { NotFoundErr } from "../../helpers/errors";
-import { PlaceService } from "./place.service";
+import { PlaceRegisterService } from "./registers.place.service";
 
-async function getRegisterReqByCode(this: PlaceService, code: string) {
-  const registerReq = await this.registerModel.findUnique({
+async function getRegisterReqByCode(this: PlaceRegisterService, code: string) {
+  const registerReq = await this.registerReqs.findUnique({
     where: { code },
   });
 

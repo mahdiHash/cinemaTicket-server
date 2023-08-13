@@ -17,7 +17,7 @@ import {
   decryptAdminData,
 } from './';
 
-class Admin {
+class AdminService {
   constructor(protected readonly admins = prisma.admins) {}
 
   public getCreditCardById = getCreditCardById;
@@ -37,4 +37,4 @@ class Admin {
   public decryptAdminData = decryptAdminData;
 }
 
-export { Admin as AdminService };
+export { AdminService };

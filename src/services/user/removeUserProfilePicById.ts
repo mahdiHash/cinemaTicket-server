@@ -3,7 +3,7 @@ import { BadRequestErr } from "../../helpers/errors";
 import { UserService } from "./user.service";
 
 async function removeUserProfilePicById(this: UserService, id: number) {
-  const user = await this.getUserById(id, false);
+  const user = await this.getUserById(id, { hideFileId: false });
  
   if (user.profile_pic_fileId === null) {
     throw new BadRequestErr('کاربر تصویر پروفایل ندارد');

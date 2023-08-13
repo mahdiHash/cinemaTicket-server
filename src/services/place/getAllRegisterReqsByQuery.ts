@@ -1,10 +1,10 @@
-import { PlaceService } from './place.service';
+import { PlaceRegisterService } from './registers.place.service';
 import { getAllPlaceRegisters } from '../../types/interfaces/queries';
 import { encrypt } from '../../helpers';
 
-async function getAllRegistersReqsByQuery(this: PlaceService, query: getAllPlaceRegisters) {
+async function getAllRegistersReqsByQuery(this: PlaceRegisterService, query: getAllPlaceRegisters) {
   let takeSign = query.backward ? -1 : 1;
-  let registersReqs = await this.registerModel.findMany({
+  let registersReqs = await this.registerReqs.findMany({
     where: {
       license_id: query.license_id,
       status: query.status,

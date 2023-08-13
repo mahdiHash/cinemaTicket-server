@@ -1,5 +1,5 @@
-import { prisma } from "../../config/prismaConfig";
-import { 
+import { prisma } from '../../config/prismaConfig';
+import {
   updateUserById,
   getUserById,
   removeUserProfilePicById,
@@ -17,11 +17,10 @@ import {
   resetPass,
   createCreditCardReq,
   uploadProfilePic,
-} from "./";
+} from './';
 
-class User {
-  protected users = prisma.users;
-  protected creditCards = prisma.credit_card_auth;
+class UserService {
+  constructor(protected readonly users = prisma.users) {}
 
   public updateUserById = updateUserById;
   public getUserById = getUserById;
@@ -42,4 +41,4 @@ class User {
   public uploadProfilePic = uploadProfilePic;
 }
 
-export { User as UserService };
+export { UserService };

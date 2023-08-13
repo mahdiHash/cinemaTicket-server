@@ -1,7 +1,7 @@
-import { PlaceService } from "./place.service";
+import { PlaceRegisterService } from "./registers.place.service";
 
-async function removeRegisterReqByCode(this: PlaceService, code: string) {
-  await this.registerModel.delete({
+async function removeRegisterReqByCode(this: PlaceRegisterService, code: string) {
+  await this.registerReqs.delete({
     where: { code },
   });
 }
