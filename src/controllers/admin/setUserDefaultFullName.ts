@@ -1,6 +1,5 @@
 import { passport } from '../../config';
-import { superAdminAuth, middlewareWrapper } from '../../middlewares';
-import { BadRequestErr, NotFoundErr } from '../../helpers/errors';
+import { superAdminAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
 import { Request, Response } from 'express';
 import { UserService } from '../../services';
 
@@ -12,27 +11,18 @@ const controller = [
 
   middlewareWrapper(superAdminAuth),
 
-  middlewareWrapper(middleware),
+  middlewareWrapper(checkRouteParamType({ userId: 'number' })),
+
+  middlewareWrapper(async (req: Request, res: Response) => {
+    const upUser = await User.setUserDefaultFullNameById(+req.params.userId);
+  
+    res.json({
+      first_name: upUser.first_name,
+      last_name: upUser.last_name,
+      message: "نام کاربر تغییر کرد."
+    });
+  }
+  ),
 ];
 
 export { controller as setUserDefaultFullName };
-
-async function middleware(req: Request, res: Response) {
-  if (!Number.isFinite(+req.params.userId)) {
-    throw new BadRequestErr('شناسۀ کاربر باید یک عدد باشد.');
-  }
-
-  let user = await User.getUserById(+req.params.userId);
-
-  if (user === null) {
-    throw new NotFoundErr('کاربر پیدا نشد.');
-  }
-
-  let upUser = await User.setUserDefaultFullNameById(user.id);
-
-  res.json({
-    first_name: upUser.first_name,
-    last_name: upUser.last_name,
-    message: "نام کاربر تغییر کرد."
-  });
-}

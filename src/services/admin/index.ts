@@ -10,3 +10,5 @@ export * from './getAdminByEmail';
 export * from './getAdminByNationalId';
 export * from './uploadProfilePicById';
 export * from './decryptAdminData';
+export * from './login';
+export * from './generateJWT';

@@ -1,11 +1,11 @@
 import { passport, envVariables } from '../../config';
 import { adminLoginInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
-import { decrypt } from '../../helpers';
-import { sign } from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { admins } from '@prisma/client';
+import { AdminService } from '../../services';
 
+const Admin = new AdminService();
 const controller = [
   middlewareWrapper(storeValidatedInputs(adminLoginInpValidator)),
 
@@ -13,15 +13,9 @@ const controller = [
   passport.authenticate('adminLocal', { session: false }),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    let reqAdminObj = req.user as admins;
-    let token = sign(
-      { 
-        id: reqAdminObj.id, 
-        tel: reqAdminObj.tel 
-      }, 
-      envVariables.jwtTokenSecret, 
-      { expiresIn: '7d' }
-    );
+    const reqAdminObj = req.user as admins;
+    const token = await Admin.generateJWT(reqAdminObj);
+    const { password, profile_pic_fileId, ...adminData} = reqAdminObj;
 
     res.clearCookie('userData', {
       sameSite: 'lax',
@@ -40,17 +34,7 @@ const controller = [
 
     res.cookie(
       'adminData',
-      JSON.stringify({
-        id: reqAdminObj.id,
-        access_level: reqAdminObj.access_level,
-        full_name: reqAdminObj.full_name,
-        tel: decrypt(reqAdminObj.tel),
-        email: decrypt(reqAdminObj.email),
-        national_id: decrypt(reqAdminObj.national_id),
-        home_tel: decrypt(reqAdminObj.home_tel),
-        full_address: decrypt(reqAdminObj.full_address),
-        profile_pic_url: reqAdminObj.profile_pic_url,
-      }),
+      JSON.stringify(adminData),
       {
         maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
         sameSite: 'lax',

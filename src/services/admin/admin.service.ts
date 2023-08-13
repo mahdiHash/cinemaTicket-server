@@ -1,4 +1,4 @@
-import { prisma } from '../../config';
+import { prisma } from '../../config/prismaConfig';
 import {
   createAdmin,
   getAllAdminsExceptId,
@@ -12,6 +12,8 @@ import {
   getAdminByNationalId,
   uploadAdminProfilePic,
   decryptAdminData,
+  login,
+  generateJWT,
 } from './';
 
 class AdminService {
@@ -29,6 +31,8 @@ class AdminService {
   public getAdminByNationalId = getAdminByNationalId;
   public uploadAdminProfilePic = uploadAdminProfilePic;
   public decryptAdminData = decryptAdminData;
+  public login = login;
+  public generateJWT = generateJWT;
 }
 
 export { AdminService };

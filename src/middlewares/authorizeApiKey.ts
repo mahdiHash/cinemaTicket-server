@@ -1,9 +1,10 @@
 import { Request, Response} from 'express';
 import { ApiKeyErr } from '../helpers/errors';
-import { ApiKeyService } from '../services/apikey/apikey.service';
+import { ApiKeyService } from '../services';
 
+const ApiKey = new ApiKeyService();
 async function middleware(req: Request, res: Response) {
-  let record = await ApiKeyService.findApiKeyByKey(req.headers.apikey as string);
+  let record = await ApiKey.findApiKeyByKey(req.headers.apikey as string);
   
   if (record === null) {
     throw new ApiKeyErr();
