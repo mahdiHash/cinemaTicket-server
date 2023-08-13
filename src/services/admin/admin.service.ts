@@ -20,7 +20,7 @@ class AdminService {
   constructor(protected readonly admins = prisma.admins) {}
 
   public createAdmin = createAdmin;
-  public getAllAdminsExceptID = getAllAdminsExceptId;
+  public getAllAdminsExceptId = getAllAdminsExceptId;
   public getAdminById = getAdminById;
   public deleteAdminById = deleteAdminById;
   public removeAdminProfilePicById = removeAdminProfilePicById;
