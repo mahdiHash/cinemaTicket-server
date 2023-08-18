@@ -1,14 +1,14 @@
-import { sign } from "jsonwebtoken";
-import { envVariables } from "../../config";
-import { encrypt } from "../../helpers";
-import { admins } from "@prisma/client";
+import { sign } from 'jsonwebtoken';
+import { envVariables } from '../../config';
+import { admins } from '@prisma/client';
+import { adminPermissions } from '../../config';
 
-async function generateJWT(data: Pick<admins, 'id' | 'tel'>) {
-  const { id, tel } = data;
+async function generateJWT(data: admins) {
+  const { password, profile_pic_fileId, ...adminInfo } = data;
   const token = sign(
-    { id, tel: encrypt(tel) },
+    { ...adminInfo, permissions: adminPermissions[adminInfo.access_level] },
     envVariables.jwtTokenSecret,
-    { expiresIn: '7d' },
+    { expiresIn: '7d' }
   );
 
   return token;

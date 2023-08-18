@@ -15,13 +15,6 @@ const controller = [
   middlewareWrapper(async (req: Request, res: Response) => {
     const reqAdminObj = req.user as admins;
     const token = await Admin.generateJWT(reqAdminObj);
-    const { password, profile_pic_fileId, ...adminData} = reqAdminObj;
-
-    res.clearCookie('userData', {
-      sameSite: 'lax',
-      secure: envVariables.env === 'production',
-      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-    });
 
     res.cookie('authToken', token, {
       maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
@@ -31,17 +24,6 @@ const controller = [
       secure: envVariables.env === 'production',
       domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
     });
-
-    res.cookie(
-      'adminData',
-      JSON.stringify(adminData),
-      {
-        maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
-        sameSite: 'lax',
-        secure: envVariables.env === 'production',
-        domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-      }
-    );
 
     res.json({
       message: 'با موفقیت وارد شدید. خوش آمدید.',

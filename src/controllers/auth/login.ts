@@ -18,23 +18,10 @@ const controller: RequestHandler[] = [
     let userObj = req.user as users;
     let token = await User.generateUserJWT(userObj);
 
-    res.clearCookie('adminData', {
-      sameSite: 'lax',
-      secure: envVariables.env === 'production',
-      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-    });
-  
     res.cookie('authToken', token, {
       maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
       httpOnly: true,
       signed: true,
-      sameSite: 'lax',
-      secure: envVariables.env === 'production',
-      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-    });
-  
-    res.cookie('userData', JSON.stringify(userObj), {
-      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
       sameSite: 'lax',
       secure: envVariables.env === 'production',
       domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',

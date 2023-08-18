@@ -12,4 +12,4 @@ const variables = {
   imageKitStorageUrlEndpoint: process.env.IMAGEKIT_STORAGE_URL_ENDPOINT as string,
 };
 
-export default variables;
+export { variables as envVariables };

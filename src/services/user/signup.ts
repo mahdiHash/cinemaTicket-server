@@ -17,23 +17,9 @@ async function signup(this: UserService, data: signupInputs) {
       password: hashedPass,
       tel: encrypt(data.tel) as string,
     },
-    select: {
-      id: true,
-      first_name: true,
-      last_name: true,
-      tel: true,
-      email: true,
-      birthday: true,
-      credit_card_num: true,
-      national_id: true,
-      profile_pic_fileId: false,
-      profile_pic_url: true,
-    }
   });
 
-  const { ...userInfo} = await this.decryptUserData(user);
-
-  return userInfo;
+  return await this.decryptUserData(user);
 }
 
 export { signup };

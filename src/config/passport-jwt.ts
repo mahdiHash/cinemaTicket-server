@@ -2,7 +2,8 @@ import { Strategy, VerifiedCallback } from 'passport-jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import { UnauthorizedErr } from '../helpers/errors/index.js';
 import { jwtExtractorFromCookie } from '../helpers';
-import { prisma, envVariables } from './';
+import { prisma } from './prismaConfig.js';
+import { envVariables } from "./envVariables.js";
 import { decrypt } from '../helpers';
 
 const jwtStrategy = new Strategy(

@@ -1,5 +1,5 @@
 import ImageKit = require('imagekit');
-import { envVariables } from './';
+import { envVariables } from './envVariables';
 
 const storage = new ImageKit({
   publicKey: envVariables.imageKitStoragePublicKey as string,

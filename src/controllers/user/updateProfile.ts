@@ -20,20 +20,13 @@ const controller = [
       await User.uploadProfilePic(reqUserObj.id, req.file);
     }
     
-    const upUser = await User.updateUserById(reqUserObj.id, res.locals.validBody);
+    const upUser = await User.updateUserById(reqUserObj.id, res.locals.validBody) as users;
     const token = await User.generateUserJWT(upUser);
   
     res.cookie('authToken', token, {
       maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
       httpOnly: true,
       signed: true,
-      sameSite: 'lax',
-      secure: envVariables.env === 'production',
-      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-    });
-  
-    res.cookie('userData', JSON.stringify(upUser), {
-      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
       sameSite: 'lax',
       secure: envVariables.env === 'production',
       domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
