@@ -1,7 +1,7 @@
 import { Strategy, VerifiedCallback } from 'passport-jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import { UnauthorizedErr } from '../helpers/errors/index.js';
-import { jwtExtractorFromCookie } from '../helpers';
+import { encrypt, jwtExtractorFromCookie } from '../helpers';
 import { prisma } from './prismaConfig.js';
 import { envVariables } from "./envVariables.js";
 import { decrypt } from '../helpers';
@@ -15,7 +15,7 @@ const jwtStrategy = new Strategy(
     let user = await prisma.users.findFirst({
       where: {
         id: payload.id,
-        tel: payload.tel,
+        tel: encrypt(payload.tel) as string,
       },
     });
 
