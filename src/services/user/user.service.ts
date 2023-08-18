@@ -1,4 +1,5 @@
-import { 
+import { prisma } from '../../config/prismaConfig';
+import {
   updateUserById,
   getUserById,
   removeUserProfilePicById,
@@ -10,11 +11,14 @@ import {
   signup,
   checkDuplicateTel,
   decryptUserData,
-  getFullUserDataById,
   login,
-} from "./";
+  resetPass,
+  uploadProfilePic,
+} from './';
 
-class User {
+class UserService {
+  constructor(protected readonly users = prisma.users) {}
+
   public updateUserById = updateUserById;
   public getUserById = getUserById;
   public removeUserProfilePicById = removeUserProfilePicById;
@@ -26,8 +30,9 @@ class User {
   public signup = signup;
   public checkDuplicateTel = checkDuplicateTel;
   public decryptUserData = decryptUserData;
-  public getFullUserDataById = getFullUserDataById;
-  public login = login; 
+  public login = login;
+  public resetPass = resetPass;
+  public uploadProfilePic = uploadProfilePic;
 }
 
-export { User as UserService };
+export { UserService };

@@ -5,13 +5,7 @@ import { passport, envVariables } from '../../config';
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
-  middlewareWrapper(async (req: Request, res: Response) => {
-    res.clearCookie('adminData', {
-      sameSite: 'lax',
-      secure: envVariables.env === 'production',
-      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-    });
-  
+  middlewareWrapper(async (req: Request, res: Response) => {  
     res.clearCookie('authToken', {
       httpOnly: true,
       signed: true,

@@ -1,6 +1,5 @@
 import { passport } from '../../config';
 import { updateAdminInpValidator } from '../../validation/inputValidators';
-import { encrypt } from '../../helpers';
 import { NotFoundErr, BadRequestErr, ForbiddenErr } from '../../helpers/errors';
 import { Request, Response } from 'express';
 import { AdminService } from '../../services';
@@ -8,6 +7,7 @@ import {
   storeValidatedInputs,
   superAdminAuth,
   middlewareWrapper,
+  checkRouteParamType,
 } from '../../middlewares';
 
 const Admin = new AdminService();
@@ -16,6 +16,8 @@ const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
   middlewareWrapper(superAdminAuth),
+
+  middlewareWrapper(checkRouteParamType({ adminId: 'number' })),
 
   middlewareWrapper(storeValidatedInputs(updateAdminInpValidator)),
 
@@ -35,22 +37,11 @@ const controller = [
         'ادمین برتر نمی‌تواند پروفایل دیگر ادمین‌های برتر را آپدیت کند.'
       );
     }
-  
-    let upData = {
-      access_level: res.locals.validBody.access_level,
-      full_name: res.locals.validBody.full_name,
-      tel: encrypt(res.locals.validBody.tel) as string,
-      email: encrypt(res.locals.validBody.email) as string,
-      national_id: encrypt(res.locals.validBody.national_id) as string,
-      home_tel: encrypt(res.locals.validBody.home_tel) as string,
-      full_address: encrypt(res.locals.validBody.full_address) as string,
-    };
-  
-    let upAdmin = await Admin.updateAdminById(targetAdmin.id, upData);
-    const { password, profile_pic_fileId, ...adminInfo } = upAdmin;
+    
+    const upAdmin = await Admin.updateAdminById(targetAdmin.id, res.locals.validBody);
   
     res.json({
-      admin: adminInfo,
+      admin: upAdmin,
       message: 'اطلاعات ادمین با موفقیت تغییر کرد.',
     });
   }

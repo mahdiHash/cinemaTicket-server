@@ -1,8 +1,11 @@
-import { NotFoundErr } from "../../helpers/errors";
-import { CelebrityService } from "./celebrity.service";
+import { celebrities } from '@prisma/client';
+import { NotFoundErr } from '../../helpers/errors';
+import { CelebrityService } from './celebrity.service';
 
-async function getCelebById(this: CelebrityService, id: number) {
-  const celeb = await this.model.findUnique({
+type celebWithPartialFileId = Omit<celebrities, 'profile_pic_fileId'> & { profile_pic_fileId?: string | null };
+
+async function getCelebById(this: CelebrityService, id: number, hideFileId = true): Promise<celebWithPartialFileId> {
+  const celeb = await this.celebModel.findUnique({
     where: { id },
   });
 
@@ -12,7 +15,7 @@ async function getCelebById(this: CelebrityService, id: number) {
 
   const { profile_pic_fileId, ...celebInfo } = celeb;
 
-  return celebInfo;
+  return hideFileId ? celebInfo : celeb;
 }
 
 export { getCelebById };

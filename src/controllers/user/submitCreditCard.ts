@@ -1,44 +1,25 @@
 import { Request, Response } from 'express';
 import { middlewareWrapper, storeValidatedInputs } from '../../middlewares';
-import { encrypt } from '../../helpers';
-import { prisma, passport } from '../../config';
+import { passport } from '../../config';
 import { creditCardInpValidator } from '../../validation/inputValidators';
 import { users } from '@prisma/client';
-import { ForbiddenErr } from '../../helpers/errors';
+import { CreditCardService } from '../../services';
 
+const CreditCard = new CreditCardService();
 const controller = [
   passport.authenticate('jwt', { session: false }),
 
   middlewareWrapper(storeValidatedInputs(creditCardInpValidator)),
-
-  middlewareWrapper(checkForDuplicateReq),
 
   middlewareWrapper(middleware),
 ];
 
 export { controller as submitCreditCard };
 
-async function checkForDuplicateReq(req: Request, res: Response) {
-  const reqUserObj = req.user as users;
-  let duplicate = await prisma.credit_card_auth.findFirst({
-    where: { user_id: reqUserObj.id }
-  });
-
-  if (duplicate) {
-    throw new ForbiddenErr('تنها یک درخواست می‌توان در آن واحد ثبت کرد.');
-  }
-}
-
 async function middleware(req: Request, res: Response) {
   const reqUserObj = req.user as users;
 
-  await prisma.credit_card_auth.create({
-    data: {
-      credit_card_number: encrypt(res.locals.validBody.creditCard) as string,
-      national_id: encrypt(res.locals.validBody.nationalId) as string,
-      user_id: reqUserObj.id,
-    }
-  });
+  await CreditCard.createCreditCardReq(reqUserObj.id, res.locals.validBody);
 
   res.json({
     message: 'درخواست برای بررسی ثبت شد.',

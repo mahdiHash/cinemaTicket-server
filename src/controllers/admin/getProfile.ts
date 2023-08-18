@@ -9,19 +9,10 @@ const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    let reqAdminObj = req.user as admins;
-  
-    res.json({
-      id: reqAdminObj.id,
-      access_level: reqAdminObj.access_level,
-      full_name: reqAdminObj.full_name,
-      tel: decrypt(reqAdminObj.tel),
-      email: decrypt(reqAdminObj.email),
-      national_id: decrypt(reqAdminObj.national_id),
-      home_tel: decrypt(reqAdminObj.home_tel),
-      full_address: decrypt(reqAdminObj.full_address),
-      profile_pic_url: reqAdminObj.profile_pic_url,
-    });
+    const reqAdminObj = req.user as admins;
+    const { password, profile_pic_fileId, ...adminInfo } = reqAdminObj;
+
+    res.json(adminInfo);
   }
   ),
 ];

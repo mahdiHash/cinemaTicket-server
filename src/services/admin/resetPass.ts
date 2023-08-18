@@ -3,9 +3,15 @@ import { hash, compare } from "bcryptjs";
 import { AdminService } from "./admin.service";
 import { UnauthorizedErr } from "../../helpers/errors";
 
-async function resetPassById(this: AdminService, id: number, oldPass: string, newPass: string) {
-  const admin = await this.getAdminById(id);
-  const doesPassMatch = await compare(oldPass, admin!.password);
+interface resetPassData {
+  oldPass: string;
+  oldPassInput: string;
+  newPass: string;
+}
+
+async function resetPassById(this: AdminService, id: number, data: resetPassData) {
+  const { oldPass, oldPassInput, newPass } = data;
+  const doesPassMatch = await compare(oldPass, oldPassInput);
 
   if (!doesPassMatch) {
     throw new UnauthorizedErr('رمز ورود قدیمی اشتباه است.');

@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
-import { middlewareWrapper, playAdminAuth } from '../../middlewares';
-import { passport, prisma } from '../../config';
-import { BadRequestErr, ForbiddenErr, NotFoundErr } from '../../helpers/errors';
+import { middlewareWrapper, playAdminAuth, checkRouteParamType } from '../../middlewares';
+import { passport } from '../../config';
+import { PlayService } from '../../services';
 
+const Play = new PlayService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
   middlewareWrapper(playAdminAuth),
+
+  middlewareWrapper(checkRouteParamType({ playId: 'number' })),
 
   middlewareWrapper(middleware),
 ];
@@ -14,19 +17,7 @@ const controller = [
 export { controller as publishReview };
 
 async function middleware(req: Request, res: Response) {
-  if (!Number.isFinite(+req.params.playId)) {
-    throw new BadRequestErr('شناسه نمایش یا شناسه نقد آن معتبر نیست.');
-  }
-
-  const review = await prisma.play_reviews.findFirst({
-    where: {
-      play_id: +req.params.playId,
-    },
-  });
-
-  if (review === null) {
-    throw new NotFoundErr('نقد نمایش یافت نشد.');
-  }
+  const review = await Play.getPlayReviewById(+req.params.playId);
 
   if (review.is_published) {
     return res.json({
@@ -34,10 +25,7 @@ async function middleware(req: Request, res: Response) {
     });
   }
 
-  await prisma.play_reviews.update({
-    where: { play_id: review.play_id },
-    data: { is_published: true },
-  });
+  await Play.publishPlayReviewById(+req.params.playId);
 
   res.json({
     message: 'نقد پابلیش شد.',

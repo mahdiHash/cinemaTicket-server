@@ -9,5 +9,6 @@ export * from './generateUserJWT';
 export * from './signup';
 export * from './checkDuplicateTel';
 export * from './decryptUserData';
-export * from './getFullUserDataById';
 export * from './login';
+export * from './resetPass';
+export * from './uploadProfliePic';

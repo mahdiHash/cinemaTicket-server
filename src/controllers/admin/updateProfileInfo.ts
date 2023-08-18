@@ -18,22 +18,13 @@ const controller = [
 
   middlewareWrapper(async function middleware(req: Request, res: Response) {
     const reqAdminObj = req.user as admins;
-    let upData = {
-      access_level: reqAdminObj.access_level,
-      full_name: res.locals.validBody.full_name,
-      tel: encrypt(res.locals.validBody.tel) as string,
-      email: encrypt(res.locals.validBody.email) as string,
-      national_id: encrypt(res.locals.validBody.national_id) as string,
-      home_tel: encrypt(res.locals.validBody.home_tel) as string,
-      full_address: encrypt(res.locals.validBody.full_address) as string,
-    };
 
     if (req.file) {
       await Admin.uploadAdminProfilePic(reqAdminObj.id, req.file.path);
     }
 
-    let upAdmin = await Admin.updateAdminById(reqAdminObj.id, upData);
-    let token = sign({ id: upAdmin.id, tel: upAdmin.tel }, envVariables.jwtTokenSecret);
+    let upAdmin = await Admin.updateAdminById(reqAdminObj.id, res.locals.validBody) as admins;
+    let token = await Admin.generateJWT(upAdmin);
 
     res.cookie('authToken', token, {
       maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
@@ -44,28 +35,8 @@ const controller = [
       domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
     });
 
-    res.cookie(
-      'adminData',
-      {
-        id: upAdmin.id,
-        access_level: upAdmin.access_level,
-        full_name: upAdmin.full_name,
-        tel: decrypt(upAdmin.tel),
-        email: decrypt(upAdmin.email),
-        national_id: decrypt(upAdmin.national_id),
-        home_tel: decrypt(upAdmin.home_tel),
-        full_address: decrypt(upAdmin.full_address),
-        profile_pic_url: upAdmin.profile_pic_url,
-      },
-      {
-        maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
-        sameSite: 'lax',
-        secure: envVariables.env === 'production',
-        domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-      }
-    );
-
     res.json({
+      admin: upAdmin,
       message: 'اطلاعات شما تغییر کرد.',
     });
   }),

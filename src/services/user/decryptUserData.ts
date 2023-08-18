@@ -1,7 +1,9 @@
-import { users } from "@prisma/client";
-import { decrypt } from "../../helpers";
+import { users } from '@prisma/client';
+import { decrypt } from '../../helpers';
 
-async function decryptUserData(data: users) {
+type encryptedUserType = Omit<users, 'password' | 'profile_pic_fileId'> & { profile_pic_fileId?: string | null };
+
+async function decryptUserData(data: encryptedUserType) {
   const user = { ...data };
 
   user.email = decrypt(user.email);

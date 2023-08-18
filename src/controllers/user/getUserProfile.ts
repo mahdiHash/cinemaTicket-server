@@ -15,18 +15,7 @@ export { controller as getUserProfile };
 
 async function middleware(req: Request, res: Response) {
   const reqUserObj = req.user as users;
-  // decrypt some vlaues for the client
-  let descryptedUser = {
-    id: reqUserObj.id,
-    first_name: unescape(reqUserObj.first_name),
-    last_name: unescape(reqUserObj.last_name),
-    tel: decrypt(reqUserObj.tel),
-    email: decrypt(reqUserObj.email),
-    birthday: reqUserObj.birthday,
-    credit_card_num: decrypt(reqUserObj.credit_card_num),
-    national_id: decrypt(reqUserObj.national_id),
-    profile_pic_url: reqUserObj.profile_pic_url,
-  }
+  const { password, profile_pic_fileId, ...userInfo} = reqUserObj;
 
-  res.json(descryptedUser);
+  res.json(userInfo);
 }

@@ -1,38 +1,24 @@
-import { Request, Response } from "express";
-import { prisma, passport, imageKit } from "../../config";
-import { BadRequestErr, NotFoundErr } from "../../helpers/errors";
-import { playAdminAuth, middlewareWrapper } from "../../middlewares";
+import { Request, Response } from 'express';
+import { passport } from '../../config';
+import { playAdminAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
+import { CelebrityService } from '../../services';
 
+const Celeb = new CelebrityService();
 const controller = [
   // authorization
   passport.authenticate('adminJwt', { session: false }),
 
   middlewareWrapper(playAdminAuth),
 
-  middlewareWrapper(middleware),  
+  middlewareWrapper(checkRouteParamType({ id: 'number' })),
+
+  middlewareWrapper(async (req: Request, res: Response) => {
+    await Celeb.removeAllCelebPicsById(+req.params.id);
+
+    res.json({
+      message: 'تمام تصاویر هنرمند حذف شدند.',
+    });
+  }),
 ];
 
 export { controller as removeAllCelebrityPics };
-
-async function middleware(req: Request, res: Response) {
-  if (!Number.isFinite(+req.params.id)) {
-    throw new BadRequestErr('پارامتر id باید یک عدد باشد.');
-  }
-
-  let pics = await prisma.celebrity_pics.findMany({
-    where: { celebrity_id: +req.params.id },
-  });
-  
-  if (!pics.length) {
-    throw new NotFoundErr('عکسی آپلود نشده است.');
-  }
-
-  await Promise.all(pics.map(({ url, fileId }) => {
-    return imageKit.deleteFile(fileId)
-      .then(() => prisma.celebrity_pics.delete({ where: { url } }));
-  }));
-
-  res.json({
-    message: "تمام تصاویر هنرمند حذف شدند."
-  });
-}

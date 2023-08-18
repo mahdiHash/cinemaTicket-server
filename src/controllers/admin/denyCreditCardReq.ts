@@ -1,24 +1,18 @@
 import { Request, Response } from 'express';
-import { middlewareWrapper, creditCardAdminAuth } from '../../middlewares';
-import { BadRequestErr, NotFoundErr } from '../../helpers/errors';
+import { middlewareWrapper, creditCardAdminAuth, checkRouteParamType } from '../../middlewares';
 import { passport } from '../../config';
-import { AdminService } from '../../services';
+import { CreditCardService } from '../../services';
 
-const Admin = new AdminService();
+const CreditCard = new CreditCardService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
   middlewareWrapper(creditCardAdminAuth),
 
-  middlewareWrapper(async (req: Request, res: Response) => {
-    if (!Number.isFinite(+req.params.reqId)) {
-      throw new BadRequestErr('شناسه درخواست معتبر نیست.');
-    }
+  middlewareWrapper(checkRouteParamType({ reqId: 'number' })),
 
-    let creditCardReq = await Admin.deleteCreditCardById(+req.params.reqId);
-    if (creditCardReq === null) {
-      throw new NotFoundErr('درخواست بررسی کارت بانکی پیدا نشد.');
-    }
+  middlewareWrapper(async (req: Request, res: Response) => {
+    await CreditCard.removeCreditCardReqById(+req.params.reqId);
 
     res.json({
       message: 'درخواست بررسی رد شد.',

@@ -16,7 +16,11 @@ const controller = [
   middlewareWrapper(async (req: Request, res: Response) => {
     const reqAdminObj = req.user as admins;
 
-    await Admin.resetPassById(reqAdminObj.id, res.locals.validBody.oldPass, res.locals.validBody.newPass);
+    await Admin.resetPassById(reqAdminObj.id, {
+      oldPass: reqAdminObj.password,
+      oldPassInput: res.locals.validBody.oldPass,
+      newPass: res.locals.validBody.newPass,
+    });
 
     res.json({
       message: 'رمز با موفقیت تغییر کرد.',

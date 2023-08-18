@@ -1,6 +1,5 @@
 import { signupInputs } from '../../types/interfaces/inputs';
 import { UserService } from './user.service';
-import { prisma } from '../../config';
 import { encrypt } from '../../helpers';
 import { hash } from 'bcryptjs';
 import { BadRequestErr } from '../../helpers/errors';
@@ -13,16 +12,14 @@ async function signup(this: UserService, data: signupInputs) {
   }
 
   const hashedPass = await hash(data.password, 16);
-  const user = await prisma.users.create({
+  const user = await this.users.create({
     data: {
       password: hashedPass,
       tel: encrypt(data.tel) as string,
     },
   });
 
-  const { password, profile_pic_fileId, ...userInfo} = await this.decryptUserData(user);
-
-  return userInfo;
+  return await this.decryptUserData(user);
 }
 
 export { signup };

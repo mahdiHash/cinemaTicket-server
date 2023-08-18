@@ -1,20 +1,36 @@
-import { prisma } from "../../config";
-import { decrypt } from "../../helpers";
-import { NotFoundErr } from "../../helpers/errors";
-import { UserService } from "./user.service";
+import { prisma } from '../../config';
+import { NotFoundErr } from '../../helpers/errors';
+import { UserService } from './user.service';
 
-async function getUserById(this: UserService, id: number) {
-  const user =  await prisma.users.findUnique({
+interface options {
+  hideFileId?: boolean;
+  hidePass?: boolean;
+}
+
+async function getUserById(this: UserService, id: number, opts?: options) {
+  const { hideFileId = true, hidePass = true } = opts ?? {};
+  const user = await prisma.users.findUnique({
     where: { id },
+    select: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      tel: true,
+      email: true,
+      birthday: true,
+      credit_card_num: true,
+      national_id: true,
+      profile_pic_fileId: !hideFileId,
+      profile_pic_url: true,
+      password: !hidePass,
+    },
   });
 
   if (user === null) {
     throw new NotFoundErr('کاربری با این شناسه پیدا نشد');
   }
 
-  const { password, profile_pic_fileId, ...userInfo} = await this.decryptUserData(user);
-
-  return userInfo;
+  return await this.decryptUserData(user);
 }
 
 export { getUserById };

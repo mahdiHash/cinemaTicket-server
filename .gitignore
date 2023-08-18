@@ -111,3 +111,5 @@ prisma/seed.js
 built
 
 .vscode
+
+.dependencygraph
