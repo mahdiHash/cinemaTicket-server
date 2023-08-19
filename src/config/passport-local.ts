@@ -13,7 +13,7 @@ const strategy = new LocalStrategy({ usernameField: 'login' }, async (login, pas
   });
 
   if (!user) {
-    throw new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.');
+    return cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
   }
 
   let isPassMatch = await compare(pass, user.password);
@@ -26,7 +26,7 @@ const strategy = new LocalStrategy({ usernameField: 'login' }, async (login, pas
 
     cb(null, user);
   } else {
-    throw new UnauthorizedErr('شماره همراه یا رمز عبور اشتباه است');
+    return cb(new UnauthorizedErr('شماره همراه یا رمز عبور اشتباه است'));
   }
 });
 

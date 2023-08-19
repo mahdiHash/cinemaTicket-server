@@ -11,7 +11,7 @@ const strategy = new LocalStrategy({ usernameField: 'tel' }, async (tel, pass, c
   });
 
   if (!admin) {
-    throw new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.');
+    return cb(new UnauthorizedErr('شماره همراه یا رمز ورود اشتباه است.'));
   }
 
   let isPassMatch = await compare(pass, admin.password);
@@ -26,7 +26,7 @@ const strategy = new LocalStrategy({ usernameField: 'tel' }, async (tel, pass, c
     cb(null, admin);
   }
   else {
-    throw new UnauthorizedErr('شماره همراه یا رمز عبور اشتباه است');
+    return cb(new UnauthorizedErr('شماره همراه یا رمز عبور اشتباه است'));
   }
 });
 
