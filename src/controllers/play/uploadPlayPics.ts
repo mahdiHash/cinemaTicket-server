@@ -26,7 +26,7 @@ const controller = [
       throw new BadRequestErr('تصویری آپلود نشده است');
     }
   
-    const urls = await PlayMedia.uploadPlayPics(+req.params.playId, {
+    const imgs = await PlayMedia.uploadPlayPics(+req.params.playId, {
       filesInfo: req.files as Array<Express.Multer.File>,
       position: res.locals.validBody.position,
       playTitle: play.title,
@@ -34,7 +34,10 @@ const controller = [
   
     res.json({
       message: 'تصاویر آپلود شدند.',
-      urls,
+      imgs: imgs.map((img) => {
+        const { fileId, ...imgInfo} = img;
+        return imgInfo;
+      })
     });
   }
   ),
