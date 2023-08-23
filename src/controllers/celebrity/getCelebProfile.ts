@@ -1,26 +1,16 @@
-import { Request, Response } from "express";
-import { prisma } from "../../config";
-import { BadRequestErr, NotFoundErr } from "../../helpers/errors";
-import { middlewareWrapper } from "../../middlewares";
+import { Request, Response } from 'express';
+import { middlewareWrapper, checkRouteParamType } from '../../middlewares';
+import { CelebrityService } from '../../services';
 
-const controller = middlewareWrapper(middleware);
+const Celeb = new CelebrityService();
+const controller = [
+  middlewareWrapper(checkRouteParamType({ id: 'number' })),
+
+  middlewareWrapper(async (req: Request, res: Response) => {
+    const celeb = await Celeb.getCelebById(+req.params.id);
+
+    res.json(celeb);
+  }),
+];
 
 export { controller as getCelebProfile };
-
-async function middleware(req: Request, res: Response) {
-  if (!Number.isFinite(+req.params.id)) {
-    throw new BadRequestErr('پارامتر id باید یک عدد باشد.');
-  }
-
-  let celeb = await prisma.celebrities.findUnique({
-    where: { id: +req.params.id },
-  });
-
-  if (!celeb) {
-    throw new NotFoundErr('شخص مورد نظر پیدا نشد.');
-  }
-
-  let { profile_pic_fileId, ...resObj } = celeb;
-  
-  res.json(resObj);
-}

@@ -9,6 +9,8 @@ interface createPlay {
   genre: genresType[];
   type: playType;
   publish_date?: string;
+  intro: string;
+  celebrities: number[];
 }
 
 export { createPlay as createPlayInputs };

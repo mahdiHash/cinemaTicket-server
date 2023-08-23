@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { ForbiddenErr, NotFoundErr } from '../helpers/errors';
-import { prisma } from '../config';
 import { users } from '@prisma/client';
+import { PlaceRegisterService } from '../services';
+
+const PlaceRegister = new PlaceRegisterService();
 
 async function middleware(req: Request, res: Response) {
   const userObj = req.user as users;
-  let registerationInfo = await prisma.non_approved_places.findUnique({
-    where: { code: req.params.code },
-  });
+  let registerationInfo = await PlaceRegister.getRegisterReqByCode(req.params.code);
 
   if (!registerationInfo) {
     throw new NotFoundErr('کد ثبت پیدا نشد.');

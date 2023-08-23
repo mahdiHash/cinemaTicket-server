@@ -11,12 +11,6 @@ const controller = [
 export { controller as logout };
 
 async function middleware(req: Request, res: Response) {
-  res.clearCookie('userData', {
-    sameSite: "lax",
-    secure: envVariables.env === 'production',
-    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-  });
-
   res.clearCookie('authToken', {
     httpOnly: true,
     signed: true,

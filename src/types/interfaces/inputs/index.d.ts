@@ -11,3 +11,4 @@ export * from './adminLogin';
 export * from './submitCreditCard';
 export * from './createPlay';
 export * from './updatePlay';
+export * from './userFinUpdate';

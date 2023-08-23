@@ -1,25 +1,16 @@
-import { Request, Response } from "express";
-import { prisma } from "../../config";
-import { BadRequestErr } from "../../helpers/errors";
-import { middlewareWrapper } from "../../middlewares";
+import { Request, Response } from 'express';
+import { middlewareWrapper, checkRouteParamType } from '../../middlewares';
+import { CelebrityPicsService } from '../../services/celebrity.pics.service';
 
-const controller = middlewareWrapper(middleware);
+const CelebPics = new CelebrityPicsService();
+const controller = [
+  middlewareWrapper(checkRouteParamType({ id: 'number' })),
+
+  middlewareWrapper(async (req: Request, res: Response) => {
+    const pics = await CelebPics.getAllCelebPics(+req.params.id);
+
+    res.json(pics);
+  }),
+];
 
 export { controller as getCelebPics };
-
-async function middleware(req: Request, res: Response) {
-  if (!Number.isFinite(+req.params.id)) {
-    throw new BadRequestErr('پارامتر id باید یک عدد باشد.');
-  }
-
-  let urls = await prisma.celebrity_pics.findMany({
-    where: { celebrity_id: +req.params.id },
-    select: { 
-      url: true,
-      width: true,
-      height: true,
-    },
-  });
-  
-  res.json(urls);
-}

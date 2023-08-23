@@ -1,8 +1,10 @@
 import { Strategy, VerifiedCallback } from "passport-jwt";
 import { JwtPayload } from "jsonwebtoken";
 import { UnauthorizedErr } from "../helpers/errors/index.js";
-import { jwtExtractorFromCookie } from "../helpers";
-import { prisma, envVariables } from "./";
+import { encrypt, jwtExtractorFromCookie } from "../helpers";
+import { prisma } from './prismaConfig.js';
+import { envVariables } from "./envVariables.js";
+import { decrypt } from "../helpers";
 
 const jwtStrategy = new Strategy(
   {
@@ -13,7 +15,7 @@ const jwtStrategy = new Strategy(
     let admin = await prisma.admins.findFirst({
       where: {
         id: payload.id,
-        tel: payload.tel,
+        tel: encrypt(payload.tel) as string,
       }
     });
 
@@ -21,6 +23,13 @@ const jwtStrategy = new Strategy(
       cb(new UnauthorizedErr());
     }
     else {
+      // password field will be provided in JS
+      admin.email = decrypt(admin.email) as string;
+      admin.national_id = decrypt(admin.national_id) as string;
+      admin.tel = decrypt(admin.tel) as string;
+      admin.full_address = decrypt(admin.full_address) as string;
+      admin.home_tel = decrypt(admin.home_tel) as string;    
+      
       cb(null, admin);
     }
   }

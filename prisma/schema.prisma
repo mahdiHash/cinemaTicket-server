@@ -290,6 +290,7 @@ enum playPicPosition {
   background
   review
   morePics
+  cover
 }
 
 enum celebRole {

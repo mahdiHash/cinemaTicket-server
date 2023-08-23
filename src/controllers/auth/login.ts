@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express';
-import { sign } from 'jsonwebtoken';
-import { decrypt, unescape } from '../../helpers';
+import { Request, Response, RequestHandler } from 'express';
 import { users } from '@prisma/client';
 import { loginInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
 import { passport, envVariables } from '../../config';
+import { UserService } from '../../services';
 
+const User = new UserService();
 const controller: RequestHandler[] = [
   middlewareWrapper(storeValidatedInputs(loginInpValidator)),
 
@@ -13,56 +13,25 @@ const controller: RequestHandler[] = [
   passport.authenticate('local', { session: false }),
 
   // authentication successful
-  middlewareWrapper(middleware),
+  middlewareWrapper(async (req: Request, res: Response) => {
+    // this is done to avoid this error: https://stackoverflow.com/questions/76296575/user-object-req-user-structure-doesnt-match-the-database-model-schema-after-a
+    let userObj = req.user as users;
+    let token = await User.generateUserJWT(userObj);
+
+    res.cookie('authToken', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
+      httpOnly: true,
+      signed: true,
+      sameSite: 'lax',
+      secure: envVariables.env === 'production',
+      domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
+    });
+  
+    res.json({
+      message: 'با موفقیت وارد شدید. خوش آمدید.',
+    });
+  }
+  ),
 ];
 
 export { controller as login };
-
-async function middleware(req: Request, res: Response) {
-  // this is done to avoid this error: https://stackoverflow.com/questions/76296575/user-object-req-user-structure-doesnt-match-the-database-model-schema-after-a
-  let userObj = req.user as users;
-  let token = sign(
-    { id: userObj.id, tel: userObj.tel },
-    envVariables.jwtTokenSecret,
-    { expiresIn: '90d' }
-  );
-
-  // decrypt some vlaues for the client
-  let decryptedUser = {
-    id: userObj.id,
-    first_name: unescape(userObj.first_name),
-    last_name: unescape(userObj.last_name),
-    tel: decrypt(userObj.tel),
-    email: decrypt(userObj.email),
-    birthday: userObj.birthday,
-    credit_card_num: decrypt(userObj.credit_card_num),
-    national_id: decrypt(userObj.national_id),
-    profile_pic_url: userObj.profile_pic_url,
-  };
-
-  res.clearCookie('adminData', {
-    sameSite: 'lax',
-    secure: envVariables.env === 'production',
-    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-  });
-
-  res.cookie('authToken', token, {
-    maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
-    httpOnly: true,
-    signed: true,
-    sameSite: 'lax',
-    secure: envVariables.env === 'production',
-    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-  });
-
-  res.cookie('userData', JSON.stringify(decryptedUser), {
-    maxAge: 1000 * 60 * 60 * 24 * 90, // 90 days
-    sameSite: 'lax',
-    secure: envVariables.env === 'production',
-    domain: envVariables.env === 'dev' ? 'localhost' : 'example.com',
-  });
-
-  res.json({
-    message: 'با موفقیت وارد شدید. خوش آمدید.',
-  });
-}

@@ -1,32 +1,23 @@
-import { Request, Response } from "express";
-import { middlewareWrapper, creditCardAdminAuth } from "../../middlewares";
-import { BadRequestErr, NotFoundErr } from "../../helpers/errors";
-import { prisma, passport } from "../../config";
+import { Request, Response } from 'express';
+import { middlewareWrapper, creditCardAdminAuth, checkRouteParamType } from '../../middlewares';
+import { passport } from '../../config';
+import { CreditCardService } from '../../services';
 
+const CreditCard = new CreditCardService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
   middlewareWrapper(creditCardAdminAuth),
 
-  middlewareWrapper(middleware),
+  middlewareWrapper(checkRouteParamType({ reqId: 'number' })),
+
+  middlewareWrapper(async (req: Request, res: Response) => {
+    await CreditCard.removeCreditCardReq(+req.params.reqId);
+
+    res.json({
+      message: 'درخواست بررسی رد شد.',
+    });
+  }),
 ];
 
 export { controller as denyCreditCardReq };
-
-async function middleware(req:Request, res: Response) {
-  if (!Number.isFinite(+req.params.reqId)) {
-    throw new BadRequestErr('شناسه درخواست معتبر نیست.');
-  }
-
-  let creditCardReq = await prisma.credit_card_auth.delete({
-    where: { id: +req.params.reqId }
-  });
-
-  if (creditCardReq === null) {
-    throw new NotFoundErr('درخواست بررسی کارت بانکی پیدا نشد.');
-  }
-
-  res.json({
-    message: 'درخواست بررسی رد شد.',
-  });
-}
