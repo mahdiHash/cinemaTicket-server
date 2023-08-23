@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { middlewareWrapper, checkRouteParamType } from '../../middlewares';
-import { CelebrityService } from '../../services/celebrity/celebrity.service';
+import { CelebrityPicsService } from '../../services/celebrity.pics.service';
 
-const Celeb = new CelebrityService();
+const CelebPics = new CelebrityPicsService();
 const controller = [
   middlewareWrapper(checkRouteParamType({ id: 'number' })),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    const pics = await Celeb.getAllCelebPicsById(+req.params.id);
+    const pics = await CelebPics.getAllCelebPics(+req.params.id);
 
     res.json(pics);
   }),

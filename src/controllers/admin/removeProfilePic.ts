@@ -18,7 +18,7 @@ const controller = [
       throw new BadRequestErr('ادمین هیچ عکس پروفایلی آپلود نکرده است.');
     }
 
-    await Admin.removeAdminProfilePicById(reqAdminObj.id, reqAdminObj.profile_pic_fileId as string);
+    await Admin.removeProfilePic(reqAdminObj.id);
 
     res.json({
       message: 'عکس پروفایل حذف شد.',

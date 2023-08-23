@@ -38,7 +38,7 @@ const controller = [
       );
     }
     
-    const upAdmin = await Admin.updateAdminById(targetAdmin.id, res.locals.validBody);
+    const upAdmin = await Admin.updateAdmin(targetAdmin.id, res.locals.validBody);
   
     res.json({
       admin: upAdmin,

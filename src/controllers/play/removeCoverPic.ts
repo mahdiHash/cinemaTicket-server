@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { middlewareWrapper, playAdminAuth, checkRouteParamType } from '../../middlewares';
 import { passport } from '../../config';
-import { PlayService } from '../../services';
+import { PlayMediaService } from '../../services/play.media.service';
 
-const Play = new PlayService();
+const PlayMedia = new PlayMediaService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
@@ -12,7 +12,7 @@ const controller = [
   middlewareWrapper(checkRouteParamType({ playId: 'number' })),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    await Play.removePlayCoverById(+req.params.playId);
+    await PlayMedia.removePlayCover(+req.params.playId);
     
     res.json({
       message: 'عکس نمایش حذف شد.',

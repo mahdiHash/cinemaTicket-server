@@ -1,6 +1,5 @@
 import { passport } from '../../config';
 import { superAdminAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
-import { BadRequestErr } from '../../helpers/errors';
 import { Request, Response } from 'express';
 import { UserService } from '../../services';
 

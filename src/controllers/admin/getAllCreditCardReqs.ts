@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { middlewareWrapper, storeValidatedQuery, creditCardAdminAuth } from '../../middlewares';
 import { getAllCreditCardReqsQuValidator } from '../../validation/queryValidators';
 import { passport } from '../../config';
-import { decrypt } from '../../helpers';
 import { CreditCardService } from '../../services';
 
 const CreditCard = new CreditCardService();

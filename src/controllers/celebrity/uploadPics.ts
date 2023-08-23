@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { passport, storeImgLocally } from '../../config';
 import { BadRequestErr } from '../../helpers/errors';
 import { playAdminAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
-import { CelebrityService } from '../../services';
+import { CelebrityPicsService } from '../../services/celebrity.pics.service';
 
-const Celeb = new CelebrityService();
+const CelebPics = new CelebrityPicsService();
 const controller = [
   // authorization
   passport.authenticate('adminJwt', { session: false }),
@@ -25,7 +25,7 @@ async function middleware(req: Request, res: Response) {
     throw new BadRequestErr('عکسی آپلود نشده است');
   }
 
-  const urls = await Celeb.uploadCelebPicsById(+req.params.id, req.files as Express.Multer.File[]);
+  const urls = await CelebPics.uploadCelebPics(+req.params.id, req.files as Express.Multer.File[]);
 
   res.json({
     urls: urls,

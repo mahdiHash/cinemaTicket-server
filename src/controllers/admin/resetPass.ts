@@ -16,7 +16,7 @@ const controller = [
   middlewareWrapper(async (req: Request, res: Response) => {
     const reqAdminObj = req.user as admins;
 
-    await Admin.resetPassById(reqAdminObj.id, {
+    await Admin.resetPass(reqAdminObj.id, {
       oldPass: reqAdminObj.password,
       oldPassInput: res.locals.validBody.oldPass,
       newPass: res.locals.validBody.newPass,

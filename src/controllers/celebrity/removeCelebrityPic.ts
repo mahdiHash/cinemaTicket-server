@@ -2,9 +2,11 @@ import { Request, Response } from 'express';
 import { passport } from '../../config';
 import { NotFoundErr } from '../../helpers/errors';
 import { playAdminAuth, middlewareWrapper, checkRouteParamType } from '../../middlewares';
+import { CelebrityPicsService } from '../../services/celebrity.pics.service';
 import { CelebrityService } from '../../services';
 
 const Celeb = new CelebrityService();
+const CelebPics = new CelebrityPicsService();
 const controller = [
   // authorization
   passport.authenticate('adminJwt', { session: false }),
@@ -20,7 +22,7 @@ const controller = [
       throw new NotFoundErr('فرد مورد نظر پیدا نشد.');
     }
 
-    await Celeb.removeCelebPicByUrl(`/${req.params.folder}/${req.params.fileName}`);
+    await CelebPics.removeCelebPicByUrl(`/${req.params.folder}/${req.params.fileName}`);
 
     res.json({
       message: 'تصویر هنرمند حذف شد.',

@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { middlewareWrapper, playAdminAuth, checkRouteParamType } from "../../middlewares";
 import { passport, storeVideoLocally } from "../../config";
 import { BadRequestErr } from "../../helpers/errors";
-import { PlayService } from "../../services";
+import { PlayMediaService } from "../../services/play.media.service";
 
-const Play = new PlayService();
+const PlayMedia = new PlayMediaService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
@@ -19,7 +19,7 @@ const controller = [
       throw new BadRequestErr('ویدیویی آپلود نشده است.');
     }
   
-    const { url } = await Play.uploadPlayTrailerById(+req.params.playId, req.file);
+    const { url } = await PlayMedia.uploadPlayTrailer(+req.params.playId, req.file);
   
     res.json({
       message: 'ویدیو آپلود شد.',

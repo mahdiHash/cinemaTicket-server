@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { middlewareWrapper, playAdminAuth, checkRouteParamType } from '../../middlewares';
 import { passport } from '../../config';
-import { PlayService } from '../../services';
+import { PlayReviewService } from '../../services/play.review.service';
 
-const Play = new PlayService();
+const PlayReview = new PlayReviewService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
@@ -11,23 +11,22 @@ const controller = [
 
   middlewareWrapper(checkRouteParamType({ playId: 'number' })),
 
-  middlewareWrapper(middleware),
-];
-
-export { controller as publishReview };
-
-async function middleware(req: Request, res: Response) {
-  const review = await Play.getPlayReviewById(+req.params.playId);
-
-  if (review.is_published) {
-    return res.json({
+  middlewareWrapper(async (req: Request, res: Response) => {
+    const review = await PlayReview.getPlayReview(+req.params.playId);
+  
+    if (review.is_published) {
+      return res.json({
+        message: 'نقد پابلیش شد.',
+      });
+    }
+  
+    await PlayReview.publishPlayReview(+req.params.playId);
+  
+    res.json({
       message: 'نقد پابلیش شد.',
     });
   }
+  ),
+];
 
-  await Play.publishPlayReviewById(+req.params.playId);
-
-  res.json({
-    message: 'نقد پابلیش شد.',
-  });
-}
+export { controller as publishReview };

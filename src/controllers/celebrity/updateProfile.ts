@@ -23,13 +23,13 @@ const controller = [
 
     if (req.file) {
       if (celeb.profile_pic_url) {
-        await Celeb.removeProfilePicById(+req.params.id);
+        await Celeb.removeProfilePic(+req.params.id);
       }
 
-      await Celeb.uploadProfilePicById(celeb.id, req.file);
+      await Celeb.uploadProfilePic(celeb.id, req.file);
     }
 
-    let upCeleb = await Celeb.updateProfileById(+req.params.id, res.locals.validBody);
+    let upCeleb = await Celeb.updateProfile(+req.params.id, res.locals.validBody);
 
     res.json({
       celeb: upCeleb,

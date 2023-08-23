@@ -16,12 +16,12 @@ const controller = [
     let creditCardReq = await CreditCard.getCreditCardReqById(+req.params.reqId);
 
     // credit card request is found, so update the target user info
-    await User.updateUserById(creditCardReq.user_id as number, {
-      credit_card_num: encrypt(creditCardReq.credit_card_number),
-      national_id: encrypt(creditCardReq.national_id),
+    await User.updateUser(creditCardReq.user_id as number, {
+      credit_card_num: encrypt(creditCardReq.credit_card_number) as string,
+      national_id: encrypt(creditCardReq.national_id) as string,
     });
 
-    await CreditCard.removeCreditCardReqById(creditCardReq.id);
+    await CreditCard.removeCreditCardReq(creditCardReq.id);
 
     res.json({
       message: 'شماره کارت ثبت شد.',

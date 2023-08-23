@@ -1,10 +1,8 @@
-import { passport, storeImgLocally, imageKit, envVariables } from '../../config';
+import { passport, storeImgLocally, envVariables } from '../../config';
 import { updateAdminInpValidator } from '../../validation/inputValidators';
 import { storeValidatedInputs, middlewareWrapper } from '../../middlewares';
-import { encrypt, decrypt } from '../../helpers';
 import { Request, Response } from 'express';
 import { admins } from '@prisma/client';
-import { sign } from 'jsonwebtoken';
 import { AdminService } from '../../services';
 
 const Admin = new AdminService();
@@ -20,10 +18,10 @@ const controller = [
     const reqAdminObj = req.user as admins;
 
     if (req.file) {
-      await Admin.uploadAdminProfilePic(reqAdminObj.id, req.file.path);
+      await Admin.uploadAdminProfilePic(reqAdminObj.id, req.file);
     }
 
-    let upAdmin = await Admin.updateAdminById(reqAdminObj.id, res.locals.validBody) as admins;
+    let upAdmin = await Admin.updateAdmin(reqAdminObj.id, res.locals.validBody) as admins;
     let token = await Admin.generateJWT(upAdmin);
 
     res.cookie('authToken', token, {

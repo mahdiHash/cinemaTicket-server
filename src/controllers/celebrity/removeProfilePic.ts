@@ -13,8 +13,8 @@ const controller = [
   middlewareWrapper(checkRouteParamType({ id: 'number' })),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    await Celeb.removeProfilePicById(+req.params.id);
-    await Celeb.updateProfileById(+req.params.id, {
+    await Celeb.removeProfilePic(+req.params.id);
+    await Celeb.updateProfile(+req.params.id, {
       profile_pic_fileId: null,
       profile_pic_url: null
     });

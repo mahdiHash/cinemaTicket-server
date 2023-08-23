@@ -20,7 +20,7 @@ const controller = [
       await User.uploadProfilePic(reqUserObj.id, req.file);
     }
     
-    const upUser = await User.updateUserById(reqUserObj.id, res.locals.validBody) as users;
+    const upUser = await User.updateUser(reqUserObj.id, res.locals.validBody) as users;
     const token = await User.generateUserJWT(upUser);
   
     res.cookie('authToken', token, {

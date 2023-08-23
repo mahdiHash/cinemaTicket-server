@@ -1,7 +1,6 @@
 import { users } from "@prisma/client";
 import { Request, Response } from "express";
 import { passport } from "../../config";
-import { decrypt, unescape } from "../../helpers";
 import { middlewareWrapper } from "../../middlewares";
 
 const controller = [

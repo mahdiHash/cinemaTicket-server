@@ -19,11 +19,11 @@ const controller = [
 export { controller as getAllCelebrities };
 
 async function middleware(req: Request, res: Response) {
-  const celebs = await Celeb.getAllCelebs(
-    res.locals.validQuery.full_name,
-    res.locals.validQuery.backward,
-    res.locals.validQuery.cursor
-  );
+  const celebs = await Celeb.getAllCelebs({
+    fullName: res.locals.validQuery.full_name,
+    isBackward: res.locals.validQuery.backward,
+    cursor: res.locals.validQuery.cursor,
+  });
 
   res.json(celebs);
 }

@@ -4,7 +4,9 @@ import { passport, storeImgLocally } from '../../config';
 import { BadRequestErr } from '../../helpers/errors';
 import { middlewareWrapper, storeValidatedInputs, playAdminAuth, checkRouteParamType } from '../../middlewares';
 import { PlayService } from '../../services';
+import { PlayMediaService } from '../../services/play.media.service';
 
+const PlayMedia = new PlayMediaService();
 const Play = new PlayService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
@@ -24,7 +26,7 @@ const controller = [
       throw new BadRequestErr('تصویری آپلود نشده است');
     }
   
-    const urls = await Play.uploadPlayPicsById(+req.params.playId, {
+    const urls = await PlayMedia.uploadPlayPics(+req.params.playId, {
       filesInfo: req.files as Array<Express.Multer.File>,
       position: res.locals.validBody.position,
       playTitle: play.title,

@@ -22,7 +22,7 @@ async function middleware(req: Request, res: Response) {
   
   await User.resetPass(reqUserObj.id, {
     oldPass: reqUserObj.password,
-    oldPassInp: res.locals.validBody.oldPass,
+    oldPassInput: res.locals.validBody.oldPass,
     newPass: res.locals.validBody.newPass,
   });
 

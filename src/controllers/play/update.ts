@@ -3,7 +3,9 @@ import { middlewareWrapper, storeValidatedInputs, playAdminAuth, checkRouteParam
 import { updatePlayInpValidator } from '../../validation/inputValidators';
 import { passport, storeImgLocally } from '../../config';
 import { PlayService } from '../../services';
+import { PlayMediaService } from '../../services/play.media.service';
 
+const PlayMedia = new PlayMediaService();
 const Play = new PlayService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
@@ -18,10 +20,10 @@ const controller = [
   middlewareWrapper(storeValidatedInputs(updatePlayInpValidator)),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    const upPlay = await Play.updatePlayById(+req.params.playId, res.locals.validBody);
+    const upPlay = await Play.updatePlay(+req.params.playId, res.locals.validBody);
   
     if (req.file) {
-      const { url} = await Play.uploadPlayCoverById(+req.params.playId, req.file);
+      const { url} = await PlayMedia.uploadPlayCover(+req.params.playId, req.file);
       upPlay.play.cover_url = url;
     }
   

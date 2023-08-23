@@ -12,7 +12,7 @@ const controller = [
   middlewareWrapper(checkRouteParamType({ reqId: 'number' })),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    await CreditCard.removeCreditCardReqById(+req.params.reqId);
+    await CreditCard.removeCreditCardReq(+req.params.reqId);
 
     res.json({
       message: 'درخواست بررسی رد شد.',

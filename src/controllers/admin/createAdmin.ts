@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { storeValidatedInputs, superAdminAuth, middlewareWrapper } from '../../middlewares';
 import { hash } from 'bcryptjs';
-import { encrypt } from '../../helpers';
 import { passport } from '../../config';
 import { AdminService } from '../../services';
 import { createAdminInpValidator } from '../../validation/inputValidators';
@@ -18,12 +17,12 @@ const controller = [
   middlewareWrapper(async (req: Request, res: Response) => {
     let admin = await Admin.createAdmin({
       access_level: res.locals.validBody.access_level,
-      tel: encrypt(res.locals.validBody.tel) as string,
+      tel: res.locals.validBody.tel,
       full_name: res.locals.validBody.full_name,
-      email: encrypt(res.locals.validBody.email) as string,
-      national_id: encrypt(res.locals.validBody.national_id) as string,
-      full_address: encrypt(res.locals.validBody.full_address) as string,
-      home_tel: encrypt(res.locals.validBody.home_tel) as string,
+      email: res.locals.validBody.email,
+      national_id: res.locals.validBody.national_id,
+      full_address: res.locals.validBody.full_address,
+      home_tel: res.locals.validBody.home_tel,
       password: await hash(res.locals.validBody.password, 16),
     });
 

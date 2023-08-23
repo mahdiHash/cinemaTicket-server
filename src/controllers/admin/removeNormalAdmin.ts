@@ -21,7 +21,7 @@ const controller = [
       throw new ForbiddenErr('ادمین برتر نمی‌تواند دیگر ادمین‌های برتر را حذف کند.');
     }
 
-    await Admin.deleteAdminById(targetAdmin.id);
+    await Admin.deleteAdmin(targetAdmin.id);
 
     res.json({
       message: 'ادمین با موفقیت حذف شد.',

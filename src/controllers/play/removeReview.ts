@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { middlewareWrapper, reviewAdminAuth, checkRouteParamType } from "../../middlewares";
 import { passport } from "../../config";
-import { PlayService } from "../../services";
+import { PlayReviewService } from "../../services/play.review.service";
 
-const Play = new PlayService();
+const PlayReview = new PlayReviewService();
 const controller = [
   passport.authenticate('adminJwt', { session: false }),
 
@@ -12,7 +12,7 @@ const controller = [
   middlewareWrapper(checkRouteParamType({ playId: 'number'})),
 
   middlewareWrapper(async (req: Request, res: Response) => {
-    await Play.removePlayReviewById(+req.params.playId);
+    await PlayReview.removePlayReview(+req.params.playId);
   
     res.json({
       message: 'نقد نمایش حذف شد.',

@@ -18,7 +18,7 @@ const controller = [
 export { controller as removeCeleb };
 
 async function middleware(req: Request, res: Response) {
-  await Celeb.removeCelebById(+req.params.id);
+  await Celeb.removeCeleb(+req.params.id);
 
   res.json({
     message: 'پروفایل هنرمند حذف شد.',
