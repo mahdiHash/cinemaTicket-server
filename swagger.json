@@ -2384,11 +2384,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "urls": {
+                    "imgs": {
                       "type": "array",
                       "items": {
-                        "type": "string",
-                        "example": "path/to/image"
+                        "$ref": "#/components/schemas/imgObj"
                       }
                     },
                     "message": {
@@ -2439,21 +2438,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "url": {
-                        "type": "string",
-                        "example": "path/to/image"
-                      },
-                      "width": {
-                        "type": "number",
-                        "example": 400
-                      },
-                      "height": {
-                        "type": "number",
-                        "example": 500
-                      }
-                    }
+                    "$ref": "#/components/schemas/imgObj"
                   }
                 }
               }
@@ -2912,32 +2897,7 @@
                     "pics": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "url": {
-                            "type": "string",
-                            "description": "The url to the image. You need to send a request to \"/img/{img_url}\" to get the pic.",
-                            "example": "/path/to/image"
-                          },
-                          "width": {
-                            "type": "number",
-                            "example": 400
-                          },
-                          "height": {
-                            "type": "number",
-                            "example": 500
-                          },
-                          "alt": {
-                            "type": "string",
-                            "description": "The alt text of the pic.",
-                            "example": "title of the play"
-                          },
-                          "position": {
-                            "type": "string",
-                            "description": "The position of the pic.",
-                            "example": "background"
-                          }
-                        }
+                        "$ref": "#/components/schemas/playImgObj"
                       }
                     }
                   }
@@ -3266,12 +3226,11 @@
                     "message": {
                       "$ref": "#/components/schemas/message"
                     },
-                    "urls": {
+                    "imgs": {
                       "type": "array",
                       "description": "The url of the images you uploaded in an array.",
                       "items": {
-                        "type": "string",
-                        "example": "/path/to/image"
+                        "$ref": "#/components/schemas/playImgObj"
                       }
                     }
                   }
@@ -3908,26 +3867,7 @@
                       "$ref": "#/components/schemas/message"
                     },
                     "pic": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string",
-                          "description": "The url to the image. Usage: \"/img/{image_url}\".",
-                          "example": "/path/to/image"
-                        },
-                        "width": {
-                          "type": "number",
-                          "example": 400
-                        },
-                        "height": {
-                          "type": "number",
-                          "example": "500"
-                        },
-                        "alt": {
-                          "type": "string",
-                          "example": "alternative text"
-                        }
-                      }
+                      "$ref": "#/components/schemas/imgObj"
                     }
                   }
                 }
@@ -4119,6 +4059,56 @@
       "message": {
         "type": "string",
         "description": "A message to show to the user when the request is successful."
+      },
+      "imgObj": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "/path/to/image",
+            "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{url}\"."
+          },
+          "width": {
+            "type": "number",
+            "example": 100
+          },
+          "height": {
+            "type": "number",
+            "example": 100
+          },
+          "alt": {
+            "type": "string",
+            "example": "alternative text",
+            "description": "The alt attribute of the img tags."
+          }
+        }
+      },
+      "playImgObj": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "/path/to/image",
+            "description": "This is a relative path to the image web address. Use it like this: \"{api-url}/img/{url}\"."
+          },
+          "width": {
+            "type": "number",
+            "example": 100
+          },
+          "height": {
+            "type": "number",
+            "example": 100
+          },
+          "alt": {
+            "type": "string",
+            "example": "alternative text",
+            "description": "The alt attribute of the img tags."
+          },
+          "position": {
+            "type": "string",
+            "enum": ["celebNoBackground", "topPlayBackground", "featuredBackground", "background", "review", "morePics", "cover"]
+          }
+        }
       }
     },
     "securitySchemes": {
