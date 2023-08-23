@@ -25,10 +25,13 @@ async function middleware(req: Request, res: Response) {
     throw new BadRequestErr('عکسی آپلود نشده است');
   }
 
-  const urls = await CelebPics.uploadCelebPics(+req.params.id, req.files as Express.Multer.File[]);
+  const imgs = await CelebPics.uploadCelebPics(+req.params.id, req.files as Express.Multer.File[]);
 
   res.json({
-    urls: urls,
+    imgs: imgs.map((img) => {
+      const { fileId, ...imgInfo} = img;
+      return imgInfo;
+    }),
     message: 'تصاویر هنرمند آپلود شدند.',
   });
 }
