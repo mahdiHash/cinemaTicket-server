@@ -17,21 +17,12 @@ class CelebrityPicsService {
         url: true,
         width: true,
         height: true,
-        fileId: true,
+        fileId: !hideFileId,
+        alt: true,
       },
     });
 
-    const pics = records.map((record) => {
-      let pic: Partial<typeof record> = { ...record };
-
-      if (hideFileId) {
-        delete pic.fileId;
-      }
-
-      return pic;
-    });
-
-    return pics;
+    return records;
   }
 
   public async getCelebPicByUrl(url: string, hideFileId = true) {
